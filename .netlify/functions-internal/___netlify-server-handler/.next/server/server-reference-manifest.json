@@ -1,0 +1,21 @@
+{
+  "node": {
+    "407f3ecd4541734a3f37964f0c8ab3ff00ad1cda4b": {
+      "workers": {
+        "app/contact/page": {
+          "moduleId": 94391,
+          "async": false,
+          "exportedName": "submitFeedback",
+          "filename": "src/app/actions.ts"
+        }
+      },
+      "layer": {
+        "app/contact/page": "action-browser"
+      },
+      "filename": "src/app/actions.ts",
+      "exportedName": "submitFeedback"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "aJxNKy08HqsofLRKzu46cvDe4qG2x5GCaD09hyR6UcI="
+}

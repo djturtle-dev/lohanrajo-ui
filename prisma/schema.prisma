@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  role       String   @default("EDITOR") // "ADMIN" or "EDITOR"
+  email      String   @unique
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model Category {
+  id            String         @id @default(uuid())
+  name          String         @unique
+  products      Product[]
+  subCategories SubCategory[]
+  isDeleted     Boolean        @default(false)
+  createdAt     DateTime       @default(now())
+}
+
+model SubCategory {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  products   Product[]
+  isDeleted  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model Product {
+  id            String       @id @default(uuid())
+  name          String
+  description   String       @db.Text
+  images        String[]     @default([])
+  categoryId    String
+  category      Category     @relation(fields: [categoryId], references: [id])
+  subCategoryId String?
+  subCategory   SubCategory? @relation(fields: [subCategoryId], references: [id])
+  isDeleted     Boolean      @default(false)
+  createdAt     DateTime     @default(now())
+}
+
+model Testimonial {
+  id         String   @id @default(uuid())
+  authorName String?
+  content    String
+  rating     Int      @default(5)
+  source     String   @default("Direct") // "Google", "Justdial", "Direct", "WhatsApp", "E-mail"
+  featured   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model AboutContent {
+  id                    String   @id @default("singleton")
+  title                 String
+  subtitle              String
+  profileContent        String   @db.Text
+  profileImage          String?
+  establishedText       String   @default("Established Industry Leaders")
+  infrastructureContent String   @db.Text @default("Our expansive manufacturing facility is equipped with state-of-the-art CNC machinery, automated welding stations, and an advanced powder-coating line. This robust infrastructure allows us to maintain strict tolerances and scale production seamlessly.")
+  infrastructureItems   String[] @default(["CNC Fabrication", "Automated Assembly", "Polymer & Powder Coating"])
+  accreditationContent  String   @db.Text
+  visionContent         String   @db.Text
+  founderNames          String   @default("MR.L.L.BASKAR & L.L.SEKAR")
+  updatedAt             DateTime @updatedAt
+}
+
+model HomeContent {
+  id        String   @id @default("singleton")
+  heroLines String[] @default(["Precision in *Metal Arts*", "*BMS* Panels", "*IP Standard* Enclosures", "Reflectors, *Poles*", "*Oil,* CPG Panels"])
+  pillars   Json     @default("[{\"icon\":\"Factory\",\"title\":\"Infrastructure\",\"desc\":\"State-of-the-art manufacturing facilities ensuring uncompromised precision and scale.\"},{\"icon\":\"ShieldCheck\",\"title\":\"ISO Certified\",\"desc\":\"ISO 9001:2015 certified quality management systems meeting rigorous international standards.\"},{\"icon\":\"Lightbulb\",\"title\":\"Founded 1992\",\"desc\":\"Over three decades of pioneering innovative metal solutions for the evolving industrial landscape.\"}]")
+  updatedAt DateTime @updatedAt
+}

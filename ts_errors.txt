@@ -1,0 +1,9 @@
+src/app/actions.ts(32,9): error TS2353: Object literal may only specify known properties, and 'name' does not exist in type '(Without<FeedbackCreateInput, FeedbackUncheckedCreateInput> & FeedbackUncheckedCreateInput) | (Without<...> & FeedbackCreateInput)'.
+src/app/page.tsx(96,26): error TS2322: Type '{ id: string; content: string; authorName: string | null; rating: number; source: string; createdAt: Date; featured: boolean; }[]' is not assignable to type 'Testimonial[]'.
+  Property 'authorAvatar' is missing in type '{ id: string; content: string; authorName: string | null; rating: number; source: string; createdAt: Date; featured: boolean; }' but required in type 'Testimonial'.
+src/components/layout/Navbar.tsx(13,22): error TS2353: Object literal may only specify known properties, and 'isApproved' does not exist in type 'TestimonialWhereInput'.
+src/components/layout/Navbar.tsx(18,13): error TS18048: 'stats._avg' is possibly 'undefined'.
+src/components/layout/Navbar.tsx(19,25): error TS18048: 'stats._avg' is possibly 'undefined'.
+src/components/layout/Navbar.tsx(21,24): error TS18048: 'stats._count' is possibly 'undefined'.
+src/components/layout/Navbar.tsx(21,37): error TS2339: Property 'id' does not exist on type 'true | { id?: number | undefined; authorName?: number | undefined; content?: number | undefined; rating?: number | undefined; source?: number | undefined; featured?: number | undefined; createdAt?: number | undefined; _all?: number | undefined; }'.
+  Property 'id' does not exist on type 'true'.
