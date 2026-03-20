@@ -68,7 +68,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                                     All Products
                                 </Link>
                             </li>
-                            {categories.map(cat => (
+                            {categories.map((cat: typeof categories[number]) => (
                                 <li key={cat.id} className="shrink-0 snap-start">
                                     <Link
                                         href={`/products?category=${cat.id}${query ? `&query=${query}` : ''}`}
@@ -124,7 +124,7 @@ async function ProductGrid({ query, category, page }: { query: string; category:
         ['products-list', query, category, page.toString()],
         { revalidate: 3600, tags: ['products'] }
     );
-    
+
     const [totalCount, products] = await getProducts(query, category, page);
 
     return <ProductsDisplay products={products} totalCount={totalCount} currentPage={page} pageSize={pageSize} />;

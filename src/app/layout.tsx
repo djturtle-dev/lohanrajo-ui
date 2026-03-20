@@ -3,6 +3,7 @@ import { Oswald, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ClarityScript from "@/components/ClarityScript";
 
 const oswald = Oswald({ subsets: ["latin"], variable: "--font-oswald" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -20,6 +21,7 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${inter.variable} ${oswald.variable}`}>
             <body className={`font-sans bg-brand-white text-brand-text selection:bg-brand-accent selection:text-brand-dark flex flex-col min-h-screen`}>
+                <ClarityScript />
                 <Navbar />
                 <main className="flex-grow pt-24 pb-16 w-full">
                     {children}

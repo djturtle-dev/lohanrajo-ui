@@ -134,7 +134,7 @@ async function CategoryLinks() {
         { name: 'Poles', label: 'Industrial Poles', icon: Zap },
     ].map(cat => ({
         ...cat,
-        id: dbCategories.find(db => db.name === cat.name)?.id
+        id: dbCategories.find((db: typeof dbCategories[number]) => db.name === cat.name)?.id
     }));
 
     return (

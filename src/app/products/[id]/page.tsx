@@ -52,7 +52,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
                     {product.images && product.images.length > 1 && (
                         <div className="grid grid-cols-4 gap-4">
-                            {product.images.slice(1).map((img, i) => (
+                            {product.images.slice(1).map((img: typeof product.images[number], i: number) => (
                                 <div key={i} className="aspect-square bg-brand-panel border border-brand-border relative overflow-hidden group cursor-pointer">
                                     <Image
                                         src={getAssetUrl(img)}
