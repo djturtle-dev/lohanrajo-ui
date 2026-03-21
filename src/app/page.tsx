@@ -5,6 +5,7 @@ import HeroVideoBackground from '@/components/HeroVideoBackground';
 import HeroTextAnimation from '@/components/HeroTextAnimation';
 import Testimonials from '@/components/Testimonials';
 import { prisma } from '@/lib/prisma';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 
 import { unstable_cache } from 'next/cache';
 import * as Icons from 'lucide-react';
@@ -68,32 +69,38 @@ export default async function Home() {
             </section>
 
             {/* Pillars Section */}
-            <section className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 sm:px-0 max-w-5xl mx-auto w-full">
-                {pillars.map((pillar, i) => (
-                    <div key={i} className="p-8 border border-brand-border bg-white group hover:border-brand-accent transition-colors shadow-sm">
-                        <div className="text-brand-accent mb-6 transform group-hover:-translate-y-2 transition-all duration-500 ease-in-out">
-                            {getIcon(pillar.icon)}
+            <ScrollReveal staggerChildren={true} direction="up" delay={0.2} staggerAmount={0.2}>
+                <section className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 sm:px-0 max-w-5xl mx-auto w-full">
+                    {pillars.map((pillar, i) => (
+                        <div key={i} className="p-8 border border-brand-border bg-white group hover:border-brand-accent transition-colors shadow-sm">
+                            <div className="text-brand-accent mb-6 transform group-hover:-translate-y-2 transition-all duration-500 ease-in-out">
+                                {getIcon(pillar.icon)}
+                            </div>
+                            <h3 className="font-oswald text-2xl uppercase tracking-widest text-brand-text mb-4">{pillar.title}</h3>
+                            <p className="text-brand-muted leading-relaxed">{pillar.desc}</p>
                         </div>
-                        <h3 className="font-oswald text-2xl uppercase tracking-widest text-brand-text mb-4">{pillar.title}</h3>
-                        <p className="text-brand-muted leading-relaxed">{pillar.desc}</p>
-                    </div>
-                ))}
-            </section>
+                    ))}
+                </section>
+            </ScrollReveal>
 
             {/* Featured Categories */}
             <section className="px-4 sm:px-0 max-w-5xl mx-auto w-full">
-                <div className="flex justify-between items-end mb-12 border-b border-brand-border pb-6">
-                    <h2 className="font-oswald text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Our Products</h2>
-                    <Link href="/products" className="hidden md:flex items-center text-sm font-oswald tracking-widest uppercase text-brand-accent hover:text-red-700 transition-colors">
-                        View All <ArrowRight className="ml-2 w-4 h-4" />
-                    </Link>
-                </div>
+                <ScrollReveal direction="left">
+                    <div className="flex justify-between items-end mb-12 border-b border-brand-border pb-6">
+                        <h2 className="font-oswald text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Our Products</h2>
+                        <Link href="/products" className="hidden md:flex items-center text-sm font-oswald tracking-widest uppercase text-brand-accent hover:text-red-700 transition-colors">
+                            View All <ArrowRight className="ml-2 w-4 h-4" />
+                        </Link>
+                    </div>
+                </ScrollReveal>
 
                 <CategoryLinks />
             </section>
 
             {/* Testimonials Section */}
-            <TestimonialsSection />
+            <ScrollReveal direction="up" delay={0.1}>
+                <TestimonialsSection />
+            </ScrollReveal>
         </div>
     );
 }
@@ -138,19 +145,21 @@ async function CategoryLinks() {
     }));
 
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((cat, i) => {
-                const Icon = cat.icon;
-                return (
-                    <Link href={`/products${cat.id ? `?category=${cat.id}` : ''}`} key={i} className="group p-8 border border-brand-border bg-white flex flex-col justify-end relative overflow-hidden hover:border-brand-accent transition-colors shadow-sm min-h-40">
-                        <div className="absolute top-2 -right-4 text-brand-border transition-all duration-500 transform translate-x-4 scale-75 opacity-30 group-hover:-translate-x-6 group-hover:scale-110 group-hover:opacity-100 group-hover:text-brand-accent/20">
-                            <Icon size={100} strokeWidth={1} />
-                        </div>
-                        <h3 className="relative z-10 font-oswald text-xl uppercase tracking-widest text-brand-text mb-2 group-hover:text-brand-accent transition-colors">{cat.label}</h3>
-                        <div className="relative z-10 h-1 w-8 bg-brand-border group-hover:w-full group-hover:bg-brand-accent transition-all duration-500" />
-                    </Link>
-                );
-            })}
-        </div>
+        <ScrollReveal staggerChildren={true} direction="up" delay={0.2} staggerAmount={0.15}>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                {categories.map((cat, i) => {
+                    const Icon = cat.icon;
+                    return (
+                        <Link href={`/products${cat.id ? `?category=${cat.id}` : ''}`} key={i} className="group p-8 border border-brand-border bg-white flex flex-col justify-end relative overflow-hidden hover:border-brand-accent transition-colors shadow-sm min-h-40">
+                            <div className="absolute top-2 -right-4 text-brand-border transition-all duration-500 transform translate-x-4 scale-75 opacity-30 group-hover:-translate-x-6 group-hover:scale-110 group-hover:opacity-100 group-hover:text-brand-accent/20">
+                                <Icon size={100} strokeWidth={1} />
+                            </div>
+                            <h3 className="relative z-10 font-oswald text-xl uppercase tracking-widest text-brand-text mb-2 group-hover:text-brand-accent transition-colors">{cat.label}</h3>
+                            <div className="relative z-10 h-1 w-8 bg-brand-border group-hover:w-full group-hover:bg-brand-accent transition-all duration-500" />
+                        </Link>
+                    );
+                })}
+            </div>
+        </ScrollReveal>
     );
 }

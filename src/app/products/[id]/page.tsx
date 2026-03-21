@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { getAssetUrl } from '@/lib/utils';
 import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -26,12 +27,14 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
     return (
         <div className="max-w-5xl mx-auto px-4 sm:px-8 py-12">
-            <Link href="/products" className="inline-flex items-center text-brand-muted hover:text-brand-text mb-8 transition-colors font-oswald tracking-widest uppercase text-sm">
-                <ArrowLeft className="w-4 h-4 mr-2" /> Back to Catalog
-            </Link>
+            <ScrollReveal direction="down" delay={0.1}>
+                <Link href="/products" className="inline-flex items-center text-brand-muted hover:text-brand-text mb-8 transition-colors font-oswald tracking-widest uppercase text-sm">
+                    <ArrowLeft className="w-4 h-4 mr-2" /> Back to Catalog
+                </Link>
+            </ScrollReveal>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="space-y-4">
+                <ScrollReveal direction="left" delay={0.2} className="space-y-4">
                     <div className="aspect-square bg-brand-panel border border-brand-border flex flex-col items-center justify-center relative overflow-hidden group">
                         {product.images?.[0] ? (
                             <Image
@@ -66,9 +69,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
                             ))}
                         </div>
                     )}
-                </div>
+                </ScrollReveal>
 
-                <div className="flex flex-col justify-center">
+                <ScrollReveal direction="right" delay={0.3} staggerChildren={true} staggerAmount={0.1} className="flex flex-col justify-center">
                     <div className="mb-6">
                         <span className="text-brand-accent font-bold tracking-widest uppercase text-sm mb-2 block">
                             {product.category.name} {product.subCategory ? `• ${product.subCategory.name}` : ''}
@@ -89,7 +92,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                             Request Quote
                         </Link>
                     </div>
-                </div>
+                </ScrollReveal>
             </div>
         </div>
     );

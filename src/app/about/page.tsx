@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
 import { getAssetUrl } from '@/lib/utils';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 
 export const metadata: Metadata = {
     title: 'About | LOHANRAJO Metal Arts',
@@ -44,7 +45,7 @@ export default async function AboutPage() {
     return (
         <div className="flex flex-col gap-12">
             {/* Header */}
-            <section className="max-w-4xl mx-auto text-center px-4 mb-12">
+            <ScrollReveal direction="up" className="max-w-4xl mx-auto text-center px-4 mb-12">
                 <h1 className="font-oswald text-5xl md:text-7xl font-bold uppercase tracking-tighter text-brand-text mb-6 text-balance">
                     {data.title.split(' ').map((word: string, i: number) =>
                         word.toLowerCase() === 'excellence' ? (
@@ -55,13 +56,13 @@ export default async function AboutPage() {
                 <p className="text-xl text-brand-muted font-light leading-relaxed">
                     {data.subtitle}
                 </p>
-            </section>
+            </ScrollReveal>
 
             {/* Profile Section */}
-            <section id="profile" className="bg-brand-panel border-y border-brand-border py-12">
+            <section id="profile" className="bg-brand-panel border-y border-brand-border py-12 overflow-hidden">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto px-4 sm:px-8 items-center">
                     {/* Image on the Left */}
-                    <div className="aspect-square border border-brand-border relative overflow-hidden flex items-center justify-center p-8 bg-brand-white">
+                    <ScrollReveal direction="left" className="aspect-square border border-brand-border relative overflow-hidden flex items-center justify-center p-8 bg-brand-white">
                         <Image
                             src={getAssetUrl(data.profileImage) || "/our company.png"}
                             alt="Lohan Rajo Metal Arts Profile"
@@ -69,10 +70,10 @@ export default async function AboutPage() {
                             sizes="(max-width: 768px) 100vw, 50vw"
                             className="object-contain p-8"
                         />
-                    </div>
+                    </ScrollReveal>
 
                     {/* Text on the Right */}
-                    <div className="space-y-6">
+                    <ScrollReveal direction="right" className="space-y-6">
                         <div className="flex items-center space-x-4 mb-2">
                             <UserCheck className="w-8 h-8 text-brand-accent" />
                             <h2 className="font-oswald text-3xl uppercase tracking-widest text-brand-text">Our Profile</h2>
@@ -100,49 +101,49 @@ export default async function AboutPage() {
                                 </span>
                             </div>
                         </div>
-                    </div>
+                    </ScrollReveal>
                 </div>
             </section>
 
             {/* Accreditation & Vision */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto px-4 sm:px-8">
-                <div id="accreditation" className="p-10 border border-brand-border bg-brand-panel relative overflow-hidden group">
+                <ScrollReveal direction="up" delay={0.1} className="p-10 border border-brand-border bg-brand-panel relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/5 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2" />
                     <ShieldCheck className="w-10 h-10 text-brand-accent mb-6" />
-                    <h2 className="font-oswald text-3xl uppercase tracking-widest text-brand-text mb-4">Accreditation</h2>
+                    <h2 className="font-oswald text-3xl uppercase tracking-widest text-brand-text mb-4" id="accreditation">Accreditation</h2>
                     <p className="text-brand-muted leading-relaxed">
                         {data.accreditationContent}
                     </p>
-                </div>
+                </ScrollReveal>
 
-                <div id="vision" className="p-10 border border-brand-border bg-brand-panel relative overflow-hidden">
+                <ScrollReveal direction="up" delay={0.2} className="p-10 border border-brand-border bg-brand-panel relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-32 h-32 bg-brand-accent/5 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2" />
                     <Lightbulb className="w-10 h-10 text-brand-accent mb-6" />
-                    <h2 className="font-oswald text-3xl uppercase tracking-widest text-brand-text mb-4">Vision</h2>
+                    <h2 className="font-oswald text-3xl uppercase tracking-widest text-brand-text mb-4" id="vision">Vision</h2>
                     <p className="text-brand-muted leading-relaxed">
                         {data.visionContent}
                     </p>
-                </div>
+                </ScrollReveal>
             </section>
 
             {/* Infrastructure Section */}
             <section id="infrastructure" className="bg-brand-panel border-y border-brand-border py-12">
                 <div className="max-w-5xl mx-auto px-4 sm:px-8">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
+                    <ScrollReveal direction="up" className="text-center max-w-3xl mx-auto mb-16">
                         <Factory className="w-12 h-12 text-brand-accent mx-auto mb-6" />
                         <h2 className="font-oswald text-4xl uppercase tracking-widest text-brand-text mb-6">Infrastructure</h2>
                         <p className="text-brand-muted leading-relaxed">
                             {data.infrastructureContent}
                         </p>
-                    </div>
-                    <div className={`grid grid-cols-1 ${data.infrastructureItems.length >= 3 ? 'sm:grid-cols-3' : data.infrastructureItems.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-1'} gap-6`}>
+                    </ScrollReveal>
+                    <ScrollReveal staggerChildren={true} direction="up" staggerAmount={0.15} className={`grid grid-cols-1 ${data.infrastructureItems.length >= 3 ? 'sm:grid-cols-3' : data.infrastructureItems.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-1'} gap-6`}>
                         {data.infrastructureItems.map((item: string, i: number) => (
                             <div key={i} className="p-8 border border-brand-border bg-brand-white flex flex-col items-center text-center">
                                 <span className="font-oswald text-4xl text-brand-accent/20 mb-4 inline-block font-black">0{i + 1}</span>
                                 <h3 className="font-bold text-brand-text uppercase tracking-widest text-sm mb-2 font-oswald">{item}</h3>
                             </div>
                         ))}
-                    </div>
+                    </ScrollReveal>
                 </div>
             </section>
         </div>

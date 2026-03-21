@@ -3,6 +3,7 @@ import { getAssetUrl } from '@/lib/utils';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
 import ProductsDisplay from './ProductsDisplay';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 import { Prisma } from '@prisma/client';
 import { Suspense } from 'react';
 import { unstable_cache } from 'next/cache';
@@ -36,14 +37,14 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 
     return (
         <div className="max-w-5xl mx-auto px-4 sm:px-8 py-12">
-            <div className="flex flex-col md:flex-row justify-between items-start mb-6 ">
+            <ScrollReveal direction="up" className="flex flex-col md:flex-row justify-between items-start mb-6 ">
                 <div>
                     <h1 className="font-oswald text-5xl md:text-7xl font-bold uppercase tracking-tighter text-brand-text mb-6 text-balance">Product <span className="text-brand-accent">Catalog</span></h1>
                 </div>
-            </div>
+            </ScrollReveal>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <aside className="space-y-8">
+                <ScrollReveal direction="right" className="space-y-8">
                     <div>
                         <h3 className="font-oswald tracking-widest uppercase text-brand-text mb-4">Search</h3>
                         <form className="relative">
@@ -80,7 +81,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                             ))}
                         </ul>
                     </div>
-                </aside>
+                </ScrollReveal>
 
                 <main className="lg:col-span-3">
                     <Suspense key={`${query}-${category}-${page}`} fallback={
@@ -99,18 +100,18 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 async function ProductGrid({ query, category, page }: { query: string; category: string; page: number }) {
     const pageSize = 12;
 
-    const where: Prisma.ProductWhereInput = {
-        isDeleted: false,
-        name: { contains: query, mode: 'insensitive' },
-        ...(category ? { categoryId: category } : {})
-    };
-
     const getProducts = unstable_cache(
         async (q: string, c: string, p: number) => {
+            const currentWhere: Prisma.ProductWhereInput = {
+                isDeleted: false,
+                name: { contains: q, mode: 'insensitive' },
+                ...(c ? { categoryId: c } : {})
+            };
+
             return await prisma.$transaction([
-                prisma.product.count({ where }),
+                prisma.product.count({ where: currentWhere }),
                 prisma.product.findMany({
-                    where,
+                    where: currentWhere,
                     include: {
                         category: true,
                         subCategory: true

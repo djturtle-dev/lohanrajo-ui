@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { submitFeedback } from '@/app/actions';
 import { MapPin, Phone, Mail, AlertTriangle } from 'lucide-react';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 
 // Simple math captcha - no external dependencies needed
 function generateCaptcha() {
@@ -57,7 +58,7 @@ export default function ContactPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-8 py-20">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
                 {/* Left Column: Form */}
-                <div className="lg:col-span-7 space-y-12">
+                <ScrollReveal direction="left" className="lg:col-span-7 space-y-12">
                     <div>
                         <h1 className="font-oswald text-5xl md:text-7xl font-bold uppercase tracking-tighter text-brand-text mb-6 text-balance">Get in <span className="text-brand-accent">touch</span></h1>
                     </div>
@@ -162,10 +163,10 @@ export default function ContactPage() {
                             )}
                         </div>
                     </form>
-                </div>
+                </ScrollReveal>
 
                 {/* Right Column: Information & Map */}
-                <div className="lg:col-span-5 flex flex-col gap-6 lg:sticky lg:top-32 group">
+                <ScrollReveal direction="right" staggerChildren={true} staggerAmount={0.2} className="lg:col-span-5 flex flex-col gap-6 lg:sticky lg:top-32 group">
                     {/* Map Row */}
                     <div className="relative border border-brand-border group-hover:border-brand-accent/40 transition-all duration-700 overflow-hidden h-[300px] lg:h-[350px]">
                         <iframe
@@ -212,7 +213,7 @@ export default function ContactPage() {
                         {/* Decorative background element */}
                         <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/5 -mr-16 -mt-16 rounded-full blur-3xl" />
                     </div>
-                </div>
+                </ScrollReveal>
             </div>
         </div>
     );

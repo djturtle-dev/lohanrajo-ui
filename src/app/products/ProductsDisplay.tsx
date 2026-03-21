@@ -7,6 +7,7 @@ import { LayoutGrid, List } from 'lucide-react';
 import { getAssetUrl } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';
 import { Prisma } from '@prisma/client';
+import ScrollReveal from '@/components/animations/ScrollReveal';
 
 type ProductWithRelations = Prisma.ProductGetPayload<{
     include: { category: true; subCategory: true; }
@@ -72,7 +73,7 @@ export default function ProductsDisplay({
             </div>
 
             {viewMode === 'grid' ? (
-                <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6">
+                <ScrollReveal direction="up" staggerChildren={true} staggerAmount={0.05} className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6">
                     {products.map(product => (
                         <Link href={`/products/${product.id}`} key={product.id} className="group border border-brand-border bg-brand-panel overflow-hidden flex flex-col hover:border-brand-accent/50 transition-colors">
                             <div className="aspect-[4/3] bg-brand-dark flex items-center justify-center p-4 md:p-6 relative">
@@ -100,9 +101,9 @@ export default function ProductsDisplay({
                             </div>
                         </Link>
                     ))}
-                </div>
+                </ScrollReveal>
             ) : (
-                <div className="flex flex-col gap-4">
+                <ScrollReveal direction="up" staggerChildren={true} staggerAmount={0.08} className="flex flex-col gap-4">
                     {products.map(product => (
                         <Link href={`/products/${product.id}`} key={product.id} className="group border border-brand-border bg-brand-panel flex flex-row hover:border-brand-accent/50 transition-colors">
                             <div className="w-24 md:w-48 aspect-4/3 md:aspect-square bg-brand-dark flex items-center justify-center relative shrink-0">
@@ -137,7 +138,7 @@ export default function ProductsDisplay({
                             </div>
                         </Link>
                     ))}
-                </div>
+                </ScrollReveal>
             )}
 
             {totalPages > 1 && (
