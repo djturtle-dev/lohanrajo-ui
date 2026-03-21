@@ -71,7 +71,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 <div className="flex flex-col justify-center">
                     <div className="mb-6">
                         <span className="text-brand-accent font-bold tracking-widest uppercase text-sm mb-2 block">
-                            {product.category.name} {product.subCategory ? `/ ${product.subCategory.name}` : ''}
+                            {product.category.name} {product.subCategory ? `• ${product.subCategory.name}` : ''}
                         </span>
                         <h1 className="font-oswald text-4xl uppercase tracking-wider text-brand-text mb-6">{product.name}</h1>
                         <div className="h-px w-full bg-brand-border mb-6" />

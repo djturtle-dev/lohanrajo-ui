@@ -80,10 +80,10 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                         <Link
                             href="/products"
                             className={cn(
-                                "px-4 py-2 text font-bold uppercase tracking-widest font-oswald transition-colors",
+                                "px-4 py-2 text font-bold uppercase tracking-widest font-oswald transition-all duration-500 ease-in-out",
                                 pathname.startsWith('/products')
                                     ? "bg-brand-white text-brand-accent border-b-2 border-brand-accent"
-                                    : "bg-brand-accent text-white hover:bg-red-700 transition-all duration-300"
+                                    : "bg-brand-accent text-white hover:bg-brand-text shadow-lg hover:shadow-brand-accent/20 hover:-translate-y-0.5 "
                             )}
                         >
                             Products
@@ -106,14 +106,14 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                 "fixed inset-0 z-40 bg-white transform transition-transform duration-300 ease-in-out md:hidden",
                 isOpen ? "translate-x-0" : "translate-x-full"
             )}>
-                <div className="flex flex-col h-full pt-24 px-8 space-y-8 overflow-y-auto">
+                <div className="flex flex-col h-full pt-38 px-8 space-y-8 overflow-y-auto">
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
                             href={link.href}
                             className={cn(
                                 "text-3xl font-oswald uppercase tracking-widest transition-colors",
-                                isLinkActive(link.href) ? "text-brand-accent" : "text-brand-text"
+                                isLinkActive(link.href) ? "text-brand-accent font-black tracking-tighter" : "text-brand-text"
                             )}
                             onClick={() => setIsOpen(false)}
                         >
@@ -124,7 +124,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                         href="/products"
                         className={cn(
                             "text-3xl font-oswald uppercase tracking-widest transition-colors",
-                            pathname.startsWith('/products') ? "text-brand-accent" : "text-brand-text"
+                            pathname.startsWith('/products') ? "text-brand-accent font-bold" : "text-brand-text"
                         )}
                         onClick={() => setIsOpen(false)}
                     >

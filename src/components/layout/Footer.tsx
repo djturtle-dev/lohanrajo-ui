@@ -21,15 +21,6 @@ export default function Footer() {
                     </ul>
                 </div>
                 <div>
-                    <h4 className="font-oswald font-bold text-sm tracking-widest uppercase text-brand-text mb-4">Products</h4>
-                    <ul className="space-y-2 text-sm text-brand-muted">
-                        <li><Link href="/products?category=BMS+Panels" className="hover:text-brand-accent transition-colors block">BMS Panels</Link></li>
-                        <li><Link href="/products?category=IP+Enclosures" className="hover:text-brand-accent transition-colors block">IP Enclosures</Link></li>
-                        <li><Link href="/products?category=Reflectors" className="hover:text-brand-accent transition-colors block">Reflectors</Link></li>
-                        <li><Link href="/products?category=Poles" className="hover:text-brand-accent transition-colors block">Poles</Link></li>
-                    </ul>
-                </div>
-                <div>
                     <h4 className="font-oswald font-bold text-sm tracking-widest uppercase text-brand-text mb-4">Contact</h4>
                     <ul className="space-y-2 text-sm text-brand-muted">
                         <li><a href="mailto:info@lohanrajo.com" className="hover:text-brand-accent transition-colors block">info@lohanrajo.com</a></li>

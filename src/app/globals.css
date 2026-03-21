@@ -22,6 +22,7 @@
             linear-gradient(45deg, #0000 8%, #f8f8f8 0 17%, #0000 0 58%, #f8f8f8 0 67%, #0000 0 83%, #f8f8f8 0 92%, #0000 0),
             #ffffff;
         background-size: 40px 40px;
+        scroll-behavior: smooth;
 
 
     }

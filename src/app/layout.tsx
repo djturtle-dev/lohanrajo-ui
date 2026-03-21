@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ClarityScript from "@/components/ClarityScript";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const oswald = Oswald({ subsets: ["latin"], variable: "--font-oswald" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -27,6 +28,7 @@ export default function RootLayout({
                     {children}
                 </main>
                 <Footer />
+                <ScrollToTop />
             </body>
         </html>
     );

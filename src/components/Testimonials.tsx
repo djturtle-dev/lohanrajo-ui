@@ -52,11 +52,10 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
     }, [paddedTestimonials]);
 
     return (
-        <section className="overflow-hidden bg-brand-light">
-            <div className="max-w-5xl mx-auto px-4 mb-12 flex justify-between items-end border-b border-brand-border h-24">
+        <section className="bg-brand-light">
+            <div className="max-w-5xl mx-auto flex justify-between items-end mb-12 border-b border-brand-border pb-6">
                 <div>
-                    <h2 className="font-oswald text-4xl md:text-5xl uppercase tracking-widest text-brand-text mb-2">Testimonials</h2>
-                    <p className="text-brand-muted font-inter mb-4">Verified reviews from Google, Justdial, WhatsApp and E-mail</p>
+                    <h2 className="font-oswald text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Testimonials</h2>
                 </div>
             </div>
 

@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) {
     const [index, setIndex] = useState(0);
     const [isMounted, setIsMounted] = useState(false);
-    
+
     const displayLines = lines.length > 0 ? lines : [
         "Precision in *Metal Arts*",
         "*BMS* Panels",
@@ -14,7 +14,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
         "Reflectors, *Poles*",
         "*Oil,* CPG Panels"
     ];
-    
+
     useEffect(() => {
         setIsMounted(true);
         const interval = setInterval(() => {
@@ -23,7 +23,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
         return () => clearInterval(interval);
     }, [displayLines.length]);
 
-    if (!isMounted) return <div className="h-[120px] sm:h-[150px] md:h-[180px] lg:h-[220px]" />;
+    if (!isMounted) return <div className="h-30 sm:h-37.5 md:h-45 lg:h-55" />;
 
     // Animation variants for staggering
     const containerVariants = {
@@ -44,15 +44,15 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
     };
 
     const itemVariants = {
-        hidden: { 
-            opacity: 0, 
-            y: 20, 
+        hidden: {
+            opacity: 0,
+            y: 20,
             rotateX: 45,
-            filter: 'blur(8px)' 
+            filter: 'blur(8px)'
         },
-        visible: { 
-            opacity: 1, 
-            y: 0, 
+        visible: {
+            opacity: 1,
+            y: 0,
             rotateX: 0,
             filter: 'blur(0px)',
             transition: {
@@ -61,9 +61,9 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                 stiffness: 60
             }
         },
-        exit: { 
-            opacity: 0, 
-            y: -20, 
+        exit: {
+            opacity: 0,
+            y: -20,
             filter: 'blur(8px)',
             transition: { duration: 1.2, ease: "easeInOut" as const }
         }
@@ -72,7 +72,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
     const parseAndAnimateLine = (text: string) => {
         // Split by highlights (*...*) or spaces, preserving both
         const parts = text.split(/(\*.*?\*)/g);
-        
+
         const elements: any[] = [];
         let elementIdx = 0;
 
@@ -114,7 +114,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
     };
 
     return (
-        <div className="relative h-[120px] sm:h-[150px] md:h-[180px] lg:h-[220px] w-full flex items-center justify-center mb-8 perspective-1000">
+        <div className="relative h-30 sm:h-37.5 md:h-45 lg:h-55 w-full flex items-center justify-center mb-8 perspective-1000">
             <AnimatePresence>
                 <motion.div
                     key={index}
@@ -124,7 +124,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                     exit="exit"
                     className="absolute w-full px-4 flex flex-wrap justify-center text-center"
                 >
-                    <h1 className="font-oswald text-4xl sm:text-5xl md:text-5xl lg:text-7xl font-black uppercase tracking-tighter text-brand-text leading-[1.1] flex flex-wrap justify-center">
+                    <h1 className="font-oswald text-6xl lg:text-7xl font-black uppercase tracking-tighter text-brand-text leading-[1.1] flex flex-wrap justify-center">
                         {parseAndAnimateLine(displayLines[index])}
                     </h1>
                 </motion.div>

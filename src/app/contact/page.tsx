@@ -66,29 +66,29 @@ export default function ContactPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div className="space-y-3">
                                 <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">First Name</label>
-                                <input required type="text" name="firstName" className="w-full bg-brand-panel border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="John" />
+                                <input required type="text" name="firstName" className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="John" />
                             </div>
                             <div className="space-y-3">
                                 <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Last Name</label>
-                                <input required type="text" name="lastName" className="w-full bg-brand-panel border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="Doe" />
+                                <input required type="text" name="lastName" className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="Doe" />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div className="space-y-3">
                                 <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Phone</label>
-                                <input required type="text" name="phone" className="w-full bg-brand-panel border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="+91 1234567890" />
+                                <input required type="text" name="phone" className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="+91 1234567890" />
                             </div>
                             <div className="space-y-3">
                                 <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Email address</label>
-                                <input required type="email" name="email" className="w-full bg-brand-panel border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="john.doe@example.com" />
+                                <input required type="email" name="email" className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="john.doe@example.com" />
                             </div>
                         </div>
 
                         <div className="space-y-3">
                             <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">What area interests you?</label>
                             <div className="relative">
-                                <select name="type" className="w-full bg-brand-panel border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all appearance-none cursor-pointer" defaultValue="ENQUIRY">
+                                <select name="type" className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all appearance-none cursor-pointer" defaultValue="ENQUIRY">
                                     <option value="ENQUIRY">Manufacturing Enquiry</option>
                                     <option value="CONTACT">General Collaboration</option>
                                     <option value="CAREER">Career Opportunities</option>
@@ -102,13 +102,13 @@ export default function ContactPage() {
 
                         <div className="space-y-3">
                             <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Tell us more</label>
-                            <textarea required name="content" rows={4} className="w-full bg-brand-panel border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all resize-none ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="Share details about your requirement..."></textarea>
+                            <textarea required name="content" rows={4} className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all resize-none ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="Share details about your requirement..."></textarea>
                         </div>
 
                         <div className="space-y-6">
                             {/* Simple Math Captcha */}
                             <div className="flex items-center gap-4">
-                                <div className="bg-brand-panel border border-brand-border px-5 py-3 flex items-center gap-3">
+                                <div className="bg-brand-white border border-brand-border px-5 py-3 flex items-center gap-3">
                                     <span className="font-oswald text-sm tracking-widest text-brand-muted/60 uppercase">Verify:</span>
                                     <span className="font-oswald text-lg font-bold text-brand-text tracking-wider">{captcha?.question ?? '...'}</span>
                                     <span className="font-oswald text-sm text-brand-muted/60">=</span>
@@ -116,7 +116,7 @@ export default function ContactPage() {
                                         type="text"
                                         value={captchaInput}
                                         onChange={(e) => { setCaptchaInput(e.target.value); setCaptchaError(false); }}
-                                        className={`w-16 bg-brand-dark border ${captchaError ? 'border-red-500' : 'border-brand-border'} px-3 py-1.5 text-center font-oswald text-lg font-bold text-brand-text focus:outline-none focus:border-brand-accent transition-all`}
+                                        className={`w-16 bg-brand-white border ${captchaError ? 'border-red-500' : 'border-brand-border'} px-3 py-1.5 text-center font-oswald text-lg font-bold text-brand-text focus:outline-none focus:border-brand-accent transition-all`}
                                         placeholder="?"
                                         required
                                     />
@@ -140,12 +140,12 @@ export default function ContactPage() {
                             <button
                                 type="submit"
                                 disabled={formStatus === 'submitting'}
-                                className="w-full bg-brand-accent text-white px-8 py-5 font-oswald font-black tracking-[0.2em] uppercase hover:bg-brand-accent/85 transition-all duration-500 disabled:opacity-50 group flex items-center justify-center gap-3"
+                                className="w-full bg-brand-accent text-white hover:bg-brand-text shadow-lg hover:shadow-brand-accent/20 hover:-translate-y-1 ease-in-out px-8 py-5 font-oswald font-black tracking-[0.2em] uppercase transition-all duration-500 disabled:opacity-50 group flex items-center justify-center gap-3"
                             >
                                 {formStatus === 'submitting' ? 'Transmitting...' : (
                                     <>
                                         Send Message
-                                        <div className="w-2 h-2 rounded-full bg-white/60 group-hover:bg-white transition-colors" />
+                                        <div className="w-2 h-2 rounded-full bg-white/60 group-hover:bg-green-500 transition-colors" />
                                     </>
                                 )}
                             </button>
@@ -187,15 +187,17 @@ export default function ContactPage() {
                                 <div className="space-y-3">
                                     <p className="font-oswald text-brand-muted/40 uppercase tracking-widest text-[10px] font-medium">Primary Facility Address</p>
                                     <p className="text-brand-text text-lg leading-relaxed font-light">
-                                        Plot No. 213, 214 &amp; 215, 3rd Main Road,<br />
-                                        Burma Colony, Perungudi, OMR,<br />
-                                        Chennai - 600096, Tamil Nadu, India
+                                        Plot No. 213, 214 &amp; 215,<br />
+                                        3rd Main Road, Burma Colony, <br />
+                                        Perungudi, OMR,<br />
+                                        Chennai - 600096,<br />
+                                        Tamil Nadu, India
                                     </p>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-8">
                                     <div className="space-y-3">
-                                        <p className="font-oswald text-brand-muted/40 uppercase tracking-widest text-[10px] font-medium">Connect</p>
+                                        <p className="text-brand-muted/40 uppercase tracking-widest text-[10px] font-medium">Connect</p>
                                         <p className="text-brand-text text-lg">+91 44 2496 2590</p>
                                         <p className="text-brand-text text-lg">+91 44 2496 2591</p>
                                     </div>

@@ -76,7 +76,7 @@ export default async function Navbar() {
                 </Link>
 
                 {/* Testimonial Stats Pill */}
-                <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-brand-white text-white group h-10 sm:h-14 overflow-hidden min-w-[80px] md:min-w-[120px] transition-all hover:border-brand-border/70">
+                <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-brand-white text-white group h-10 sm:h-14 min-w-30 md:min-w-30 transition-all hover:border-brand-border/70">
                     <ReviewSourceAnimation stats={sourceStats} />
                 </div>
             </div>
