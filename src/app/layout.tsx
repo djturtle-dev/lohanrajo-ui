@@ -4,9 +4,9 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ClarityScript from "@/components/ClarityScript";
-import ScrollToTop from "@/components/ScrollToTop";
 import SmoothScroller from "@/components/SmoothScroller";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import ChatBot from "@/components/ChatBot";
 
 const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "500", "600", "700"], style: ['normal', 'italic'], variable: "--font-cormorant" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -34,7 +34,8 @@ export default function RootLayout({
                         {children}
                     </main>
                     <Footer />
-                    <ScrollToTop />
+                    {/* Chatbot replaces the ScrollToTop button */}
+                    <ChatBot />
                 </SmoothScroller>
             </body>
         </html>
