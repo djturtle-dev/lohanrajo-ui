@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { submitFeedback } from '@/app/actions';
-import { MapPin, Phone, Mail, AlertTriangle } from 'lucide-react';
+import { MapPin, Phone, Mail, AlertTriangle, CheckCircle2, XCircle } from 'lucide-react';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 
 // Simple math captcha - no external dependencies needed
@@ -16,7 +16,9 @@ export default function ContactPage() {
     const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [captcha, setCaptcha] = useState<{ question: string; answer: string } | null>(null);
     const [captchaInput, setCaptchaInput] = useState('');
-    const [captchaError, setCaptchaError] = useState(false);
+    
+    const isCaptchaValid = captcha !== null && captchaInput.trim() === captcha.answer;
+    const isCaptchaWrong = captchaInput.trim() !== '' && captcha !== null && captchaInput.trim() !== captcha.answer;
 
     useEffect(() => {
         setCaptcha(generateCaptcha());
@@ -25,16 +27,13 @@ export default function ContactPage() {
     function refreshCaptcha() {
         setCaptcha(generateCaptcha());
         setCaptchaInput('');
-        setCaptchaError(false);
     }
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        setCaptchaError(false);
 
-        // Validate captcha
+        // Validate captcha (fallback in case they somehow submit)
         if (!captcha || captchaInput.trim() !== captcha.answer) {
-            setCaptchaError(true);
             refreshCaptcha();
             return;
         }
@@ -55,45 +54,45 @@ export default function ContactPage() {
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
                 {/* Left Column: Form */}
                 <ScrollReveal direction="left" className="lg:col-span-7 space-y-12">
                     <div>
-                        <h1 className="font-oswald text-5xl md:text-7xl font-bold uppercase tracking-tighter text-brand-text mb-6 text-balance">Get in <span className="text-brand-accent">touch</span></h1>
+                        <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl font-normal tracking-tighter text-brand-text mb-6 text-balance">Get in <span className="text-brand-accent">Touch</span></h1>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-8">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div className="space-y-3">
-                                <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">First Name</label>
-                                <input required type="text" name="firstName" className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="John" />
+                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">First Name</label>
+                                <input required type="text" name="firstName" className="w-full bg-black/40 backdrop-blur-sm border border-brand-border/50 px-4 py-2 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20 focus:bg-black/60" placeholder="John" />
                             </div>
                             <div className="space-y-3">
-                                <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Last Name</label>
-                                <input required type="text" name="lastName" className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="Doe" />
+                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Last Name</label>
+                                <input required type="text" name="lastName" className="w-full bg-black/40 backdrop-blur-sm border border-brand-border/50 px-4 py-2 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20 focus:bg-black/60" placeholder="Doe" />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div className="space-y-3">
-                                <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Phone</label>
-                                <input required type="text" name="phone" className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="+91 1234567890" />
+                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Phone</label>
+                                <input required type="text" name="phone" className="w-full bg-black/40 backdrop-blur-sm border border-brand-border/50 px-4 py-2 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20 focus:bg-black/60" placeholder="+91 1234567890" />
                             </div>
                             <div className="space-y-3">
-                                <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Email address</label>
-                                <input required type="email" name="email" className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="john.doe@example.com" />
+                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Email address</label>
+                                <input required type="email" name="email" className="w-full bg-black/40 backdrop-blur-sm border border-brand-border/50 px-4 py-2 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-all ring-offset-2 focus:ring-1 ring-brand-accent/20 focus:bg-black/60" placeholder="john.doe@example.com" />
                             </div>
                         </div>
 
                         <div className="space-y-3">
-                            <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">What area interests you?</label>
+                            <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">What area interests you?</label>
                             <div className="relative">
-                                <select name="type" className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all appearance-none cursor-pointer" defaultValue="ENQUIRY">
-                                    <option value="ENQUIRY">Manufacturing Enquiry</option>
-                                    <option value="CONTACT">General Collaboration</option>
-                                    <option value="CAREER">Career Opportunities</option>
-                                    <option value="SUPPORT">Technical Support</option>
+                                <select name="type" className="w-full bg-black/40 backdrop-blur-sm border border-brand-border/50 px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all appearance-none cursor-pointer focus:bg-black/60" defaultValue="ENQUIRY">
+                                    <option value="ENQUIRY" className="bg-[#111] text-white">Manufacturing Enquiry</option>
+                                    <option value="CONTACT" className="bg-[#111] text-white">General Collaboration</option>
+                                    <option value="CAREER" className="bg-[#111] text-white">Career Opportunities</option>
+                                    <option value="SUPPORT" className="bg-[#111] text-white">Technical Support</option>
                                 </select>
                                 <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-brand-accent">
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
@@ -102,32 +101,38 @@ export default function ContactPage() {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="font-oswald text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Tell us more</label>
-                            <textarea required name="content" rows={4} className="w-full bg-brand-white border border-brand-border px-4 py-2 text-brand-text focus:outline-none focus:border-brand-accent transition-all resize-none ring-offset-2 focus:ring-1 ring-brand-accent/20" placeholder="Share details about your requirement..."></textarea>
+                            <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Tell us more</label>
+                            <textarea required name="content" rows={4} className="w-full bg-black/40 backdrop-blur-sm border border-brand-border/50 px-4 py-2 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-all resize-none ring-offset-2 focus:ring-1 ring-brand-accent/20 focus:bg-black/60" placeholder="Share details about your requirement..."></textarea>
                         </div>
 
                         <div className="space-y-6">
                             {/* Simple Math Captcha */}
                             <div className="flex items-center gap-4">
-                                <div className="bg-brand-white border border-brand-border px-5 py-3 flex items-center gap-3">
-                                    <span className="font-oswald text-sm tracking-widest text-brand-muted/60 uppercase">Verify:</span>
-                                    <span className="font-oswald text-lg font-bold text-brand-text tracking-wider">{captcha?.question ?? '...'}</span>
-                                    <span className="font-oswald text-sm text-brand-muted/60">=</span>
-                                    <input
-                                        type="text"
-                                        value={captchaInput}
-                                        onChange={(e) => { setCaptchaInput(e.target.value); setCaptchaError(false); }}
-                                        className={`w-16 bg-brand-white border ${captchaError ? 'border-red-500' : 'border-brand-border'} px-3 py-1.5 text-center font-oswald text-lg font-bold text-brand-text focus:outline-none focus:border-brand-accent transition-all`}
-                                        placeholder="?"
-                                        required
-                                    />
+                                <div className="bg-black/40 backdrop-blur-sm border border-brand-border/50 px-5 py-3 flex items-center gap-3">
+                                    <span className="font-sans text-sm tracking-widest text-brand-muted/60 uppercase">Verify:</span>
+                                    <span className="font-sans text-lg font-bold text-brand-text tracking-wider">{captcha?.question ?? '...'}</span>
+                                    <span className="font-sans text-sm text-brand-muted/60">=</span>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            value={captchaInput}
+                                            onChange={(e) => { setCaptchaInput(e.target.value); }}
+                                            className={`w-16 bg-black/40 backdrop-blur-sm border ${isCaptchaWrong ? 'border-red-500' : isCaptchaValid ? 'border-green-500/50' : 'border-brand-border/50'} px-3 py-1.5 text-center font-sans text-lg font-bold text-brand-text focus:outline-none focus:border-brand-accent transition-all focus:bg-black/60 pr-2`}
+                                            placeholder="?"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="flex items-center justify-center w-6 h-6">
+                                        {isCaptchaValid && <CheckCircle2 className="w-5 h-5 text-green-500 animate-in zoom-in" />}
+                                        {isCaptchaWrong && <XCircle className="w-5 h-5 text-red-500 animate-in zoom-in" />}
+                                    </div>
                                 </div>
-                                <button type="button" onClick={refreshCaptcha} className="text-brand-muted/40 hover:text-brand-accent transition-colors text-xs font-oswald uppercase tracking-widest">
+                                <button type="button" onClick={refreshCaptcha} className="px-3 py-1.5 rounded border border-brand-border/50 bg-black/40 hover:bg-black/60 text-brand-muted hover:text-brand-accent transition-all text-xs font-sans uppercase tracking-widest backdrop-blur-sm">
                                     Refresh
                                 </button>
                             </div>
-                            {captchaError && (
-                                <p className="text-red-500 text-xs font-oswald tracking-widest uppercase">Incorrect answer. Please try again.</p>
+                            {isCaptchaWrong && (
+                                <p className="text-red-500 text-xs font-sans tracking-widest uppercase">Incorrect answer. Please try again.</p>
                             )}
 
                             {/* Agreement Warning */}
@@ -140,8 +145,8 @@ export default function ContactPage() {
 
                             <button
                                 type="submit"
-                                disabled={formStatus === 'submitting'}
-                                className="w-full bg-brand-accent text-white hover:bg-brand-text shadow-lg hover:shadow-brand-accent/20 hover:-translate-y-1 ease-in-out px-8 py-5 font-oswald font-black tracking-[0.2em] uppercase transition-all duration-500 disabled:opacity-50 group flex items-center justify-center gap-3"
+                                disabled={formStatus === 'submitting' || !isCaptchaValid}
+                                className="w-full btn-glass-secondary px-8 py-5 font-sans font-bold tracking-[0.2em] uppercase transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed group flex items-center justify-center gap-3"
                             >
                                 {formStatus === 'submitting' ? 'Transmitting...' : (
                                     <>
@@ -152,12 +157,12 @@ export default function ContactPage() {
                             </button>
 
                             {formStatus === 'success' && (
-                                <div className="p-4 bg-brand-accent/10 border border-brand-accent/30 text-brand-accent font-oswald tracking-widest uppercase text-xs text-center animate-in fade-in slide-in-from-bottom-2">
+                                <div className="p-4 bg-brand-accent/10 border border-brand-accent/30 text-brand-accent font-sans tracking-widest uppercase text-xs text-center animate-in fade-in slide-in-from-bottom-2">
                                     Message received. We&apos;ll get back to you soon.
                                 </div>
                             )}
                             {formStatus === 'error' && (
-                                <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-500 font-oswald tracking-widest uppercase text-xs text-center animate-in fade-in slide-in-from-bottom-2">
+                                <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-500 font-sans tracking-widest uppercase text-xs text-center animate-in fade-in slide-in-from-bottom-2">
                                     Communication error. Please try again.
                                 </div>
                             )}
@@ -182,12 +187,16 @@ export default function ContactPage() {
                     </div>
 
                     {/* Headquarters Row */}
-                    <div className="bg-brand-panel border border-brand-border p-8 sm:p-10 flex flex-col justify-between overflow-hidden relative min-h-[400px]">
+                    <div className="bg-[#0a0a0a] border border-brand-border/50 rounded-xl p-8 sm:p-10 flex flex-col justify-between overflow-hidden relative min-h-[400px]">
                         <div>
-                            <div className="space-y-10">
-                                <div className="space-y-3">
-                                    <p className="font-oswald text-brand-muted/40 uppercase tracking-widest text-[10px] font-medium">Primary Facility Address</p>
-                                    <p className="text-brand-text text-lg leading-relaxed font-light">
+                            <div className="space-y-10 z-10 relative">
+                                {/* Address Block */}
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-3 border-b border-brand-border/50 pb-3">
+                                        <MapPin className="text-brand-accent w-5 h-5 shrink-0" />
+                                        <h4 className="font-sans text-sm uppercase tracking-widest text-brand-text">Primary Facility Address</h4>
+                                    </div>
+                                    <p className="text-brand-text font-mono text-sm leading-loose italic">
                                         Plot No. 213, 214 &amp; 215,<br />
                                         3rd Main Road, Burma Colony, <br />
                                         Perungudi, OMR,<br />
@@ -197,14 +206,25 @@ export default function ContactPage() {
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-8">
-                                    <div className="space-y-3">
-                                        <p className="text-brand-muted/40 uppercase tracking-widest text-[10px] font-medium">Connect</p>
-                                        <p className="text-brand-text text-lg">+91 44 2496 2590</p>
-                                        <p className="text-brand-text text-lg">+91 44 2496 2591</p>
+                                    {/* Phone Block */}
+                                    <div className="space-y-4">
+                                        <div className="flex items-center gap-3 border-b border-brand-border/50 pb-3">
+                                            <Phone className="text-brand-accent w-5 h-5 shrink-0" />
+                                            <h4 className="font-sans text-sm uppercase tracking-widest text-brand-text">Connect</h4>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <p className="text-brand-text font-mono text-sm leading-relaxed italic">+91 44 2496 2590</p>
+                                            <p className="text-brand-text font-mono text-sm leading-relaxed italic">+91 44 2496 2591</p>
+                                        </div>
                                     </div>
-                                    <div className="space-y-3">
-                                        <p className="font-oswald text-brand-muted/40 uppercase tracking-widest text-[10px] font-medium">Mail</p>
-                                        <p className="text-brand-text text-lg">info@lohanrajo.com</p>
+
+                                    {/* Mail Block */}
+                                    <div className="space-y-4">
+                                        <div className="flex items-center gap-3 border-b border-brand-border/50 pb-3">
+                                            <Mail className="text-brand-accent w-5 h-5 shrink-0" />
+                                            <h4 className="font-sans text-sm uppercase tracking-widest text-brand-text">Mail</h4>
+                                        </div>
+                                        <p className="text-brand-text font-mono text-sm leading-relaxed italic">info@lohanrajo.com</p>
                                     </div>
                                 </div>
                             </div>

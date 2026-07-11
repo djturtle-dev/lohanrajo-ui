@@ -26,7 +26,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-12">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
             <ScrollReveal direction="down" delay={0.1}>
                 <Link href="/products" className="inline-flex items-center text-brand-muted hover:text-brand-text mb-8 transition-colors font-oswald tracking-widest uppercase text-sm">
                     <ArrowLeft className="w-4 h-4 mr-2" /> Back to Catalog
@@ -42,7 +42,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                                 alt={product.name}
                                 fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                className="object-cover z-0 grayscale group-hover:grayscale-0 transition-all duration-700"
+                                className="object-cover z-0 transition-all duration-700"
                                 priority
                             />
                         ) : (
@@ -50,7 +50,6 @@ export default async function ProductDetailPage({ params }: PageProps) {
                                 <span className="text-brand-muted font-oswald tracking-widest uppercase border border-brand-border px-4 py-2">No Image Provided</span>
                             </div>
                         )}
-                        <div className="absolute inset-0 bg-brand-dark/20 mix-blend-multiply z-10 group-hover:bg-transparent transition-colors" />
                     </div>
 
                     {product.images && product.images.length > 1 && (
@@ -88,7 +87,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                     />
 
                     <div className="mt-auto">
-                        <Link href={`/contact?product=${encodeURIComponent(product.name)}`} className="w-full block text-center px-8 py-4 bg-brand-accent text-brand-dark font-oswald font-bold tracking-widest uppercase hover:bg-white transition-colors">
+                        <Link href={`/contact?product=${encodeURIComponent(product.name)}`} className="w-full btn-glass-primary block text-center px-8 py-4 font-oswald tracking-widest uppercase">
                             Request Quote
                         </Link>
                     </div>

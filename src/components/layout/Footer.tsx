@@ -3,17 +3,17 @@ import Image from 'next/image';
 
 export default function Footer() {
     return (
-        <footer className="border-t border-brand-border bg-white py-12 px-4 sm:px-8 mt-auto">
+        <footer className="relative z-10 border-t border-brand-border bg-brand-panel py-12 px-4 sm:px-8 mt-auto">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <Image src="/logo.png" alt="LOHANRAJO Metal Arts" width={140} height={50} className="h-12 w-auto mb-4" />
-                    <p className="text-brand-muted text-sm leading-relaxed">
+                    <Image src="/new logo.jpeg" alt="LOHANRAJO Metal Arts" width={140} height={50} className="h-12 w-auto mb-4 rounded-lg" />
+                    <p className="text-brand-muted text-sm leading-relaxed font-mono">
                         Passionate about manufacturing high quality engineering products since 1992. Chennai, India.
                     </p>
                 </div>
                 <div>
-                    <h4 className="font-oswald font-bold text-sm tracking-widest uppercase text-brand-text mb-4">Company</h4>
-                    <ul className="space-y-2 text-sm text-brand-muted">
+                    <h4 className="font-sans font-bold text-sm tracking-widest uppercase text-brand-text mb-4">Company</h4>
+                    <ul className="space-y-2 text-sm text-brand-muted font-mono">
                         <li><Link href="/about" className="hover:text-brand-accent transition-colors block">Profile</Link></li>
                         <li><Link href="/about#infrastructure" className="hover:text-brand-accent transition-colors block">Infrastructure</Link></li>
                         <li><Link href="/about#accreditation" className="hover:text-brand-accent transition-colors block">Accreditation</Link></li>
@@ -21,17 +21,26 @@ export default function Footer() {
                     </ul>
                 </div>
                 <div>
-                    <h4 className="font-oswald font-bold text-sm tracking-widest uppercase text-brand-text mb-4">Contact</h4>
-                    <ul className="space-y-2 text-sm text-brand-muted">
+                    <h4 className="font-sans font-bold text-sm tracking-widest uppercase text-brand-text mb-4">Contact</h4>
+                    <ul className="space-y-2 text-sm text-brand-muted font-mono">
                         <li><a href="mailto:info@lohanrajo.com" className="hover:text-brand-accent transition-colors block">info@lohanrajo.com</a></li>
                         <li><Link href="/contact" className="hover:text-brand-accent transition-colors block">Send a Message</Link></li>
                         <li><Link href="/contact?type=CAREER" className="hover:text-brand-accent transition-colors block">Careers</Link></li>
                     </ul>
                 </div>
+                <div>
+                    <h4 className="font-sans font-bold text-sm tracking-widest uppercase text-brand-text mb-4">Products</h4>
+                    <ul className="space-y-2 text-sm text-brand-muted font-mono">
+                        <li><Link href="/products" className="hover:text-brand-accent transition-colors block">BMS Panels</Link></li>
+                        <li><Link href="/products" className="hover:text-brand-accent transition-colors block">IP Enclosures</Link></li>
+                        <li><Link href="/products" className="hover:text-brand-accent transition-colors block">Reflectors</Link></li>
+                        <li><Link href="/products" className="hover:text-brand-accent transition-colors block">Industrial Poles</Link></li>
+                    </ul>
+                </div>
             </div>
-            <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-brand-border text-xs text-brand-muted flex justify-between items-center font-oswald tracking-widest uppercase basis-1 sm:basis-1/2">
-                <div className=''>&copy; {new Date().getFullYear()} LOHANRAJO Metal Arts. All rights reserved.</div>
-                <div className=''>AN ISO 9001:2015 Certified Company</div>
+            <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-brand-border text-xs text-brand-muted flex justify-between items-center font-mono tracking-widest uppercase">
+                <div>&copy; {new Date().getFullYear()} LOHANRAJO Metal Arts. All rights reserved.</div>
+                <div className="text-brand-accent">AN ISO 9001:2015 Certified Company</div>
             </div>
         </footer>
     );

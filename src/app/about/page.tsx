@@ -43,10 +43,10 @@ export default async function AboutPage() {
     const data = { ...defaults, ...content };
 
     return (
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-12 pt-32 md:pt-40">
             {/* Header */}
             <ScrollReveal direction="up" className="max-w-4xl mx-auto text-center px-4 mb-12">
-                <h1 className="font-oswald text-5xl md:text-7xl font-bold uppercase tracking-tighter text-brand-text mb-6 text-balance">
+                <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl font-normal tracking-tighter text-brand-text mb-6 text-balance">
                     {data.title.split(' ').map((word: string, i: number) =>
                         word.toLowerCase() === 'excellence' ? (
                             <span key={i} className="text-brand-accent">{word} </span>
@@ -62,7 +62,7 @@ export default async function AboutPage() {
             <section id="profile" className="bg-brand-panel border-y border-brand-border py-12 overflow-hidden">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto px-4 sm:px-8 items-center">
                     {/* Image on the Left */}
-                    <ScrollReveal direction="left" className="aspect-square border border-brand-border relative overflow-hidden flex items-center justify-center p-8 bg-brand-white">
+                    <ScrollReveal direction="left" className="aspect-square card-glass relative flex items-center justify-center p-8 bg-brand-white/10">
                         <Image
                             src={getAssetUrl(data.profileImage) || "/our company.png"}
                             alt="Lohan Rajo Metal Arts Profile"
@@ -76,7 +76,7 @@ export default async function AboutPage() {
                     <ScrollReveal direction="right" className="space-y-6">
                         <div className="flex items-center space-x-4 mb-2">
                             <UserCheck className="w-8 h-8 text-brand-accent" />
-                            <h2 className="font-oswald text-3xl uppercase tracking-widest text-brand-text">Our Profile</h2>
+                            <h2 className="font-sans text-3xl uppercase tracking-widest text-brand-text">Our Profile</h2>
                         </div>
                         <div className="space-y-4">
                             {data.profileContent.split('\n').map((para: string, i: number) => (
@@ -94,12 +94,6 @@ export default async function AboutPage() {
                                     {data.establishedText || "Since 1992"}
                                 </span>
                             </div>
-                            <div className="flex items-center space-x-4">
-                                <UserCheck className="w-5 h-5 text-brand-accent" />
-                                <span className="text-sm font-oswald tracking-widest uppercase text-brand-text">
-                                    {data.founderNames ? (data.founderNames.toUpperCase().startsWith('FOUNDERS:') ? data.founderNames : `Founders: ${data.founderNames}`) : "Founders: MR.L.L.BASKAR & L.L.SEKAR"}
-                                </span>
-                            </div>
                         </div>
                     </ScrollReveal>
                 </div>
@@ -107,19 +101,19 @@ export default async function AboutPage() {
 
             {/* Accreditation & Vision */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto px-4 sm:px-8">
-                <ScrollReveal direction="up" delay={0.1} className="p-10 border border-brand-border bg-brand-panel relative overflow-hidden group">
+                <ScrollReveal direction="up" delay={0.1} className="p-10 card-glass group">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/5 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2" />
                     <ShieldCheck className="w-10 h-10 text-brand-accent mb-6" />
-                    <h2 className="font-oswald text-3xl uppercase tracking-widest text-brand-text mb-4" id="accreditation">Accreditation</h2>
+                    <h2 className="font-sans text-3xl uppercase tracking-widest text-brand-text mb-4" id="accreditation">Accreditation</h2>
                     <p className="text-brand-muted leading-relaxed">
                         {data.accreditationContent}
                     </p>
                 </ScrollReveal>
 
-                <ScrollReveal direction="up" delay={0.2} className="p-10 border border-brand-border bg-brand-panel relative overflow-hidden">
+                <ScrollReveal direction="up" delay={0.2} className="p-10 card-glass">
                     <div className="absolute top-0 left-0 w-32 h-32 bg-brand-accent/5 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2" />
                     <Lightbulb className="w-10 h-10 text-brand-accent mb-6" />
-                    <h2 className="font-oswald text-3xl uppercase tracking-widest text-brand-text mb-4" id="vision">Vision</h2>
+                    <h2 className="font-sans text-3xl uppercase tracking-widest text-brand-text mb-4" id="vision">Vision</h2>
                     <p className="text-brand-muted leading-relaxed">
                         {data.visionContent}
                     </p>
@@ -131,16 +125,16 @@ export default async function AboutPage() {
                 <div className="max-w-5xl mx-auto px-4 sm:px-8">
                     <ScrollReveal direction="up" className="text-center max-w-3xl mx-auto mb-16">
                         <Factory className="w-12 h-12 text-brand-accent mx-auto mb-6" />
-                        <h2 className="font-oswald text-4xl uppercase tracking-widest text-brand-text mb-6">Infrastructure</h2>
+                        <h2 className="font-sans text-4xl uppercase tracking-widest text-brand-text mb-6">Infrastructure</h2>
                         <p className="text-brand-muted leading-relaxed">
                             {data.infrastructureContent}
                         </p>
                     </ScrollReveal>
                     <ScrollReveal staggerChildren={true} direction="up" staggerAmount={0.15} className={`grid grid-cols-1 ${data.infrastructureItems.length >= 3 ? 'sm:grid-cols-3' : data.infrastructureItems.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-1'} gap-6`}>
                         {data.infrastructureItems.map((item: string, i: number) => (
-                            <div key={i} className="p-8 border border-brand-border bg-brand-white flex flex-col items-center text-center">
-                                <span className="font-oswald text-4xl text-brand-accent/20 mb-4 inline-block font-black">0{i + 1}</span>
-                                <h3 className="font-bold text-brand-text uppercase tracking-widest text-sm mb-2 font-oswald">{item}</h3>
+                            <div key={i} className="card-glass p-8 flex flex-col items-center text-center">
+                                <span className="font-sans text-4xl text-brand-accent/20 mb-4 inline-block font-black">0{i + 1}</span>
+                                <h3 className="font-bold text-brand-text uppercase tracking-widest text-sm mb-2 font-sans">{item}</h3>
                             </div>
                         ))}
                     </ScrollReveal>

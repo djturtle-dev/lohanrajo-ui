@@ -1,11 +1,14 @@
 import Link from 'next/link';
-import { ArrowRight, ShieldCheck, Factory, Lightbulb, Server, Box, Sun, Zap } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import HeroVideoBackground from '@/components/HeroVideoBackground';
 import HeroTextAnimation from '@/components/HeroTextAnimation';
 import Testimonials from '@/components/Testimonials';
 import { prisma } from '@/lib/prisma';
 import ScrollReveal from '@/components/animations/ScrollReveal';
+import SpatialNodeMap from '@/components/SpatialNodeMap';
+import CategoryCards from '@/components/CategoryCards';
+import HeroBlobVideo from '@/components/HeroBlobVideo';
 
 import { unstable_cache } from 'next/cache';
 import * as Icons from 'lucide-react';
@@ -43,52 +46,40 @@ export default async function Home() {
 
     return (
         <div className="flex flex-col gap-24">
-            {/* Hero Section */}
-            <section className="relative min-h-[80vh] flex items-center justify-center border-b border-brand-border mt-[-6rem] pt-24 overflow-hidden bg-white">
-                {/* Looping Background Videos */}
-                <div className="absolute inset-0 z-0 flex pointer-events-none">
-                    <HeroVideoBackground />
-                    {/* Overlay to ensure text readability */}
-                    <div className="absolute inset-0 bg-white/85" />
-                </div>
+            {/* Custom Masked Blob Hero Section */}
+            <section className="relative w-full pt-28 pb-0 overflow-hidden flex flex-col px-4 sm:px-0 max-w-5xl mx-auto">
+                <div className="relative z-20 w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col justify-center">
 
-                <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
-                    <HeroTextAnimation lines={homeContent.heroLines} />
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-24 md:mt-12 lg:mt-8">
-                        <Link href="/products" className="group relative px-8 py-4 md:px-10 md:py-5 font-oswald font-bold tracking-widest uppercase overflow-hidden flex items-center bg-brand-accent text-white hover:bg-brand-text transition-all duration-500 shadow-lg hover:shadow-brand-accent/20 hover:-translate-y-1">
-                            <span className="relative z-10 flex items-center">
-                                Explore Products <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform duration-500" />
-                            </span>
-                            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                        </Link>
-                        <Link href="/contact" className="group w-full sm:w-auto px-8 py-3.5 md:px-10 md:py-5 border-2 border-brand-border text-brand-text font-oswald font-bold tracking-widest uppercase hover:border-brand-accent hover:text-brand-accent transition-all duration-500 hover:-translate-y-1 bg-white/50 backdrop-blur-sm">
-                            Get an Estimate
-                        </Link>
+                    {/* Top Text Row */}
+                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12">
+                        <div className="flex flex-col items-start">
+                            <HeroTextAnimation lines={homeContent.heroLines} />
+                            <Link href="/products" className="group btn-glass-secondary px-8 py-3 font-oswald tracking-widest uppercase inline-flex items-center text-sm">
+                                Explore Products <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
+                            </Link>
+                        </div>
+                        <div className="max-w-md pb-4">
+                            <p className="text-brand-muted text-sm md:text-base leading-relaxed text-justify">
+                                LOHANRAJO merges uncompromised quality with state-of-the-art manufacturing. Our mission is to deliver enclosures and metal solutions that are exceptionally resilient and seamlessly functional, redefining standards in the physical infrastructure space.
+                            </p>
+                        </div>
                     </div>
+
+                    {/* The Masked Video Blob & Stats */}
+                    <HeroBlobVideo />
+
                 </div>
             </section>
 
-            {/* Pillars Section */}
-            <ScrollReveal staggerChildren={true} direction="up" delay={0.2} staggerAmount={0.2}>
-                <section className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 sm:px-0 max-w-5xl mx-auto w-full">
-                    {pillars.map((pillar, i) => (
-                        <div key={i} className="p-8 border border-brand-border bg-white group hover:border-brand-accent transition-colors shadow-sm">
-                            <div className="text-brand-accent mb-6 transform group-hover:-translate-y-2 transition-all duration-500 ease-in-out">
-                                {getIcon(pillar.icon)}
-                            </div>
-                            <h3 className="font-oswald text-2xl uppercase tracking-widest text-brand-text mb-4">{pillar.title}</h3>
-                            <p className="text-brand-muted leading-relaxed">{pillar.desc}</p>
-                        </div>
-                    ))}
-                </section>
-            </ScrollReveal>
+            {/* Spatial Node Map Section */}
+            <SpatialNodeMap pillars={pillars} />
 
             {/* Featured Categories */}
             <section className="px-4 sm:px-0 max-w-5xl mx-auto w-full">
                 <ScrollReveal direction="left">
                     <div className="flex justify-between items-end mb-12 border-b border-brand-border pb-6">
-                        <h2 className="font-oswald text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Our Products</h2>
-                        <Link href="/products" className="hidden md:flex items-center text-sm font-oswald tracking-widest uppercase text-brand-accent hover:text-red-700 transition-colors">
+                        <h2 className="font-sans text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Our Products</h2>
+                        <Link href="/products" className="hidden md:flex items-center text-sm font-sans tracking-widest uppercase text-brand-accent hover:text-brand-accent2 transition-colors">
                             View All <ArrowRight className="ml-2 w-4 h-4" />
                         </Link>
                     </div>
@@ -98,9 +89,7 @@ export default async function Home() {
             </section>
 
             {/* Testimonials Section */}
-            <ScrollReveal direction="up" delay={0.1}>
-                <TestimonialsSection />
-            </ScrollReveal>
+            <TestimonialsSection />
         </div>
     );
 }
@@ -135,31 +124,14 @@ async function CategoryLinks() {
     const dbCategories = await getCategories();
 
     const categories = [
-        { name: 'Panels', label: 'BMS Panels', icon: Server },
-        { name: 'Enclosures', label: 'IP Enclosures', icon: Box },
-        { name: 'Reflectors', label: 'Reflectors', icon: Sun },
-        { name: 'Poles', label: 'Industrial Poles', icon: Zap },
+        { name: 'Panels',     label: 'BMS Panels',      icon: 'Server', imageUrl: '/images/products/bms-panels.png' },
+        { name: 'Enclosures', label: 'IP Enclosures',   icon: 'Box',    imageUrl: '/images/products/ip-enclosures.png' },
+        { name: 'Reflectors', label: 'Reflectors',      icon: 'Sun',    imageUrl: '/images/products/reflectors.png' },
+        { name: 'Poles',      label: 'Industrial Poles',icon: 'Zap',    imageUrl: '/images/products/industrial-poles.png' },
     ].map(cat => ({
         ...cat,
         id: dbCategories.find((db: typeof dbCategories[number]) => db.name === cat.name)?.id
     }));
 
-    return (
-        <ScrollReveal staggerChildren={true} direction="up" delay={0.2} staggerAmount={0.15}>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                {categories.map((cat, i) => {
-                    const Icon = cat.icon;
-                    return (
-                        <Link href={`/products${cat.id ? `?category=${cat.id}` : ''}`} key={i} className="group p-8 border border-brand-border bg-white flex flex-col justify-end relative overflow-hidden hover:border-brand-accent transition-colors shadow-sm min-h-40">
-                            <div className="absolute top-2 -right-4 text-brand-border transition-all duration-500 transform translate-x-4 scale-75 opacity-30 group-hover:-translate-x-6 group-hover:scale-110 group-hover:opacity-100 group-hover:text-brand-accent/20">
-                                <Icon size={100} strokeWidth={1} />
-                            </div>
-                            <h3 className="relative z-10 font-oswald text-xl uppercase tracking-widest text-brand-text mb-2 group-hover:text-brand-accent transition-colors">{cat.label}</h3>
-                            <div className="relative z-10 h-1 w-8 bg-brand-border group-hover:w-full group-hover:bg-brand-accent transition-all duration-500" />
-                        </Link>
-                    );
-                })}
-            </div>
-        </ScrollReveal>
-    );
+    return <CategoryCards categories={categories} />;
 }

@@ -44,8 +44,13 @@ export default function HeroVideoBackground() {
             autoPlay 
             muted 
             playsInline 
+            suppressHydrationWarning
             onEnded={() => setCurrentIndex((prev) => (prev + 1) % videoSources.length)}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover absolute inset-0"
+            style={{
+                maskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)',
+                WebkitMaskImage: 'radial-gradient(circle at center, black 30%, transparent 80%)'
+            }}
         >
             <source src={videoSources[currentIndex]} type="video/mp4" />
         </video>

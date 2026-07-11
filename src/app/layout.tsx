@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { Oswald, Inter } from "next/font/google";
+import { Cormorant_Garamond, Inter, Poppins, Forum } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ClarityScript from "@/components/ClarityScript";
 import ScrollToTop from "@/components/ScrollToTop";
 import SmoothScroller from "@/components/SmoothScroller";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
-const oswald = Oswald({ subsets: ["latin"], variable: "--font-oswald" });
+const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "500", "600", "700"], style: ['normal', 'italic'], variable: "--font-cormorant" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-poppins" });
+const forum = Forum({ subsets: ["latin"], weight: ["400"], variable: "--font-forum" });
 
 export const metadata: Metadata = {
     title: "LOHANRAJO Metal Arts | Industrial Enclosures & Panels",
@@ -21,12 +24,13 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className={`${inter.variable} ${oswald.variable}`}>
-            <body className={`font-sans bg-brand-white text-brand-text selection:bg-brand-accent selection:text-brand-dark flex flex-col min-h-screen`}>
+        <html lang="en" className={`${inter.variable} ${cormorant.variable} ${poppins.variable} ${forum.variable}`}>
+            <body suppressHydrationWarning className={`font-serif bg-brand-bg text-brand-text selection:bg-brand-accent selection:text-brand-bg flex flex-col min-h-screen antialiased`}>
+                <AnimatedBackground />
                 <SmoothScroller>
                     <ClarityScript />
                     <Navbar />
-                    <main className="flex-grow pt-24 pb-16 w-full">
+                    <main className="flex-grow pb-16 w-full">
                         {children}
                     </main>
                     <Footer />

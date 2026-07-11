@@ -87,7 +87,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                         <motion.span
                             key={elementIdx++}
                             variants={itemVariants}
-                            className="inline-block mr-[0.2em] last:mr-0 text-brand-accent"
+                            className="inline-block mr-[0.2em] last:mr-0 text-brand-text font-bold"
                         >
                             {word}
                         </motion.span>
@@ -101,7 +101,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                         <motion.span
                             key={elementIdx++}
                             variants={itemVariants}
-                            className="inline-block mr-[0.2em] last:mr-0"
+                            className="inline-block text-brand-primary mr-[0.2em] last:mr-0"
                         >
                             {word}
                         </motion.span>
@@ -114,7 +114,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
     };
 
     return (
-        <div className="relative h-30 sm:h-37.5 md:h-45 lg:h-55 w-full flex items-center justify-center mb-8 perspective-1000">
+        <div className="relative h-16 sm:h-20 md:h-24 w-fit flex items-center justify-start mb-1 perspective-1000 overflow-visible">
             <AnimatePresence>
                 <motion.div
                     key={index}
@@ -122,9 +122,9 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="absolute w-full px-4 flex flex-wrap justify-center text-center"
+                    className="absolute w-fit flex flex-nowrap whitespace-nowrap justify-start text-left"
                 >
-                    <h1 className="font-oswald text-6xl lg:text-7xl font-black uppercase tracking-tighter text-brand-text leading-[1.1] flex flex-wrap justify-center">
+                    <h1 className="font-sans text-2xl md:text-3xl lg:text-4xl font-normal tracking-tighter text-brand-text leading-none flex flex-nowrap whitespace-nowrap justify-start drop-shadow-lg">
                         {parseAndAnimateLine(displayLines[index])}
                     </h1>
                 </motion.div>

@@ -62,21 +62,20 @@ export default async function Navbar() {
 
     return (
         <NavbarClient>
-            <div className="flex items-center gap-4 sm:gap-10">
+            <div className="flex items-center gap-4 sm:gap-6">
                 {/* Logo */}
-                <Link href="/" className="flex items-center transition-opacity hover:opacity-80">
+                <Link href="/" className="flex items-center transition-opacity hover:opacity-80 cursor-pointer">
                     <Image
-                        src="/logo.png"
+                        src="/new logo.jpeg"
                         alt="LOHANRAJO Metal Arts"
                         width={200}
                         height={80}
-                        className="h-16 sm:h-20 w-auto object-contain py-3"
+                        className="h-10 sm:h-12 w-auto object-contain rounded-full"
                         priority
                     />
                 </Link>
-
-                {/* Testimonial Stats Pill */}
-                <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-brand-white text-white group h-10 sm:h-14 min-w-30 md:min-w-30 transition-all hover:border-brand-border/70">
+                {/* Testimonial Stats Pill (Hidden on extreme mobile to save pill space) */}
+                <div className="hidden sm:flex items-center gap-2 px-2 py-1 bg-brand-panel/50 rounded-full text-white group h-8 min-w-24 transition-all border border-brand-border/50">
                     <ReviewSourceAnimation stats={sourceStats} />
                 </div>
             </div>

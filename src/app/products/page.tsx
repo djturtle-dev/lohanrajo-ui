@@ -3,6 +3,7 @@ import { getAssetUrl } from '@/lib/utils';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
 import ProductsDisplay from './ProductsDisplay';
+import SearchAutocomplete from '@/components/SearchAutocomplete';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import { Prisma } from '@prisma/client';
 import { Suspense } from 'react';
@@ -36,29 +37,18 @@ export default async function ProductsPage({ searchParams }: PageProps) {
     const categories = await getCategories();
 
     return (
-        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-12">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
             <ScrollReveal direction="up" className="flex flex-col md:flex-row justify-between items-start mb-6 ">
                 <div>
-                    <h1 className="font-oswald text-5xl md:text-7xl font-bold uppercase tracking-tighter text-brand-text mb-6 text-balance">Product <span className="text-brand-accent">Catalog</span></h1>
+                    <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl font-normal tracking-tighter text-brand-text mb-6 text-balance">Product <span className="text-brand-accent">Catalog</span></h1>
                 </div>
             </ScrollReveal>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <ScrollReveal direction="right" className="space-y-8">
+                <div className="space-y-8 relative z-[100]">
                     <div>
                         <h3 className="font-oswald tracking-widest uppercase text-brand-text mb-4">Search</h3>
-                        <form className="relative">
-                            <input
-                                type="text"
-                                name="query"
-                                defaultValue={query}
-                                placeholder="Search products..."
-                                className="w-full bg-brand-panel border border-brand-border px-4 py-3 pl-10 text-brand-text focus:outline-none focus:border-brand-accent transition-colors block"
-                                autoComplete="off"
-                            />
-                            <Search className="absolute left-3 top-3.5 w-4 h-4 text-brand-muted" />
-                            {category && <input type="hidden" name="category" value={category} />}
-                        </form>
+                        <SearchAutocomplete initialQuery={query} initialCategory={category} />
                     </div>
 
                     <div>
@@ -81,7 +71,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                             ))}
                         </ul>
                     </div>
-                </ScrollReveal>
+                </div>
 
                 <main className="lg:col-span-3">
                     <Suspense key={`${query}-${category}-${page}`} fallback={

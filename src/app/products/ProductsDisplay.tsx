@@ -35,36 +35,32 @@ export default function ProductsDisplay({
         return `/products?${sp.toString()}`;
     };
 
-    const stripHtml = (html: string) => {
-        if (!html) return '';
-        return html.replace(/<[^>]*>?/gm, '');
-    };
-
     if (products.length === 0) {
         return (
             <div className="py-24 text-center border border-dashed border-brand-border flex items-center justify-center flex-col">
-                <p className="text-brand-muted mb-4 font-oswald uppercase tracking-widest">No products found</p>
+                <p className="text-brand-muted mb-4 font-sans uppercase tracking-widest">No products found</p>
             </div>
         );
     }
 
     return (
         <div className="space-y-6">
-            <div className="flex justify-between items-center bg-brand-panel border border-brand-border p-3">
-                <p className="text-xs md:text-sm tracking-widest uppercase font-oswald text-brand-muted">
+            {/* Toolbar */}
+            <div className="flex justify-between items-center bg-brand-panel border border-brand-border p-3 clip-chamfer">
+                <p className="text-xs md:text-sm tracking-widest uppercase font-sans text-brand-muted">
                     Showing {products.length} of {totalCount} Product{totalCount !== 1 && 's'}
                 </p>
                 <div className="flex gap-2">
                     <button
                         onClick={() => setViewMode('list')}
-                        className={`p-2 border transition-colors ${viewMode === 'list' ? 'border-brand-accent text-brand-accent bg-brand-accent/10' : 'border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-text/50'}`}
+                        className={`p-2 border transition-colors ${viewMode === 'list' ? 'border-brand-accent text-brand-accent bg-brand-accent/10' : 'border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary'}`}
                         aria-label="List View"
                     >
                         <List className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                     <button
                         onClick={() => setViewMode('grid')}
-                        className={`p-2 border transition-colors ${viewMode === 'grid' ? 'border-brand-accent text-brand-accent bg-brand-accent/10' : 'border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-text/50'}`}
+                        className={`p-2 border transition-colors ${viewMode === 'grid' ? 'border-brand-accent text-brand-accent bg-brand-accent/10' : 'border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary'}`}
                         aria-label="Grid View"
                     >
                         <LayoutGrid className="w-4 h-4 md:w-5 md:h-5" />
@@ -72,103 +68,114 @@ export default function ProductsDisplay({
                 </div>
             </div>
 
+            {/* Grid View */}
             {viewMode === 'grid' ? (
-                <ScrollReveal direction="up" staggerChildren={true} staggerAmount={0.05} className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     {products.map(product => (
-                        <Link href={`/products/${product.id}`} key={product.id} className="group border border-brand-border bg-brand-panel overflow-hidden flex flex-col hover:border-brand-accent/50 transition-colors">
-                            <div className="aspect-[4/3] bg-brand-dark flex items-center justify-center p-4 md:p-6 relative">
-                                <div className="absolute inset-0 bg-brand-dark/20 mix-blend-multiply group-hover:bg-brand-accent/5 transition-colors z-10" />
+                        <Link
+                            href={`/products/${product.id}`}
+                            key={product.id}
+                            className="card-glass group flex flex-col"
+                        >
+                            <div className="aspect-[4/3] bg-brand-dark flex items-center justify-center relative overflow-hidden">
                                 {product.images?.[0] ? (
                                     <Image
                                         src={getAssetUrl(product.images[0])}
                                         alt={product.name}
                                         fill
                                         sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                                        className="object-cover z-0 grayscale group-hover:grayscale-0 transition-all duration-500"
+                                        className="object-cover z-0 transition-all duration-500 group-hover:scale-105"
                                     />
                                 ) : (
-                                    <span className="text-brand-muted font-oswald tracking-widest uppercase text-xs z-0 border border-brand-border px-2 md:px-4 py-1 md:py-2">Image</span>
+                                    <span className="text-brand-muted font-sans tracking-widest uppercase text-xs z-0 border border-brand-border px-4 py-2">
+                                        No Image
+                                    </span>
                                 )}
                             </div>
-                            <div className="p-4 md:p-6 flex-grow flex flex-col justify-between">
+                            <div className="p-4 md:p-6 flex-grow flex flex-col justify-between relative z-20">
                                 <div>
-                                    <p className="text-brand-accent text-[10px] md:text-xs font-bold tracking-widest uppercase mb-1 md:mb-2">
-                                        {product.category.name} {product.subCategory && `• ${product.subCategory.name}`}
+                                    <p className="text-brand-accent text-[10px] md:text-xs font-bold tracking-widest uppercase mb-1 md:mb-2 drop-shadow-md">
+                                        {product.category.name}{product.subCategory && ` • ${product.subCategory.name}`}
                                     </p>
-                                    <h3 className="text-brand-text font-oswald text-base md:text-xl uppercase tracking-wide mb-2 line-clamp-2 md:line-clamp-none">{product.name}</h3>
+                                    <h3 className="text-white font-sans text-sm md:text-lg uppercase tracking-wide mb-2 line-clamp-2 drop-shadow-md">{product.name}</h3>
                                 </div>
-                                <div className="h-1 w-4 md:w-8 bg-brand-border group-hover:w-full group-hover:bg-brand-accent transition-all mt-4 md:mt-6" />
+                                <div className="h-px w-8 bg-brand-border group-hover:w-full group-hover:bg-brand-accent transition-all duration-500 mt-4" />
                             </div>
                         </Link>
                     ))}
-                </ScrollReveal>
+                </div>
             ) : (
-                <ScrollReveal direction="up" staggerChildren={true} staggerAmount={0.08} className="flex flex-col gap-4">
+                /* List View */
+                <div className="flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     {products.map(product => (
-                        <Link href={`/products/${product.id}`} key={product.id} className="group border border-brand-border bg-brand-panel flex flex-row hover:border-brand-accent/50 transition-colors">
-                            <div className="w-24 md:w-48 aspect-4/3 md:aspect-square bg-brand-dark flex items-center justify-center relative shrink-0">
-                                <div className="absolute inset-0 bg-brand-dark/20 mix-blend-multiply group-hover:bg-brand-accent/5 transition-colors z-10" />
+                        <Link
+                            href={`/products/${product.id}`}
+                            key={product.id}
+                            className="card-glass group flex flex-row"
+                        >
+                            <div className="w-24 md:w-44 shrink-0 bg-brand-dark flex items-center justify-center relative overflow-hidden">
                                 {product.images?.[0] ? (
                                     <Image
                                         src={getAssetUrl(product.images[0])}
                                         alt={product.name}
                                         fill
                                         sizes="(max-width: 768px) 100vw, 200px"
-                                        className="object-cover z-0 grayscale group-hover:grayscale-0 transition-all duration-500"
+                                        className="object-cover z-0 transition-all duration-500 group-hover:scale-105"
                                     />
                                 ) : (
-                                    <span className="text-brand-muted font-oswald tracking-widest uppercase text-xs z-0 border border-brand-border px-2 py-1">Image</span>
+                                    <span className="text-brand-muted font-sans tracking-widest uppercase text-xs z-0 border border-brand-border px-2 py-1">No Image</span>
                                 )}
                             </div>
-                            <div className="p-4 md:p-6 flex flex-col justify-center flex-grow">
-                                <div className="flex justify-between items-start mb-2">
-                                    <p className="text-brand-accent text-xs font-bold tracking-widest uppercase">
-                                        {product.category.name} {product.subCategory && `• ${product.subCategory.name}`}
+                            <div className="p-4 md:p-6 flex flex-col justify-center flex-grow min-w-0 relative z-20">
+                                <div className="flex justify-between items-start mb-2 gap-2">
+                                    <p className="text-brand-accent text-xs font-bold tracking-widest uppercase drop-shadow-md">
+                                        {product.category.name}{product.subCategory && ` • ${product.subCategory.name}`}
                                     </p>
-                                    <span className="hidden md:block text-brand-muted text-[10px] md:text-xs border border-brand-border px-2 py-1 tracking-widest font-oswald uppercase">View Details</span>
+                                    <span className="hidden md:block text-brand-muted text-[10px] border border-brand-border px-2 py-1 tracking-widest font-sans uppercase shrink-0">
+                                        View Details
+                                    </span>
                                 </div>
-                                <h3 className="text-brand-text font-oswald text-lg md:text-2xl uppercase tracking-wide mb-2 md:mb-3">{product.name}</h3>
-                                {/* <p className="text-brand-muted text-xs md:text-sm line-clamp-2 max-w-2xl">{stripHtml(product.description)}</p> */}
+                                <h3 className="text-white font-sans text-base md:text-xl uppercase tracking-wide mb-2 md:mb-3 truncate drop-shadow-md">{product.name}</h3>
                                 <div
-                                    className="prose prose-invert prose-brand mb-8 text-brand-muted max-w-2xl
-                                    prose-headings:font-oswald prose-headings:uppercase prose-headings:tracking-wider
-                                    prose-a:text-brand-accent prose-strong:text-brand-text text-brand-muted text-xs line-clamp-2"
+                                    className="text-gray-300 text-xs line-clamp-2 font-mono
+                                    [&_h1]:font-sans [&_h2]:font-sans [&_h3]:font-sans [&_strong]:text-white [&_a]:text-brand-accent drop-shadow-md"
                                     dangerouslySetInnerHTML={{ __html: product.description }}
                                 />
                             </div>
                         </Link>
                     ))}
-                </ScrollReveal>
+                </div>
             )}
 
+            {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-2 mt-8 md:mt-12 font-oswald tracking-widest uppercase text-sm">
+                <div className="flex justify-center items-center gap-2 mt-8 md:mt-12 font-sans tracking-widest uppercase text-sm">
                     {currentPage > 1 ? (
                         <Link
                             href={buildUrl(currentPage - 1)}
-                            className="px-4 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-text/50 transition-colors bg-brand-panel"
+                            className="px-4 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel clip-chamfer"
                         >
                             Previous
                         </Link>
                     ) : (
-                        <span className="px-4 py-2 border border-brand-border/30 text-brand-muted/50 cursor-not-allowed bg-brand-panel/50">
+                        <span className="px-4 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 clip-chamfer">
                             Previous
                         </span>
                     )}
 
-                    <span className="px-4 py-2 text-brand-text">
+                    <span className="px-4 py-2 text-brand-text font-mono text-xs">
                         Page {currentPage} of {totalPages}
                     </span>
 
                     {currentPage < totalPages ? (
                         <Link
                             href={buildUrl(currentPage + 1)}
-                            className="px-4 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-text/50 transition-colors bg-brand-panel"
+                            className="px-4 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel clip-chamfer"
                         >
                             Next
                         </Link>
                     ) : (
-                        <span className="px-4 py-2 border border-brand-border/30 text-brand-muted/50 cursor-not-allowed bg-brand-panel/50">
+                        <span className="px-4 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 clip-chamfer">
                             Next
                         </span>
                     )}
