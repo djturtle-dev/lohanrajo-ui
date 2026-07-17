@@ -79,3 +79,16 @@ model HomeContent {
   pillars   Json     @default("[{\"icon\":\"Factory\",\"title\":\"Infrastructure\",\"desc\":\"State-of-the-art manufacturing facilities ensuring uncompromised precision and scale.\"},{\"icon\":\"ShieldCheck\",\"title\":\"ISO Certified\",\"desc\":\"ISO 9001:2015 certified quality management systems meeting rigorous international standards.\"},{\"icon\":\"Lightbulb\",\"title\":\"Founded 1992\",\"desc\":\"Over three decades of pioneering innovative metal solutions for the evolving industrial landscape.\"}]")
   updatedAt DateTime @updatedAt
 }
+
+model ContactSubmission {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  phone     String
+  email     String
+  type      String   // ENQUIRY, CONTACT, CAREER, SUPPORT
+  content   String   @db.Text
+  cvUrl     String?  // Nullable, only populated for CAREER with a CV
+  createdAt DateTime @default(now())
+  isRead    Boolean  @default(false)
+}

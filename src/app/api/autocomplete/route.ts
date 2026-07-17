@@ -36,8 +36,9 @@ export async function GET(request: Request) {
                 take: 3
             })
         ]);
-
-        return NextResponse.json({ products, categories, subCategories });
+        const response = NextResponse.json({ products, categories, subCategories });
+        response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=600');
+        return response;
     } catch (error) {
         console.error('Autocomplete Error:', error);
         return NextResponse.json({ error: 'Failed to fetch suggestions' }, { status: 500 });

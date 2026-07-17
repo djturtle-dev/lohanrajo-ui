@@ -44,6 +44,7 @@ export default function HeroVideoBackground() {
             autoPlay 
             muted 
             playsInline 
+            preload="auto"
             suppressHydrationWarning
             onEnded={() => setCurrentIndex((prev) => (prev + 1) % videoSources.length)}
             className="w-full h-full object-cover absolute inset-0"

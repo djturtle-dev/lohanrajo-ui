@@ -8,9 +8,11 @@ import ScrollReveal from '@/components/animations/ScrollReveal';
 import { Prisma } from '@prisma/client';
 import { Suspense } from 'react';
 import { unstable_cache } from 'next/cache';
+import { Metadata } from 'next';
 
-export const metadata = {
-    title: 'Catalog | LOHANRAJO Metal Arts',
+export const metadata: Metadata = {
+    title: 'Catalog | LIAT - LOHANRAJO INDUSTRIES AND TECHNOLOGIES',
+    description: 'Explore our catalog of BMS Panels, IP Enclosures, Reflectors, and custom metal solutions.',
 }
 
 interface PageProps {

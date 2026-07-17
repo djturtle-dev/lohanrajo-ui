@@ -43,10 +43,10 @@ export default function HeroBlobVideo() {
     // }, { scope: blobRef });
 
     return (
-        <div ref={blobRef} className="relative w-full h-[80vh] lg:h-[90vh] mt-8 md:mt-12 pointer-events-none">
+        <div ref={blobRef} className="relative w-full aspect-video md:aspect-[21/9] lg:aspect-[24/9] mt-6 md:mt-10 pointer-events-none">
             {/* The Video Container masked by the PNG */}
             <div
-                className="absolute inset-0 w-full h-full -top-[25%]"
+                className="absolute inset-0 w-full h-full"
                 style={{
                     // Using CSS mask-image with the provided png
                     maskImage: "url('/mask.png')",
@@ -59,9 +59,6 @@ export default function HeroBlobVideo() {
                     WebkitMaskPosition: "center"
                 }}
             >
-                {/*
-                    Using a container much larger than the blob to ensure the video covers the entire area
-                */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[150%]">
                     <video
                         ref={videoRef}
@@ -70,35 +67,29 @@ export default function HeroBlobVideo() {
                         autoPlay
                         muted
                         playsInline
+                        preload="auto"
                         suppressHydrationWarning
-                        className="w-full h-full object-center scale-[1.05]"
+                        className="w-full h-full object-cover scale-[1.05]"
                     />
                     {/* Dark gradient overlay to ensure the video blends with our dark theme */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-brand-bg/80 via-transparent to-brand-accent/20" />
                 </div>
             </div>
 
-            {/* Floating Stats positioned precisely inside the asymmetrical cutouts (Negative Space) */}
-            {/* Top Right Cutout */}
-            <div className="absolute top-[15%] right-[3%] sm:right-[5%] flex flex-col items-center text-center z-50">
-                <span className="text-lg sm:text-xl md:text-2xl font-bold font-sans text-white">5000+</span>
-                <span className="text-xs text-brand-muted font-sans">Clients</span>
-            </div>
-
-            {/* Bottom Left Huge Cutout (3 stats spread out) */}
-            <div className="absolute bottom-[15%] left-[8%] sm:left-[10%] flex flex-col items-center text-center z-50">
-                <span className="text-lg sm:text-xl md:text-2xl font-bold font-sans text-white">50+</span>
-                <span className="text-xs text-brand-muted font-sans">Industries</span>
-            </div>
-
-            <div className="absolute bottom-[15%] left-[32%] sm:left-[35%] flex flex-col items-center text-center z-50">
-                <span className="text-lg sm:text-xl md:text-2xl font-bold font-sans text-white">4 Week</span>
-                <span className="text-xs text-brand-muted font-sans">Turnaround</span>
-            </div>
-
-            <div className="absolute bottom-[15%] left-[56%] sm:left-[60%] flex flex-col items-center text-center z-50">
-                <span className="text-lg sm:text-xl md:text-2xl font-bold font-sans text-white">100%</span>
-                <span className="text-xs text-brand-muted font-sans">Satisfaction</span>
+            {/* Metrics 2: Positioned inside the bottom-left cutout space of the mask */}
+            <div className="absolute bottom-[8%] left-[5%] md:left-[8%] w-[65%] sm:w-[55%] md:w-[60%] flex flex-row justify-between items-center z-50 px-2 sm:px-4">
+                <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                    <span className="text-sm sm:text-xl md:text-3xl font-bold font-sans text-white">50+</span>
+                    <span className="text-[8px] sm:text-[10px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Industries</span>
+                </div>
+                <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                    <span className="text-sm sm:text-xl md:text-3xl font-bold font-sans text-white">4 Wk</span>
+                    <span className="text-[8px] sm:text-[10px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Turnaround</span>
+                </div>
+                <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                    <span className="text-sm sm:text-xl md:text-3xl font-bold font-sans text-white">100%</span>
+                    <span className="text-[8px] sm:text-[10px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Satisfaction</span>
+                </div>
             </div>
         </div>
     );

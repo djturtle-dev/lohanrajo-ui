@@ -3,10 +3,13 @@ import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import HeroVideoBackground from '@/components/HeroVideoBackground';
 import HeroTextAnimation from '@/components/HeroTextAnimation';
-import Testimonials from '@/components/Testimonials';
 import { prisma } from '@/lib/prisma';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-import SpatialNodeMap from '@/components/SpatialNodeMap';
+import dynamic from 'next/dynamic';
+
+const Testimonials = dynamic(() => import('@/components/Testimonials'));
+const SpatialNodeMap = dynamic(() => import('@/components/SpatialNodeMap'));
+
 import CategoryCards from '@/components/CategoryCards';
 import HeroBlobVideo from '@/components/HeroBlobVideo';
 
@@ -47,25 +50,31 @@ export default async function Home() {
     return (
         <div className="flex flex-col gap-24">
             {/* Custom Masked Blob Hero Section */}
-            <section className="relative w-full pt-28 pb-0 overflow-hidden flex flex-col px-4 sm:px-0 max-w-5xl mx-auto">
+            <section className="relative w-full pt-36 md:pt-40 pb-0 overflow-hidden flex flex-col px-4 sm:px-0 max-w-5xl mx-auto">
                 <div className="relative z-20 w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col justify-center">
 
-                    {/* Top Text Row */}
-                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12">
-                        <div className="flex flex-col items-start">
+                    {/* Top Row: Hero Text & Description */}
+                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 lg:gap-12 w-full">
+                        <div className="flex-1 w-full">
                             <HeroTextAnimation lines={homeContent.heroLines} />
-                            <Link href="/products" className="group btn-glass-secondary px-8 py-3 font-oswald tracking-widest uppercase inline-flex items-center text-sm">
-                                Explore Products <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
-                            </Link>
                         </div>
-                        <div className="max-w-md pb-4">
+                        <div className="w-full lg:max-w-md lg:pb-4">
                             <p className="text-brand-muted text-sm md:text-base leading-relaxed text-justify">
                                 LOHANRAJO merges uncompromised quality with state-of-the-art manufacturing. Our mission is to deliver enclosures and metal solutions that are exceptionally resilient and seamlessly functional, redefining standards in the physical infrastructure space.
                             </p>
                         </div>
                     </div>
 
-                    {/* The Masked Video Blob & Stats */}
+                    {/* Second Row: Button */}
+                    <div className="flex flex-row justify-between items-end gap-6 w-full mt-6">
+                        <div>
+                            <Link href="/products" className="group btn-glass-secondary px-6 py-3 md:px-8 font-oswald tracking-widest uppercase inline-flex items-center text-xs md:text-sm">
+                                Explore <span className="hidden md:inline ml-1">Products</span> <ArrowRight className="ml-2 md:ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Third Row: The Masked Video Blob */}
                     <HeroBlobVideo />
 
                 </div>

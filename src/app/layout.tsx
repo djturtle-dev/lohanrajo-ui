@@ -14,7 +14,7 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600
 const forum = Forum({ subsets: ["latin"], weight: ["400"], variable: "--font-forum" });
 
 export const metadata: Metadata = {
-    title: "LOHANRAJO Metal Arts | Industrial Enclosures & Panels",
+    title: "LIAT - LOHANRAJO INDUSTRIES AND TECHNOLOGIES | Industrial Enclosures & Panels",
     description: "Professional manufacturer of BMS Panels, IP Standard Enclosures, Reflectors, and more.",
 };
 

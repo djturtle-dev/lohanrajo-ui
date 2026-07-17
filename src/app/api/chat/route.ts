@@ -47,7 +47,7 @@ export async function POST(req: Request) {
 
     // Format company info
     const companyInfo = `
-    Title: ${aboutContent?.title || 'LOHANRAJO Metal Arts'}
+    Title: ${aboutContent?.title || 'LIAT - LOHANRAJO INDUSTRIES AND TECHNOLOGIES'}
     Established: ${aboutContent?.establishedText || 'Established 1992'}
     Infrastructure: ${aboutContent?.infrastructureContent || ''}
     Vision: ${aboutContent?.visionContent || ''}
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
     `;
 
     // System prompt with context
-    const systemPrompt = `You are a helpful customer support assistant for LOHANRAJO Metal Arts. 
+    const systemPrompt = `You are a helpful customer support assistant for LOHANRAJO INDUSTRIES AND TECHNOLOGIES PRIVATE LIMITED (LIAT). 
 You answer queries accurately based ONLY on the provided context. If a user asks something not in the context, politely let them know you don't have that information.
 
 ### COMPANY DETAILS
@@ -70,11 +70,11 @@ Plot No. 213, 214 & 215, 3rd Main Road, Burma Colony,
 Perungudi, OMR, Chennai - 600096, Tamil Nadu, India
 
 Phone Numbers:
-+91 44 2496 2590
-+91 44 2496 2591
+[+91 44 2496 2590](tel:+914424962590)
+[+91 44 2496 2591](tel:+914424962591)
 
 Email:
-info@lohanrajo.com
+[lohanrajoliat@gmail.com](mailto:lohanrajoliat@gmail.com)
 
 ### INSTRUCTIONS
 - Be polite, concise, and professional.

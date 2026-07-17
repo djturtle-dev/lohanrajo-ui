@@ -4,6 +4,20 @@ import { prisma } from '@/lib/prisma';
 import ReviewSourceAnimation from '../ReviewSourceAnimation';
 import NavbarClient from './NavbarClient';
 import { Star } from 'lucide-react';
+import { unstable_cache } from 'next/cache';
+
+const getCachedTestimonialStats = unstable_cache(
+    async () => {
+        return await prisma.testimonial.findMany({
+            select: {
+                rating: true,
+                source: true
+            }
+        });
+    },
+    ['navbar-testimonial-stats'],
+    { revalidate: 3600, tags: ['testimonials'] }
+);
 
 export default async function Navbar() {
     let sourceStats = [
@@ -14,12 +28,7 @@ export default async function Navbar() {
     ];
 
     try {
-        const testimonials = await prisma.testimonial.findMany({
-            select: {
-                rating: true,
-                source: true
-            }
-        });
+        const testimonials = await getCachedTestimonialStats();
 
         if (testimonials.length > 0) {
             const grouped = testimonials.reduce((acc: any, curr) => {
@@ -66,8 +75,8 @@ export default async function Navbar() {
                 {/* Logo */}
                 <Link href="/" className="flex items-center transition-opacity hover:opacity-80 cursor-pointer">
                     <Image
-                        src="/new logo.jpeg"
-                        alt="LOHANRAJO Metal Arts"
+                        src="/logo_new.png"
+                        alt="LIAT"
                         width={200}
                         height={80}
                         className="h-10 sm:h-12 w-auto object-contain rounded-full"

@@ -5,7 +5,6 @@ const nextConfig: NextConfig = {
     turbopackUseSystemTlsCerts: true,
   },
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -20,6 +19,11 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'api.dicebear.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lohanrajo-admin.netlify.app',
         pathname: '/**',
       },
       {
@@ -44,16 +48,18 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
-    return [
-      {
-        source: '/uploads/:path*',
-        destination: 'http://localhost:3001/uploads/:path*',
-      },
-      {
-        source: '/api/blobs/:path*',
-        destination: 'http://localhost:3001/api/blobs/:path*',
-      },
-    ];
+    return {
+      fallback: [
+        {
+          source: '/uploads/:path*',
+          destination: 'http://localhost:3005/uploads/:path*',
+        },
+        {
+          source: '/api/blobs/:path*',
+          destination: 'http://localhost:3005/api/blobs/:path*',
+        },
+      ],
+    };
   },
 };
 

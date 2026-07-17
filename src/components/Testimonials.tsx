@@ -151,6 +151,7 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
                                 sizes="48px"
                                 className="object-cover"
                                 draggable={false}
+                                unoptimized
                             />
                         </div>
                         <div>

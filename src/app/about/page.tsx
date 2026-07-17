@@ -6,8 +6,8 @@ import { getAssetUrl } from '@/lib/utils';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 
 export const metadata: Metadata = {
-    title: 'About | LOHANRAJO Metal Arts',
-    description: 'Learn about our profile, infrastructure, accreditation, and vision.',
+    title: 'About | LIAT - LOHANRAJO INDUSTRIES AND TECHNOLOGIES',
+    description: 'Learn about our profile, infrastructure, mission, and vision.',
 };
 
 export default async function AboutPage() {
@@ -28,16 +28,16 @@ export default async function AboutPage() {
 
     // Fallback values if DB is empty or lacks new fields
     const defaults = {
-        title: 'The Foundation of Excellence',
-        subtitle: 'From humble beginnings to an industry leader in IP Standard Enclosures, BMS Panels, and Industrial Metal Arts.',
-        profileContent: 'LOHANRAJO Metal Arts was established with a clear mandate: to provide uncompromising quality in electrical enclosures and industrial metal products. Over the years, we have grown from a local supplier to a trusted partner for major infrastructure projects nationwide.\n\nOur commitment to precision engineering, utilizing premium raw materials like Mild Steel and Stainless Steel, ensures that every product leaving our facility meets strict operational standards.',
+        title: 'LOHANRAJO INDUSTRIES AND TECHNOLOGIES',
+        subtitle: 'Precision engineering and manufacturing excellence.',
+        profileContent: 'LOHANRAJO INDUSTRIES AND TECHNOLOGIES PRIVATE LIMITED (LIAT) is an ISO 9001:2015 certified engineering and manufacturing company specializing in the design, manufacturing IP rated enclosures, assembly & wiring of control panels, and customized engineering solutions conforming to IP standards.\n\nThe company traces its origins to Lohanrajo Metal Arts, Estd in 1992 by visionary entrepreneurs Mr.L.L.Baskar & Mr.L.L.Sekar. Backed by more than three decades of manufacturing excellence and extensive industry expertise, the organization has built a strong reputation for quality, reliability, innovation and on-time delivery.',
         profileImage: '/our company.png',
-        establishedText: 'Since 1992',
-        infrastructureContent: 'Our expansive manufacturing facility is equipped with state-of-the-art CNC machinery, automated welding stations, and an advanced powder-coating line. This robust infrastructure allows us to maintain strict tolerances and scale production seamlessly.',
+        establishedText: 'Estd in 1992',
+        infrastructureContent: 'Operating from a modern manufacturing facility spread across 7,200 sq.ft at Perungudi, Chennai, TamilNadu, India, the company has consistently expanded its capabilities to meet the evolving needs of its customers.',
         infrastructureItems: ['CNC Fabrication', 'Automated Assembly', 'Polymer & Powder Coating'],
-        accreditationContent: 'We operate under stringent ISO-certified quality management systems. Every enclosure and panel is tested for IP rating compliance, ensuring absolute protection against dust, water, and mechanical impact.',
-        visionContent: 'To be the defining standard in industrial metal arts—pioneering solutions that integrate seamlessly with the automation and building management needs of tomorrow. We envision a future built on our resilient infrastructure.',
-        founderNames: 'MR.L.L.BASKAR & L.L.SEKAR',
+        accreditationContent: 'Deliver quality products on time\nProvide value engineering solutions\nContinuously improve technology and manufacturing capability\nBuild long-term customer relationships\nEnsure customer satisfaction through quality, reliability, and service',
+        visionContent: 'To become one of India\'s most trusted engineering manufacturing companies by delivering innovative, high-quality products with world-class customer service.',
+        founderNames: 'MR.L.L.BASKAR & MR.L.L.SEKAR',
     };
 
     const data = { ...defaults, ...content };
@@ -104,10 +104,12 @@ export default async function AboutPage() {
                 <ScrollReveal direction="up" delay={0.1} className="p-10 card-glass group">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/5 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2" />
                     <ShieldCheck className="w-10 h-10 text-brand-accent mb-6" />
-                    <h2 className="font-sans text-3xl uppercase tracking-widest text-brand-text mb-4" id="accreditation">Accreditation</h2>
-                    <p className="text-brand-muted leading-relaxed">
-                        {data.accreditationContent}
-                    </p>
+                    <h2 className="font-sans text-3xl uppercase tracking-widest text-brand-text mb-4" id="mission">Mission</h2>
+                    <div className="text-brand-muted leading-relaxed space-y-2">
+                        {data.accreditationContent.split('\n').map((line: string, i: number) => (
+                            <p key={i}>{line}</p>
+                        ))}
+                    </div>
                 </ScrollReveal>
 
                 <ScrollReveal direction="up" delay={0.2} className="p-10 card-glass">

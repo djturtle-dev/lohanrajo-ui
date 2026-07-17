@@ -21,9 +21,11 @@ export async function GET(
       return new NextResponse('Not Found', { status: 404 });
     }
 
-    // Determine content type from extension or metadata (simplified here)
+    // Determine content type from extension or metadata
     const contentType = filename.endsWith('.png') ? 'image/png' 
                       : filename.endsWith('.pdf') ? 'application/pdf'
+                      : filename.endsWith('.docx') ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                      : filename.endsWith('.doc') ? 'application/msword'
                       : 'image/jpeg';
 
     return new NextResponse(blob, {
