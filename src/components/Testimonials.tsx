@@ -116,7 +116,7 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
         return (
             <div
                 key={`${prefix}-${t.id}-${idx}`}
-                className={`w-[300px] md:w-[420px] shrink-0 card-glass p-6 flex flex-col justify-between select-none ${isPlaceholder ? 'opacity-50 grayscale' : ''}`}
+                className={`w-[300px] md:w-[420px] shrink-0 card-glass-static p-6 flex flex-col justify-between select-none ${isPlaceholder ? 'opacity-50 grayscale' : ''}`}
             >
                 <div>
                     <div className="flex justify-between items-start mb-4">
@@ -195,7 +195,7 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
     return (
         <section className="bg-brand-bg pb-16 overflow-hidden" ref={containerRef}>
             <ScrollReveal direction="up" className="max-w-5xl mx-auto flex justify-between items-end mb-10 border-b border-brand-border pb-6 px-4 md:px-0">
-                <h2 className="font-sans text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Testimonials</h2>
+                <h2 className="font-oswald text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Testimonials</h2>
                 <span className="hidden md:block text-xs font-mono text-brand-muted tracking-widest uppercase">Drag to explore →</span>
             </ScrollReveal>
 

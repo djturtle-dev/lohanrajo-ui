@@ -49,7 +49,7 @@ export default function ScrollReveal({
         const dir = getDirection();
 
         if (staggerChildren) {
-            let targets = containerRef.current.children as unknown as HTMLElement[];
+            let targets = gsap.utils.toArray(containerRef.current.children);
             if (childSelector) {
                 targets = gsap.utils.toArray(childSelector, containerRef.current);
             }

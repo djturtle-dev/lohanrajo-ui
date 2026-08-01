@@ -81,13 +81,13 @@ export default function CategoryCards({ categories }: { categories: Category[] }
                     overwrite: "auto"
                 });
                 
-                // Reveal background glow inside the card based on mouse pos
-                const bgGlow = card.querySelector('.bento-mouse-glow');
+                const bgGlow = card.querySelector('.bento-mouse-glow') as HTMLElement | null;
                 if (bgGlow) {
+                    const maxOpacity = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--th-glow-opacity').trim()) || 0.2;
                     gsap.to(bgGlow, {
-                        x: x - 150, // offset by half the width/height of the glow circle (300px)
+                        x: x - 150,
                         y: y - 150,
-                        opacity: 1,
+                        opacity: maxOpacity,
                         duration: 0.4,
                         ease: "power2.out"
                     });
@@ -150,7 +150,7 @@ export default function CategoryCards({ categories }: { categories: Category[] }
                             style={{ transformOrigin: 'center center' }}
                         >
                             {/* Hover mouse glow */}
-                            <div className="bento-mouse-glow absolute top-0 left-0 w-[300px] h-[300px] bg-brand-accent/30 blur-[80px] rounded-full opacity-0 pointer-events-none z-0" />
+                            <div className="bento-mouse-glow absolute top-0 left-0 w-[300px] h-[300px] rounded-full pointer-events-none z-0" style={{ background: 'rgba(184,36,29,0.3)', filter: 'blur(80px)', opacity: 0, ['--glow-max' as any]: 'var(--th-glow-opacity)' }} />
 
                             {/* Background Image (faded out subtly at bottom) */}
                             {cat.imageUrl && (
@@ -197,13 +197,13 @@ export default function CategoryCards({ categories }: { categories: Category[] }
                     className="group relative overflow-hidden card-glass flex flex-col justify-center items-center min-h-[250px]"
                     style={{ transformOrigin: 'center center' }}
                 >
-                    <div className="bento-mouse-glow absolute top-0 left-0 w-[300px] h-[300px] bg-brand-accent/30 blur-[80px] rounded-full opacity-0 pointer-events-none z-0" />
+                    <div className="bento-mouse-glow absolute top-0 left-0 w-[300px] h-[300px] rounded-full pointer-events-none z-0" style={{ background: 'rgba(184,36,29,0.3)', filter: 'blur(80px)', opacity: 0, ['--glow-max' as any]: 'var(--th-glow-opacity)' }} />
                     
                     <div className="relative z-10 flex flex-col items-center gap-6">
                         <div className="w-16 h-16 rounded-full border border-brand-accent/30 flex items-center justify-center group-hover:bg-brand-accent group-hover:border-transparent transition-colors duration-500">
                             <ArrowUpRight className="w-8 h-8 text-brand-accent group-hover:text-white group-hover:rotate-45 transition-all duration-500" />
                         </div>
-                        <h3 className="font-sans text-xl font-bold uppercase tracking-widest text-white text-center">
+                        <h3 className="font-sans text-xl font-bold uppercase tracking-widest text-brand-text text-center">
                             View All <br /> Products
                         </h3>
                     </div>

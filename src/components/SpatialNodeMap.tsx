@@ -53,7 +53,13 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
     return (
         <section ref={containerRef} className="relative w-full bg-brand-bg py-20 border-b border-brand-border/30 overflow-hidden">
             {/* Subtle grid background */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#333333_1px,transparent_1px),linear-gradient(to_bottom,#333333_1px,transparent_1px)] bg-[size:5rem_5rem] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_60%,transparent_100%)] opacity-20 pointer-events-none" />
+            <div
+                className="absolute inset-0 [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_60%,transparent_100%)] opacity-20 pointer-events-none"
+                style={{
+                    backgroundImage: 'linear-gradient(to right, var(--th-border) 1px, transparent 1px), linear-gradient(to bottom, var(--th-border) 1px, transparent 1px)',
+                    backgroundSize: '5rem 5rem'
+                }}
+            />
 
             <div className="relative max-w-5xl mx-auto px-4">
                 {/* Animated connector line (desktop only) */}

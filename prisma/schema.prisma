@@ -17,22 +17,22 @@ model User {
 }
 
 model Category {
-  id            String         @id @default(uuid())
-  name          String         @unique
+  id            String        @id @default(uuid())
+  name          String        @unique
   products      Product[]
   subCategories SubCategory[]
-  isDeleted     Boolean        @default(false)
-  createdAt     DateTime       @default(now())
+  isDeleted     Boolean       @default(false)
+  createdAt     DateTime      @default(now())
 }
 
 model SubCategory {
-  id         String   @id @default(uuid())
-  name       String   @unique
+  id         String    @id @default(uuid())
+  name       String    @unique
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category  @relation(fields: [categoryId], references: [id])
   products   Product[]
-  isDeleted  Boolean  @default(false)
-  createdAt  DateTime @default(now())
+  isDeleted  Boolean   @default(false)
+  createdAt  DateTime  @default(now())
 }
 
 model Product {
@@ -59,18 +59,29 @@ model Testimonial {
 }
 
 model AboutContent {
-  id                    String   @id @default("singleton")
+  id                    String               @id @default("singleton")
   title                 String
   subtitle              String
-  profileContent        String   @db.Text
+  profileContent        String               @db.Text
   profileImage          String?
-  establishedText       String   @default("Established Industry Leaders")
-  infrastructureContent String   @db.Text @default("Our expansive manufacturing facility is equipped with state-of-the-art CNC machinery, automated welding stations, and an advanced powder-coating line. This robust infrastructure allows us to maintain strict tolerances and scale production seamlessly.")
-  infrastructureItems   String[] @default(["CNC Fabrication", "Automated Assembly", "Polymer & Powder Coating"])
-  accreditationContent  String   @db.Text
-  visionContent         String   @db.Text
-  founderNames          String   @default("MR.L.L.BASKAR & L.L.SEKAR")
-  updatedAt             DateTime @updatedAt
+  establishedText       String               @default("Established Industry Leaders")
+  infrastructureContent String               @default("Our expansive manufacturing facility is equipped with state-of-the-art CNC machinery, automated welding stations, and an advanced powder-coating line. This robust infrastructure allows us to maintain strict tolerances and scale production seamlessly.") @db.Text
+  infrastructureItems   String[]             @default(["CNC Fabrication", "Automated Assembly", "Polymer & Powder Coating"]) // Kept for backwards compatibility
+  infrastructureCards   InfrastructureCard[]
+  accreditationContent  String               @db.Text
+  visionContent         String               @db.Text
+  founderNames          String               @default("MR.L.L.BASKAR & L.L.SEKAR")
+  updatedAt             DateTime             @updatedAt
+}
+
+model InfrastructureCard {
+  id             String       @id @default(uuid())
+  title          String
+  description    String       @db.Text
+  icon           String       @default("Factory") // Name of the lucide icon
+  aboutContentId String       @default("singleton")
+  aboutContent   AboutContent @relation(fields: [aboutContentId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
 }
 
 model HomeContent {
@@ -86,9 +97,9 @@ model ContactSubmission {
   lastName  String
   phone     String
   email     String
-  type      String   // ENQUIRY, CONTACT, CAREER, SUPPORT
+  type      String // ENQUIRY, CONTACT, CAREER, SUPPORT
   content   String   @db.Text
-  cvUrl     String?  // Nullable, only populated for CAREER with a CV
+  cvUrl     String? // Nullable, only populated for CAREER with a CV
   createdAt DateTime @default(now())
   isRead    Boolean  @default(false)
 }

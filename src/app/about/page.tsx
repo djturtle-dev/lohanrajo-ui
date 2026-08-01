@@ -17,7 +17,8 @@ export default async function AboutPage() {
     if (p.aboutContent) {
         try {
             content = await p.aboutContent.findUnique({
-                where: { id: 'singleton' }
+                where: { id: 'singleton' },
+                include: { infrastructureCards: true } // Fetch the new relation
             });
         } catch (e) {
             console.warn("Database schema mismatch or fetch error. Falling back to defaults.", e);
@@ -35,12 +36,23 @@ export default async function AboutPage() {
         establishedText: 'Estd in 1992',
         infrastructureContent: 'Operating from a modern manufacturing facility spread across 7,200 sq.ft at Perungudi, Chennai, TamilNadu, India, the company has consistently expanded its capabilities to meet the evolving needs of its customers.',
         infrastructureItems: ['CNC Fabrication', 'Automated Assembly', 'Polymer & Powder Coating'],
+        infrastructureCards: [],
         accreditationContent: 'Deliver quality products on time\nProvide value engineering solutions\nContinuously improve technology and manufacturing capability\nBuild long-term customer relationships\nEnsure customer satisfaction through quality, reliability, and service',
         visionContent: 'To become one of India\'s most trusted engineering manufacturing companies by delivering innovative, high-quality products with world-class customer service.',
         founderNames: 'MR.L.L.BASKAR & MR.L.L.SEKAR',
     };
 
     const data = { ...defaults, ...content };
+    
+    // Map existing string items to cards if DB cards are empty (migration fallback)
+    const displayCards = data.infrastructureCards?.length > 0 
+        ? data.infrastructureCards 
+        : data.infrastructureItems.map((item: string, i: number) => ({
+            id: `fallback-${i}`,
+            title: item,
+            description: "State-of-the-art infrastructure enabling high-precision engineering and manufacturing at scale.",
+            icon: "Factory"
+        }));
 
     return (
         <div className="flex flex-col gap-12 pt-32 md:pt-40">
@@ -122,24 +134,33 @@ export default async function AboutPage() {
                 </ScrollReveal>
             </section>
 
-            {/* Infrastructure Section */}
+            {/* Infrastructure Section (New Layout) */}
             <section id="infrastructure" className="bg-brand-panel border-y border-brand-border py-12">
-                <div className="max-w-5xl mx-auto px-4 sm:px-8">
-                    <ScrollReveal direction="up" className="text-center max-w-3xl mx-auto mb-16">
-                        <Factory className="w-12 h-12 text-brand-accent mx-auto mb-6" />
-                        <h2 className="font-sans text-4xl uppercase tracking-widest text-brand-text mb-6">Infrastructure</h2>
-                        <p className="text-brand-muted leading-relaxed">
-                            {data.infrastructureContent}
-                        </p>
+                <div className="max-w-7xl mx-auto px-4 sm:px-8">
+                    <ScrollReveal direction="up" className="text-center max-w-3xl mx-auto mb-12">
+                        <h2 className="font-sans text-4xl uppercase tracking-widest text-brand-text">Infrastructure</h2>
                     </ScrollReveal>
-                    <ScrollReveal staggerChildren={true} direction="up" staggerAmount={0.15} className={`grid grid-cols-1 ${data.infrastructureItems.length >= 3 ? 'sm:grid-cols-3' : data.infrastructureItems.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-1'} gap-6`}>
-                        {data.infrastructureItems.map((item: string, i: number) => (
-                            <div key={i} className="card-glass p-8 flex flex-col items-center text-center">
-                                <span className="font-sans text-4xl text-brand-accent/20 mb-4 inline-block font-black">0{i + 1}</span>
-                                <h3 className="font-bold text-brand-text uppercase tracking-widest text-sm mb-2 font-sans">{item}</h3>
-                            </div>
-                        ))}
-                    </ScrollReveal>
+                    
+                    {/* New Card Layout matching Mission/Vision */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        {displayCards.map((card: any, i: number) => {
+                            const availableIcons: Record<string, any> = { ShieldCheck, Factory, Lightbulb, UserCheck, CalendarDays };
+                            const IconComponent = availableIcons[card.icon] || Factory;
+                            
+                            return (
+                                <ScrollReveal key={card.id} direction="up" delay={0.1 * i} className="p-10 card-glass group relative overflow-hidden">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/5 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2" />
+                                    
+                                    <IconComponent className="w-10 h-10 text-brand-accent mb-6 relative z-10" />
+                                    
+                                    <h3 className="font-sans text-2xl uppercase tracking-widest text-brand-text mb-4 relative z-10">{card.title}</h3>
+                                    <p className="text-brand-muted leading-relaxed relative z-10">
+                                        {card.description}
+                                    </p>
+                                </ScrollReveal>
+                            );
+                        })}
+                    </div>
                 </div>
             </section>
         </div>

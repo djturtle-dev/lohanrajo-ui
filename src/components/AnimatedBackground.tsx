@@ -15,7 +15,7 @@ export default function AnimatedBackground() {
     }, []);
 
     return (
-        <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-brand-bg">
+        <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" style={{ backgroundColor: 'var(--th-bg)' }}>
             {/* Mesh Wire Grid Background */}
             <div 
                 className="absolute inset-0 pointer-events-none"
@@ -28,10 +28,11 @@ export default function AnimatedBackground() {
                     className="absolute inset-[-50%] opacity-100 rotate-45"
                     style={{
                         backgroundImage: `
-                            linear-gradient(to right, rgba(255,255,255,0.15) 1px, transparent 1px),
-                            linear-gradient(to bottom, rgba(255,255,255,0.15) 1px, transparent 1px)
+                            linear-gradient(to right, var(--th-border) 1px, transparent 1px),
+                            linear-gradient(to bottom, var(--th-border) 1px, transparent 1px)
                         `,
                         backgroundSize: '30px 30px',
+                        opacity: 0.5,
                     }}
                 />
             </div>
@@ -70,7 +71,7 @@ export default function AnimatedBackground() {
                     <motion.div 
                         animate={{ backgroundPosition: ['0% 0%', '100% 100%'] }}
                         transition={{ duration: 15, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
-                        className="absolute inset-0 bg-gradient-to-br from-[#d42e26] via-[#b8241d]/60 to-transparent opacity-100 bg-[length:200%_200%]"
+                        className="absolute inset-0 bg-gradient-to-br from-brand-accent2 via-brand-accent/60 to-transparent opacity-100 bg-[length:200%_200%]"
                         style={{
                             maskImage: `
                                 linear-gradient(to right, black 1px, transparent 1px),
@@ -103,7 +104,7 @@ export default function AnimatedBackground() {
                 <motion.div
                     animate={{ x: ['-1000px', '4000px', '4000px'], opacity: [0, 1, 0, 0] }}
                     transition={{ duration: 18, repeat: Infinity, ease: 'linear', delay: 1, times: [0, 0.2, 0.3, 1] }}
-                    className="absolute top-[2100px] left-0 w-1/4 h-[2px] bg-gradient-to-r from-transparent to-[#d42e26]/80 blur-[1px] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[3px] after:h-[3px] after:bg-[#d42e26] after:rounded-full"
+                    className="absolute top-[2100px] left-0 w-1/4 h-[2px] bg-gradient-to-r from-transparent to-brand-accent2/80 blur-[1px] after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[3px] after:h-[3px] after:bg-brand-accent2 after:rounded-full"
                 />
                 <motion.div
                     animate={{ x: ['-1000px', '4000px', '4000px'], opacity: [0, 1, 0, 0] }}
@@ -118,7 +119,7 @@ export default function AnimatedBackground() {
                 <motion.div
                     animate={{ x: ['-1000px', '4000px', '4000px'], opacity: [0, 1, 0, 0] }}
                     transition={{ duration: 14, repeat: Infinity, ease: 'linear', delay: 6, times: [0, 0.2, 0.3, 1] }}
-                    className="absolute top-[1800px] left-0 w-1/5 h-[1px] bg-gradient-to-r from-transparent to-white/60 after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[2px] after:h-[2px] after:bg-white after:rounded-full"
+                    className="absolute top-[1800px] left-0 w-1/5 h-[1px] bg-gradient-to-r from-transparent to-brand-text/60 after:absolute after:right-0 after:top-1/2 after:-translate-y-1/2 after:w-[2px] after:h-[2px] after:bg-brand-text after:rounded-full"
                 />
 
                 {/* Vertical (diagonal top-right to bottom-left) */}
@@ -135,7 +136,7 @@ export default function AnimatedBackground() {
                 <motion.div
                     animate={{ y: ['-1000px', '4000px', '4000px'], opacity: [0, 1, 0, 0] }}
                     transition={{ duration: 20, repeat: Infinity, ease: 'linear', delay: 8, times: [0, 0.2, 0.3, 1] }}
-                    className="absolute left-[2100px] top-0 h-1/3 w-[1px] bg-gradient-to-b from-transparent to-white/60 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-[2px] after:h-[2px] after:bg-white after:rounded-full"
+                    className="absolute left-[2100px] top-0 h-1/3 w-[1px] bg-gradient-to-b from-transparent to-brand-text/60 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-[2px] after:h-[2px] after:bg-brand-text after:rounded-full"
                 />
                 <motion.div
                     animate={{ y: ['-1000px', '4000px', '4000px'], opacity: [0, 1, 0, 0] }}
@@ -145,7 +146,7 @@ export default function AnimatedBackground() {
                 <motion.div
                     animate={{ y: ['-1000px', '4000px', '4000px'], opacity: [0, 1, 0, 0] }}
                     transition={{ duration: 18, repeat: Infinity, ease: 'linear', delay: 5, times: [0, 0.2, 0.3, 1] }}
-                    className="absolute left-[1200px] top-0 h-1/3 w-[1px] bg-gradient-to-b from-transparent to-white/60 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-[2px] after:h-[2px] after:bg-white after:rounded-full"
+                    className="absolute left-[1200px] top-0 h-1/3 w-[1px] bg-gradient-to-b from-transparent to-brand-text/60 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-[2px] after:h-[2px] after:bg-brand-text after:rounded-full"
                 />
                 <motion.div
                     animate={{ y: ['-1000px', '4000px', '4000px'], opacity: [0, 1, 0, 0] }}

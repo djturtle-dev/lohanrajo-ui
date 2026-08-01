@@ -79,15 +79,15 @@ export default function HeroBlobVideo() {
             {/* Metrics 2: Positioned inside the bottom-left cutout space of the mask */}
             <div className="absolute bottom-[8%] left-[5%] md:left-[8%] w-[65%] sm:w-[55%] md:w-[60%] flex flex-row justify-between items-center z-50 px-2 sm:px-4">
                 <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-                    <span className="text-sm sm:text-xl md:text-3xl font-bold font-sans text-white">50+</span>
+                    <span className="text-sm sm:text-xl md:text-3xl font-bold font-sans text-brand-text">50+</span>
                     <span className="text-[8px] sm:text-[10px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Industries</span>
                 </div>
                 <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-                    <span className="text-sm sm:text-xl md:text-3xl font-bold font-sans text-white">4 Wk</span>
+                    <span className="text-sm sm:text-xl md:text-3xl font-bold font-sans text-brand-text">4 Wk</span>
                     <span className="text-[8px] sm:text-[10px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Turnaround</span>
                 </div>
                 <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-                    <span className="text-sm sm:text-xl md:text-3xl font-bold font-sans text-white">100%</span>
+                    <span className="text-sm sm:text-xl md:text-3xl font-bold font-sans text-brand-text">100%</span>
                     <span className="text-[8px] sm:text-[10px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Satisfaction</span>
                 </div>
             </div>

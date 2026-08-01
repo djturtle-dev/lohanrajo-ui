@@ -78,33 +78,33 @@ export default function ContactPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div className="space-y-3">
                                 <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">First Name<span className="text-brand-accent ml-1">*</span></label>
-                                <input required type="text" name="firstName" className="w-full bg-[#1d1d1d] border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="John" />
+                                <input required type="text" name="firstName" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="John" />
                             </div>
                             <div className="space-y-3">
                                 <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Last Name<span className="text-brand-accent ml-1">*</span></label>
-                                <input required type="text" name="lastName" className="w-full bg-[#1d1d1d] border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="Doe" />
+                                <input required type="text" name="lastName" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="Doe" />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div className="space-y-3">
                                 <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Phone<span className="text-brand-accent ml-1">*</span></label>
-                                <input required type="text" name="phone" className="w-full bg-[#1d1d1d] border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="+91 1234567890" />
+                                <input required type="text" name="phone" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="+91 1234567890" />
                             </div>
                             <div className="space-y-3">
                                 <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Email address<span className="text-brand-accent ml-1">*</span></label>
-                                <input required type="email" name="email" className="w-full bg-[#1d1d1d] border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="john.doe@example.com" />
+                                <input required type="email" name="email" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="john.doe@example.com" />
                             </div>
                         </div>
 
                         <div className="space-y-3">
                             <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">What area interests you?<span className="text-brand-accent ml-1">*</span></label>
                             <div className="relative">
-                                <select name="type" className="w-full bg-[#1d1d1d] border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors appearance-none cursor-pointer rounded-full text-sm" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-                                    <option value="ENQUIRY" className="bg-[#1d1d1d] text-white">Manufacturing Enquiry</option>
-                                    <option value="CONTACT" className="bg-[#1d1d1d] text-white">General Collaboration</option>
-                                    <option value="CAREER" className="bg-[#1d1d1d] text-white">Career Opportunities</option>
-                                    <option value="SUPPORT" className="bg-[#1d1d1d] text-white">Technical Support</option>
+                                <select name="type" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors appearance-none cursor-pointer rounded-full text-sm" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+                                    <option value="ENQUIRY" className="bg-brand-panel text-brand-text">Manufacturing Enquiry</option>
+                                    <option value="CONTACT" className="bg-brand-panel text-brand-text">General Collaboration</option>
+                                    <option value="CAREER" className="bg-brand-panel text-brand-text">Career Opportunities</option>
+                                    <option value="SUPPORT" className="bg-brand-panel text-brand-text">Technical Support</option>
                                 </select>
                                 <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-brand-accent">
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
@@ -115,7 +115,7 @@ export default function ContactPage() {
                         {selectedType === 'CAREER' && (
                             <div className="space-y-3 animate-in fade-in slide-in-from-top-2">
                                 <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Upload your CV<span className="text-brand-accent ml-1">*</span></label>
-                                <div className="flex items-center gap-4 bg-[#1d1d1d] border border-brand-border p-2 rounded-full">
+                                <div className="flex items-center gap-4 bg-th-input border border-brand-border p-2 rounded-full">
                                     <label className="btn-glass-secondary px-4 py-2 rounded-full text-xs font-sans uppercase tracking-widest cursor-pointer shrink-0">
                                         Choose File
                                         <input required type="file" name="cv" accept=".pdf,.doc,.docx" className="hidden" onChange={(e) => setCvFileName(e.target.files?.[0]?.name || '')} />
@@ -129,13 +129,13 @@ export default function ContactPage() {
 
                         <div className="space-y-3">
                             <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Tell us more<span className="text-brand-accent ml-1">*</span></label>
-                            <textarea required name="content" rows={4} className="w-full bg-[#1d1d1d] border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors resize-none rounded-2xl text-sm" placeholder="Share details about your requirement..."></textarea>
+                            <textarea required name="content" rows={4} className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors resize-none rounded-2xl text-sm" placeholder="Share details about your requirement..."></textarea>
                         </div>
 
                         <div className="space-y-6">
                             {/* Simple Math Captcha */}
                             <div className="flex items-center gap-4 w-full">
-                                <div className="bg-[#1d1d1d] border border-brand-border pl-5 pr-2 py-2 flex items-center justify-between w-full gap-4 rounded-full">
+                                <div className="bg-th-input border border-brand-border pl-5 pr-2 py-2 flex items-center justify-between w-full gap-4 rounded-full">
                                     <div className="flex items-center gap-3">
                                         <span className="font-sans text-sm tracking-widest text-brand-muted/60 uppercase">Verify:<span className="text-brand-accent ml-1">*</span></span>
                                         <span className="font-sans text-lg font-bold text-brand-text tracking-wider">{captcha?.question ?? '...'}</span>
@@ -145,7 +145,7 @@ export default function ContactPage() {
                                                 type="text"
                                                 value={captchaInput}
                                                 onChange={(e) => { setCaptchaInput(e.target.value); }}
-                                                className={`w-16 bg-[#1d1d1d] border ${isCaptchaWrong ? 'border-red-500' : isCaptchaValid ? 'border-green-500/50' : 'border-brand-border'} px-3 py-1.5 text-center font-sans text-lg font-bold text-brand-text focus:outline-none focus:border-brand-accent transition-colors pr-2 rounded-full`}
+                                                className={`w-16 bg-th-input border ${isCaptchaWrong ? 'border-red-500' : isCaptchaValid ? 'border-green-500/50' : 'border-brand-border'} px-3 py-1.5 text-center font-sans text-lg font-bold text-brand-text focus:outline-none focus:border-brand-accent transition-colors pr-2 rounded-full`}
                                                 placeholder="?"
                                                 required
                                             />
@@ -216,7 +216,7 @@ export default function ContactPage() {
                     </div>
 
                     {/* Headquarters Row */}
-                    <div className="bg-[#0a0a0a] border border-brand-border/50 rounded-xl p-8 sm:p-10 flex flex-col justify-between overflow-hidden relative min-h-[400px]">
+                    <div className="bg-th-panel border border-brand-border/50 rounded-xl p-8 sm:p-10 flex flex-col justify-between overflow-hidden relative min-h-[400px]">
                         <div>
                             <div className="space-y-10 z-10 relative">
                                 {/* Address Block */}

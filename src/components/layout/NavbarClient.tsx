@@ -3,7 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, ChevronLeft } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 import { motion, useScroll, useTransform, useMotionValueEvent, animate, useMotionValue, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -129,7 +130,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                 ))}
                             </div>
                         </motion.div>
-                        <div className="flex items-center flex-shrink-0">
+                        <div className="flex items-center gap-2 flex-shrink-0">
                             <Link
                                 href="/products"
                                 className={cn(
@@ -138,12 +139,15 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                             >
                                 Products
                             </Link>
+
+                            {/* Theme toggle — always visible on desktop */}
+                            <ThemeToggle />
                             
                             <AnimatePresence>
                                 {isScrolled && (
                                     <motion.button
                                         initial={{ opacity: 0, width: 0, marginLeft: 0 }}
-                                        animate={{ opacity: 1, width: 40, marginLeft: 8 }}
+                                        animate={{ opacity: 1, width: 40, marginLeft: 0 }}
                                         exit={{ opacity: 0, width: 0, marginLeft: 0 }}
                                         transition={{ duration: 0.2 }}
                                         onClick={() => setIsManuallyExpanded(!isManuallyExpanded)}
@@ -155,7 +159,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                             transition={{ duration: 0.3 }}
                                             className="flex items-center justify-center min-w-[20px]"
                                         >
-                                            {isManuallyExpanded ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
+                                            {isManuallyExpanded ? <X className="w-5 h-5" style={{ color: 'var(--th-text)' }} /> : <Menu className="w-5 h-5" style={{ color: 'var(--th-text)' }} />}
                                         </motion.div>
                                     </motion.button>
                                 )}
@@ -163,22 +167,28 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                         </div>
                     </div>
 
-                    {/* Mobile burger button */}
-                    <button
-                        className="md:hidden p-2 rounded-full btn-glass-secondary flex-shrink-0 transition-transform hover:scale-105 flex items-center justify-center cursor-pointer z-50 ml-2"
-                        onClick={() => setIsOpen(!isOpen)}
-                        aria-label="Toggle Menu"
-                    >
-                        {isOpen ? <X className="w-5 h-5 text-white" /> : <Menu className="w-5 h-5 text-white" />}
-                    </button>
+                    {/* Mobile controls: theme toggle + burger */}
+                    <div className="md:hidden flex items-center gap-2 ml-2">
+                        <ThemeToggle />
+                        <button
+                            className="p-2 rounded-full btn-glass-secondary flex-shrink-0 transition-transform hover:scale-105 flex items-center justify-center cursor-pointer z-50"
+                            onClick={() => setIsOpen(!isOpen)}
+                            aria-label="Toggle Menu"
+                        >
+                            {isOpen ? <X className="w-5 h-5" style={{ color: 'var(--th-text)' }} /> : <Menu className="w-5 h-5" style={{ color: 'var(--th-text)' }} />}
+                        </button>
+                    </div>
                 </div>
             </motion.nav>
 
             {/* Mobile Menu Overlay */}
-            <div className={cn(
-                "fixed inset-0 z-40 bg-brand-bg/95 backdrop-blur-lg transform transition-transform duration-300 ease-in-out md:hidden flex flex-col items-center justify-center",
-                isOpen ? "translate-x-0" : "translate-x-full"
-            )}>
+            <div
+                className={cn(
+                    "fixed inset-0 z-40 backdrop-blur-lg transform transition-transform duration-300 ease-in-out md:hidden flex flex-col items-center justify-center",
+                    isOpen ? "translate-x-0" : "translate-x-full"
+                )}
+                style={{ backgroundColor: 'var(--th-overlay-bg)' }}
+            >
                 <div className="flex flex-col items-center justify-center space-y-10 w-full px-8">
                     {navLinks.map((link) => (
                         <Link

@@ -9,17 +9,17 @@ export default function NotFound() {
     const mainUrl = process.env.NEXT_PUBLIC_MAIN_URL || 'http://localhost:3000';
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden bg-white">
-            {/* Geometric Background Pattern from globals.css */}
+        <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden bg-brand-bg">
+            {/* Geometric Background Pattern from globals.css using CSS variables */}
             <div 
                 className="absolute inset-0 opacity-40 pointer-events-none"
                 style={{
                     background: `
-                        linear-gradient(135deg, #0000 20.5%, #f8f8f8 0 29.5%, #0000 0) 0 10px,
-                        linear-gradient(45deg, #0000 8%, #f8f8f8 0 17%, #0000 0 58%) 20px 0,
-                        linear-gradient(135deg, #0000 8%, #f8f8f8 0 17%, #0000 0 58%, #f8f8f8 0 67%, #0000 0),
-                        linear-gradient(45deg, #0000 8%, #f8f8f8 0 17%, #0000 0 58%, #f8f8f8 0 67%, #0000 0 83%, #f8f8f8 0 92%, #0000 0),
-                        #ffffff
+                        linear-gradient(135deg, transparent 20.5%, var(--th-panel) 0 29.5%, transparent 0) 0 10px,
+                        linear-gradient(45deg, transparent 8%, var(--th-panel) 0 17%, transparent 0 58%) 20px 0,
+                        linear-gradient(135deg, transparent 8%, var(--th-panel) 0 17%, transparent 0 58%, var(--th-panel) 0 67%, transparent 0),
+                        linear-gradient(45deg, transparent 8%, var(--th-panel) 0 17%, transparent 0 58%, var(--th-panel) 0 67%, transparent 0 83%, var(--th-panel) 0 92%, transparent 0),
+                        var(--th-bg)
                     `,
                     backgroundSize: '40px 40px'
                 }}
@@ -46,7 +46,7 @@ export default function NotFound() {
                     404
                 </motion.h1>
 
-                <div className="bg-white/80 backdrop-blur-xl border border-brand-border p-8 md:p-12 shadow-2xl relative overflow-hidden group">
+                <div className="bg-brand-panel/80 backdrop-blur-xl border border-brand-border p-8 md:p-12 shadow-2xl relative overflow-hidden group">
                     {/* Interior accent line */}
                     <div className="absolute top-0 left-0 w-2 h-full bg-brand-accent" />
                     
@@ -70,23 +70,10 @@ export default function NotFound() {
                             >
                                 <Link 
                                     href={mainUrl}
-                                    className="flex items-center gap-2 px-8 py-4 bg-brand-text text-white font-oswald font-bold uppercase tracking-widest hover:bg-brand-accent transition-colors w-full sm:w-auto justify-center"
+                                    className="flex items-center gap-2 px-8 py-4 bg-brand-text text-brand-bg font-oswald font-bold uppercase tracking-widest hover:bg-brand-accent hover:text-white transition-colors w-full sm:w-auto justify-center"
                                 >
                                     <Home className="w-5 h-5" />
                                     Take Me Home
-                                </Link>
-                            </motion.div>
-
-                            <motion.div
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <Link 
-                                    href={adminUrl}
-                                    className="flex items-center gap-2 px-8 py-4 bg-white border border-brand-border text-brand-text font-oswald font-bold uppercase tracking-widest hover:border-brand-accent hover:text-brand-accent transition-all w-full sm:w-auto justify-center group/btn"
-                                >
-                                    <Settings className="w-5 h-5 group-hover/btn:rotate-90 transition-transform duration-500" />
-                                    Admin Portal
                                 </Link>
                             </motion.div>
                         </div>

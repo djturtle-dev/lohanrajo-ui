@@ -1,22 +1,121 @@
 @import "tailwindcss";
 
 @theme {
-    /* === Lohanrajo Brand Palette === */
-    --color-brand-bg:       #000000;
-    --color-brand-panel:    #111111;
-    --color-brand-border:   #333333;
+    /* Static tokens (accent / white stay constant across themes) */
     --color-brand-accent:   #b8241d;
-    --color-brand-accent2:  #d42e26;
     --color-brand-primary:  #eaeaea;
-    --color-brand-text:     #F9F9F9;
-    --color-brand-muted:    #eaeaea;
-    --color-brand-dark:     #333333;
     --color-brand-white:    #F9F9F9;
+    --color-brand-dark:     #333333;
+
+    /* Dynamic tokens: wired to CSS custom properties so they respond to data-theme */
+    --color-brand-accent2:  var(--th-accent2);
+    --color-brand-bg:       var(--th-bg);
+    --color-brand-panel:    var(--th-panel);
+    --color-brand-border:   var(--th-border);
+    --color-brand-text:     var(--th-text);
+    --color-brand-muted:    var(--th-muted);
 
     --font-oswald: var(--font-oswald), sans-serif;
     --font-sans:   var(--font-poppins), sans-serif;
     --font-serif:  var(--font-forum), serif;
     --font-mono:   var(--font-inter), sans-serif;
+}
+
+/* =============================================
+   THEME CUSTOM PROPERTIES
+   ============================================= */
+
+/* Dark theme (default) */
+:root,
+[data-theme="dark"] {
+    --th-bg:          #000000;
+    --th-panel:       #111111;
+    --th-border:      #333333;
+    --th-text:        #F9F9F9;
+    --th-muted:       #eaeaea;
+    --th-muted-60:    rgba(234, 234, 234, 0.6);
+    --th-input-bg:    #1d1d1d;
+    --th-overlay-bg:  rgba(0, 0, 0, 0.95);
+    --th-accent2:     #d42e26;
+
+    /* Nav glass */
+    --th-nav-bg-from: rgba(35,35,35,0.8);
+    --th-nav-bg-to:   rgba(0,0,0,0.7);
+    --th-nav-border:  rgba(255,255,255,0.1);
+    --th-nav-inset:   rgba(255,255,255,0.2);
+    --th-nav-shadow:  rgba(0,0,0,0.4);
+
+    /* Card glass */
+    --th-card-bg-from:    rgba(20,20,20,0.4);
+    --th-card-bg-to:      rgba(0,0,0,0.2);
+    --th-card-border:     rgba(255,255,255,0.1);
+    --th-card-border-dim: rgba(255,255,255,0.02);
+    --th-card-inset:      rgba(255,255,255,0.15);
+
+    /* Secondary button */
+    --th-btn-sec-bg-from:   rgba(0,0,0,0.3);
+    --th-btn-sec-bg-mid:    rgba(91,20,17,0.2);
+    --th-btn-sec-bg-to:     rgba(184,36,29,0.1);
+    --th-btn-sec-bg-hover-from: rgba(0,0,0,0.4);
+    --th-btn-sec-bg-hover-mid:  rgba(91,20,17,0.3);
+    --th-btn-sec-bg-hover-to:   rgba(184,36,29,0.2);
+    --th-btn-sec-border:    rgba(255,255,255,0.3);
+    --th-btn-sec-inset:     rgba(255,255,255,0.5);
+    --th-btn-sec-shine:     rgba(255,255,255,0.25);
+    --th-btn-sec-shadow:    rgba(0,0,0,0.3);
+
+    /* Glow / accent blobs */
+    --th-glow-opacity: 0.2;
+
+    /* Scrollbar */
+    --th-scrollbar-track: #111111;
+    --th-scrollbar-thumb: #333333;
+}
+
+/* Light theme */
+[data-theme="light"] {
+    --th-bg:          #eaeaea;
+    --th-panel:       #f5f5f5;
+    --th-border:      #c8c8c8;
+    --th-text:        #111111;
+    --th-muted:       #555555;
+    --th-muted-60:    rgba(85, 85, 85, 0.6);
+    --th-input-bg:    #ffffff;
+    --th-overlay-bg:  rgba(234, 234, 234, 0.97);
+    --th-accent2:     #da7c77;
+
+    /* Nav glass */
+    --th-nav-bg-from: rgba(255,255,255,0.75);
+    --th-nav-bg-to:   rgba(234,234,234,0.85);
+    --th-nav-border:  rgba(0,0,0,0.08);
+    --th-nav-inset:   rgba(255,255,255,0.9);
+    --th-nav-shadow:  rgba(0,0,0,0.08);
+
+    /* Card glass */
+    --th-card-bg-from:    rgba(255,255,255,0.7);
+    --th-card-bg-to:      rgba(234,234,234,0.5);
+    --th-card-border:     rgba(0,0,0,0.08);
+    --th-card-border-dim: rgba(0,0,0,0.03);
+    --th-card-inset:      rgba(255,255,255,0.9);
+
+    /* Secondary button — #eaeaea based, dark text */
+    --th-btn-sec-bg-from:   rgba(234,234,234,0.9);
+    --th-btn-sec-bg-mid:    rgba(255,255,255,0.7);
+    --th-btn-sec-bg-to:     rgba(234,234,234,0.6);
+    --th-btn-sec-bg-hover-from: rgba(255,255,255,0.95);
+    --th-btn-sec-bg-hover-mid:  rgba(234,234,234,0.85);
+    --th-btn-sec-bg-hover-to:   rgba(220,220,220,0.7);
+    --th-btn-sec-border:    rgba(0,0,0,0.12);
+    --th-btn-sec-inset:     rgba(255,255,255,0.9);
+    --th-btn-sec-shine:     rgba(255,255,255,0.6);
+    --th-btn-sec-shadow:    rgba(0,0,0,0.07);
+
+    /* Glow / accent blobs */
+    --th-glow-opacity: 0.02;
+
+    /* Scrollbar */
+    --th-scrollbar-track: #f5f5f5;
+    --th-scrollbar-thumb: #c8c8c8;
 }
 
 /* Industrial chamfer cut */
@@ -41,11 +140,27 @@
     box-shadow: 0 0 20px rgba(184, 36, 29, 0.4), 0 0 60px rgba(184, 36, 29, 0.15);
 }
 
+/* Theme-aware input / panel background */
+@utility bg-th-input {
+    background-color: var(--th-input-bg);
+}
+
+@utility bg-th-panel {
+    background-color: var(--th-panel);
+}
+
 @layer base {
+    html {
+        color-scheme: dark;
+    }
+    [data-theme="light"] {
+        color-scheme: light;
+    }
     body {
-        background-color: #000000;
-        color: #F9F9F9;
+        background-color: var(--th-bg);
+        color: var(--th-text);
         scroll-behavior: smooth;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 }
 
@@ -93,14 +208,15 @@
     }
 
     .btn-glass-secondary {
-        @apply relative overflow-hidden rounded-full font-bold text-white transition-all duration-300 backdrop-blur-md;
-        background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(91,20,17,0.2) 50%, rgba(184,36,29,0.1) 100%);
-        border: 1px solid rgba(255,255,255,0.3);
+        @apply relative overflow-hidden rounded-full font-bold transition-all duration-300 backdrop-blur-md;
+        color: var(--th-text);
+        background: linear-gradient(135deg, var(--th-btn-sec-bg-from) 0%, var(--th-btn-sec-bg-mid) 50%, var(--th-btn-sec-bg-to) 100%);
+        border: 1px solid var(--th-btn-sec-border);
         box-shadow:
-            inset 0 1px 2px rgba(255,255,255,0.6),
-            inset 0 -2px 10px rgba(184,36,29,0.3),
-            0 4px 6px -1px rgba(0,0,0,0.4),
-            0 0 15px rgba(184,36,29,0.2);
+            inset 0 1px 2px var(--th-btn-sec-inset),
+            inset 0 -2px 10px rgba(184,36,29,0.15),
+            0 4px 6px -1px var(--th-btn-sec-shadow),
+            0 0 12px rgba(184,36,29,0.15);
     }
     .btn-glass-secondary::before {
         content: '';
@@ -109,67 +225,75 @@
         left: 2px;
         right: 2px;
         height: 40%;
-        background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 100%);
+        background: linear-gradient(180deg, var(--th-btn-sec-shine) 0%, rgba(255,255,255,0) 100%);
         border-radius: 9999px;
         pointer-events: none;
     }
     .btn-glass-secondary:hover {
-        background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(91,20,17,0.3) 50%, rgba(184,36,29,0.2) 100%);
+        background: linear-gradient(135deg, var(--th-btn-sec-bg-hover-from) 0%, var(--th-btn-sec-bg-hover-mid) 50%, var(--th-btn-sec-bg-hover-to) 100%);
         box-shadow:
-            inset 0 1px 3px rgba(255,255,255,0.8),
-            inset 0 -2px 15px rgba(184,36,29,0.4),
-            0 6px 12px -2px rgba(0,0,0,0.5),
-            0 0 25px rgba(184,36,29,0.4);
+            inset 0 1px 3px var(--th-btn-sec-inset),
+            inset 0 -2px 15px rgba(184,36,29,0.2),
+            0 6px 12px -2px var(--th-btn-sec-shadow),
+            0 0 20px rgba(184,36,29,0.25);
         transform: translateY(-2px) scale(1.02);
     }
 
     .nav-glass {
         @apply relative rounded-full transition-all duration-500 backdrop-blur-xl;
-        background: linear-gradient(180deg, rgba(35,35,35,0.8) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.7) 100%);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: linear-gradient(180deg, var(--th-nav-bg-from) 0%, var(--th-nav-bg-to) 40%, var(--th-nav-bg-to) 100%);
+        border: 1px solid var(--th-nav-border);
         box-shadow:
-            inset 0 1px 1px rgba(255,255,255,0.2),
-            0 10px 20px -5px rgba(0,0,0,0.5);
+            inset 0 1px 1px var(--th-nav-inset),
+            0 10px 20px -5px var(--th-nav-shadow);
     }
     .nav-glass:hover {
-        background: linear-gradient(180deg, rgba(45,45,45,0.9) 0%, rgba(15,15,15,0.85) 40%, rgba(15,15,15,0.85) 100%);
         box-shadow:
-            inset 0 1px 2px rgba(255,255,255,0.25),
-            0 15px 25px -5px rgba(0,0,0,0.6);
+            inset 0 1px 2px var(--th-nav-inset),
+            0 15px 25px -5px var(--th-nav-shadow);
     }
     /* Universal Glass Card Effect */
     .card-glass {
         @apply relative backdrop-blur-2xl transition-all duration-300 overflow-hidden;
         border-radius: 12px;
-        background: linear-gradient(145deg, rgba(20, 20, 20, 0.4) 0%, rgba(0, 0, 0, 0.2) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-right-color: rgba(255, 255, 255, 0.02);
-        border-bottom-color: rgba(255, 255, 255, 0.02);
+        background: linear-gradient(145deg, var(--th-card-bg-from) 0%, var(--th-card-bg-to) 100%);
+        border: 1px solid var(--th-card-border);
+        border-right-color: var(--th-card-border-dim);
+        border-bottom-color: var(--th-card-border-dim);
         box-shadow:
-            inset 0 1px 1px rgba(255, 255, 255, 0.15),
-            inset 1px 0 1px rgba(255, 255, 255, 0.05),
-            0 20px 40px -10px rgba(0, 0, 0, 0.8);
+            inset 0 1px 1px var(--th-card-inset),
+            inset 1px 0 1px color-mix(in srgb, var(--th-card-inset) 30%, transparent),
+            0 4px 12px -4px rgba(0, 0, 0, 0.2);
     }
     .card-glass::before {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 40%);
+        background: linear-gradient(135deg, color-mix(in srgb, var(--th-card-inset) 60%, transparent) 0%, rgba(255,255,255,0) 40%);
         border-radius: 12px;
         pointer-events: none;
         z-index: 10;
     }
-    .card-glass:hover {
-        background: linear-gradient(145deg, rgba(30, 30, 30, 0.5) 0%, rgba(10, 10, 10, 0.3) 100%);
-        border-color: rgba(255, 255, 255, 0.2);
-        border-right-color: rgba(255, 255, 255, 0.05);
-        border-bottom-color: rgba(255, 255, 255, 0.05);
+    /* Static variant — no hover effects (used in Testimonials slider) */
+    .card-glass-static {
+        @apply relative backdrop-blur-2xl overflow-hidden;
+        border-radius: 12px;
+        background: linear-gradient(145deg, var(--th-card-bg-from) 0%, var(--th-card-bg-to) 100%);
+        border: 1px solid var(--th-card-border);
+        border-right-color: var(--th-card-border-dim);
+        border-bottom-color: var(--th-card-border-dim);
         box-shadow:
-            inset 0 1px 2px rgba(255, 255, 255, 0.25),
-            inset 1px 0 2px rgba(255, 255, 255, 0.1),
-            0 30px 60px -15px rgba(0, 0, 0, 0.9),
-            0 0 40px rgba(184, 36, 29, 0.15); /* Soft brand glow */
-        transform: translateY(-4px);
+            inset 0 1px 1px var(--th-card-inset),
+            0 2px 8px -4px rgba(0, 0, 0, 0.15);
+    }
+    .card-glass-static::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, color-mix(in srgb, var(--th-card-inset) 60%, transparent) 0%, rgba(255,255,255,0) 40%);
+        border-radius: 12px;
+        pointer-events: none;
+        z-index: 10;
     }
 }
 
@@ -179,11 +303,12 @@
 }
 
 ::-webkit-scrollbar-track {
-    @apply bg-brand-panel;
+    background: var(--th-scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply bg-brand-border rounded-none;
+    background: var(--th-scrollbar-thumb);
+    border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {

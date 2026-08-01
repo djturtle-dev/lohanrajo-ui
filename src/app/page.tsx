@@ -53,24 +53,25 @@ export default async function Home() {
             <section className="relative w-full pt-36 md:pt-40 pb-0 overflow-hidden flex flex-col px-4 sm:px-0 max-w-5xl mx-auto">
                 <div className="relative z-20 w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col justify-center">
 
-                    {/* Top Row: Hero Text & Description */}
-                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 lg:gap-12 w-full">
-                        <div className="flex-1 w-full">
-                            <HeroTextAnimation lines={homeContent.heroLines} />
+                    {/* Top Row: Hero Text, Button & Description */}
+                    <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-12 w-full">
+                        {/* Left Side: Hero Text and Button */}
+                        <div className="flex-1 w-full flex flex-col items-start lg:-mt-2">
+                            <div className="w-full">
+                                <HeroTextAnimation lines={homeContent.heroLines} />
+                            </div>
+                            <div className="mt-2 lg:mt-2">
+                                <Link href="/products" className="group btn-glass-secondary px-6 py-3 md:px-8 font-oswald tracking-widest uppercase inline-flex items-center text-xs md:text-sm">
+                                    Explore <span className="hidden md:inline ml-1">Products</span> <ArrowRight className="ml-2 md:ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
+                                </Link>
+                            </div>
                         </div>
-                        <div className="w-full lg:max-w-md lg:pb-4">
+                        
+                        {/* Right Side: Paragraph */}
+                        <div className="w-full lg:max-w-md lg:pb-4 lg:pt-10">
                             <p className="text-brand-muted text-sm md:text-base leading-relaxed text-justify">
                                 LOHANRAJO merges uncompromised quality with state-of-the-art manufacturing. Our mission is to deliver enclosures and metal solutions that are exceptionally resilient and seamlessly functional, redefining standards in the physical infrastructure space.
                             </p>
-                        </div>
-                    </div>
-
-                    {/* Second Row: Button */}
-                    <div className="flex flex-row justify-between items-end gap-6 w-full mt-6">
-                        <div>
-                            <Link href="/products" className="group btn-glass-secondary px-6 py-3 md:px-8 font-oswald tracking-widest uppercase inline-flex items-center text-xs md:text-sm">
-                                Explore <span className="hidden md:inline ml-1">Products</span> <ArrowRight className="ml-2 md:ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
-                            </Link>
                         </div>
                     </div>
 
@@ -87,8 +88,8 @@ export default async function Home() {
             <section className="px-4 sm:px-0 max-w-5xl mx-auto w-full">
                 <ScrollReveal direction="left">
                     <div className="flex justify-between items-end mb-12 border-b border-brand-border pb-6">
-                        <h2 className="font-sans text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Our Products</h2>
-                        <Link href="/products" className="hidden md:flex items-center text-sm font-sans tracking-widest uppercase text-brand-accent hover:text-brand-accent2 transition-colors">
+                        <h2 className="font-oswald text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Our Products</h2>
+                        <Link href="/products" className="hidden md:flex items-center text-sm font-sans tracking-widest uppercase text-brand-text hover:text-brand-accent transition-colors">
                             View All <ArrowRight className="ml-2 w-4 h-4" />
                         </Link>
                     </div>

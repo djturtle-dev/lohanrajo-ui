@@ -273,11 +273,8 @@ export default function ChatBot() {
               </button>
             </div>
 
-            {/* Messages - added data-lenis-prevent to solve the scrolling issue inside scroll-jacked layouts */}
-            <div 
-              data-lenis-prevent 
-              className="flex-1 overflow-y-auto p-4 space-y-4"
-            >
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.length === 0 && (
                 <div className="flex flex-col items-center justify-center gap-4 mt-6">
                   <div className="text-center text-brand-muted/40 text-sm font-oswald uppercase tracking-widest">
