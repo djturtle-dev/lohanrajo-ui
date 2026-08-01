@@ -137,9 +137,6 @@ export default async function AboutPage() {
             {/* Infrastructure Section (New Layout) */}
             <section id="infrastructure" className="bg-brand-panel border-y border-brand-border py-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-8">
-                    <ScrollReveal direction="up" className="text-center max-w-3xl mx-auto mb-12">
-                        <h2 className="font-sans text-4xl uppercase tracking-widest text-brand-text">Infrastructure</h2>
-                    </ScrollReveal>
                     
                     {/* New Card Layout matching Mission/Vision */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
