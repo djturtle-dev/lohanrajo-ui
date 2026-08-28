@@ -194,12 +194,12 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
 
     return (
         <section className="bg-brand-bg pb-16 overflow-hidden" ref={containerRef}>
-            <ScrollReveal direction="up" className="max-w-5xl mx-auto flex justify-between items-end mb-10 border-b border-brand-border pb-6 px-4 md:px-0">
+            <ScrollReveal direction="up" className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto flex justify-between items-end mb-10 border-b border-brand-border pb-6 px-4 md:px-8">
                 <h2 className="font-oswald text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Testimonials</h2>
                 <span className="hidden md:block text-xs font-mono text-brand-muted tracking-widest uppercase">Drag to explore →</span>
             </ScrollReveal>
 
-            <div className="relative w-full max-w-5xl mx-auto overflow-hidden flex px-4 md:px-0 pt-4">
+            <div className="relative w-full w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto overflow-hidden flex px-4 md:px-8 pt-4">
                 {/* Edge fades */}
                 <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-brand-bg to-transparent z-10 pointer-events-none" />
                 <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-brand-bg to-transparent z-10 pointer-events-none" />
@@ -216,3 +216,4 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
         </section>
     );
 }
+

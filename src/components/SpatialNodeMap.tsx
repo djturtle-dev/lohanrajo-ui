@@ -61,7 +61,7 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
                 }}
             />
 
-            <div className="relative max-w-5xl mx-auto px-4">
+            <div className="relative w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4">
                 {/* Animated connector line (desktop only) */}
                 <div className="hidden md:block absolute top-[5.5rem] left-[calc(16.666%+2rem)] right-[calc(16.666%+2rem)] h-px bg-brand-border overflow-hidden">
                     <div
@@ -101,3 +101,4 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
         </section>
     );
 }
+

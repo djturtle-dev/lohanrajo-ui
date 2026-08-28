@@ -5,6 +5,7 @@ import { getAssetUrl } from '@/lib/utils';
 import { ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import ScrollReveal from '@/components/animations/ScrollReveal';
+import ProductGallery from './ProductGallery';
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -26,7 +27,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
+        <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
             <ScrollReveal direction="down" delay={0.1}>
                 <Link href="/products" className="inline-flex items-center text-brand-muted hover:text-brand-text mb-8 transition-colors font-oswald tracking-widest uppercase text-sm">
                     <ArrowLeft className="w-4 h-4 mr-2" /> Back to Catalog
@@ -35,39 +36,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <ScrollReveal direction="left" delay={0.2} className="space-y-4">
-                    <div className="aspect-square bg-brand-panel border border-brand-border flex flex-col items-center justify-center relative overflow-hidden group">
-                        {product.images?.[0] ? (
-                            <Image
-                                src={getAssetUrl(product.images[0])}
-                                alt={product.name}
-                                fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className="object-cover z-0 transition-all duration-700"
-                                priority
-                            />
-                        ) : (
-                            <div className="z-20 text-center">
-                                <span className="text-brand-muted font-oswald tracking-widest uppercase border border-brand-border px-4 py-2">No Image Provided</span>
-                            </div>
-                        )}
-                    </div>
-
-                    {product.images && product.images.length > 1 && (
-                        <div className="grid grid-cols-4 gap-4">
-                            {product.images.slice(1).map((img: typeof product.images[number], i: number) => (
-                                <div key={i} className="aspect-square bg-brand-panel border border-brand-border relative overflow-hidden group cursor-pointer">
-                                    <Image
-                                        src={getAssetUrl(img)}
-                                        alt={`${product.name} ${i + 2}`}
-                                        fill
-                                        sizes="(max-width: 768px) 25vw, 12vw"
-                                        className="object-cover z-0 grayscale group-hover:grayscale-0 transition-all"
-                                    />
-                                    <div className="absolute inset-0 bg-brand-dark/10 mix-blend-multiply z-10" />
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                    <ProductGallery productName={product.name} images={product.images || []} />
                 </ScrollReveal>
 
                 <ScrollReveal direction="right" delay={0.3} staggerChildren={true} staggerAmount={0.1} className="flex flex-col justify-center">
@@ -96,3 +65,4 @@ export default async function ProductDetailPage({ params }: PageProps) {
         </div>
     );
 }
+

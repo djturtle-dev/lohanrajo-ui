@@ -97,7 +97,7 @@ export default function ProductsDisplay({
                                     <p className="text-brand-accent text-[10px] md:text-xs font-bold tracking-widest uppercase mb-1 md:mb-2 drop-shadow-md">
                                         {product.category.name}{product.subCategory && ` • ${product.subCategory.name}`}
                                     </p>
-                                    <h3 className="text-white font-sans text-sm md:text-lg uppercase tracking-wide mb-2 line-clamp-2 drop-shadow-md">{product.name}</h3>
+                                    <h3 className="text-brand-text font-sans text-sm md:text-lg uppercase tracking-wide mb-2 line-clamp-2">{product.name}</h3>
                                 </div>
                                 <div className="h-px w-8 bg-brand-border group-hover:w-full group-hover:bg-brand-accent transition-all duration-500 mt-4" />
                             </div>
@@ -135,10 +135,10 @@ export default function ProductsDisplay({
                                         View Details
                                     </span>
                                 </div>
-                                <h3 className="text-white font-sans text-base md:text-xl uppercase tracking-wide mb-2 md:mb-3 truncate drop-shadow-md">{product.name}</h3>
+                                <h3 className="text-brand-text font-sans text-base md:text-xl uppercase tracking-wide mb-2 md:mb-3 truncate">{product.name}</h3>
                                 <div
-                                    className="text-gray-300 text-xs line-clamp-2 font-mono
-                                    [&_h1]:font-sans [&_h2]:font-sans [&_h3]:font-sans [&_strong]:text-white [&_a]:text-brand-accent drop-shadow-md"
+                                    className="text-brand-muted text-xs line-clamp-2 font-mono
+                                    [&_h1]:font-sans [&_h2]:font-sans [&_h3]:font-sans [&_strong]:text-brand-text [&_a]:text-brand-accent"
                                     dangerouslySetInnerHTML={{ __html: product.description }}
                                 />
                             </div>

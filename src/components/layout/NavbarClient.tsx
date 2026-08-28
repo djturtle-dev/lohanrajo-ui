@@ -72,7 +72,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
     }, [isCollapsed, progress]);
 
     // Map the progress to exact CSS values
-    const navMaxWidth = useTransform(progress, [0, 1], ["64rem", "38rem"]); // 5xl down to ~608px
+    const navMaxWidth = useTransform(progress, [0, 1], ["100vw", "38rem"]); // 100vw down to ~608px
     const linksOpacity = useTransform(progress, [0, 0.5], [1, 0]);
     const linksBlur = useTransform(progress, [0, 0.5], ["blur(0px)", "blur(10px)"]);
     const gridColumns = useTransform(progress, [0.2, 1], ["1fr", "0fr"]);

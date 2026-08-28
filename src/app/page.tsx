@@ -50,8 +50,8 @@ export default async function Home() {
     return (
         <div className="flex flex-col gap-24">
             {/* Custom Masked Blob Hero Section */}
-            <section className="relative w-full pt-36 md:pt-40 pb-0 overflow-hidden flex flex-col px-4 sm:px-0 max-w-5xl mx-auto">
-                <div className="relative z-20 w-full max-w-7xl mx-auto px-4 md:px-8 flex flex-col justify-center">
+            <section className="relative w-full pt-36 md:pt-40 pb-0 overflow-hidden flex flex-col px-4 sm:px-0 w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto">
+                <div className="relative z-20 w-full w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8 flex flex-col justify-center">
 
                     {/* Top Row: Hero Text, Button & Description */}
                     <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-12 w-full">
@@ -85,7 +85,7 @@ export default async function Home() {
             <SpatialNodeMap pillars={pillars} />
 
             {/* Featured Categories */}
-            <section className="px-4 sm:px-0 max-w-5xl mx-auto w-full">
+            <section className="px-4 md:px-8 w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto">
                 <ScrollReveal direction="left">
                     <div className="flex justify-between items-end mb-12 border-b border-brand-border pb-6">
                         <h2 className="font-oswald text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Our Products</h2>
@@ -145,3 +145,4 @@ async function CategoryLinks() {
 
     return <CategoryCards categories={categories} />;
 }
+

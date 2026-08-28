@@ -66,7 +66,7 @@ export default function ContactPage() {
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
+        <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
                 {/* Left Column: Form */}
                 <ScrollReveal direction="left" className="lg:col-span-7 space-y-12">
@@ -267,3 +267,4 @@ export default function ContactPage() {
         </div>
     );
 }
+

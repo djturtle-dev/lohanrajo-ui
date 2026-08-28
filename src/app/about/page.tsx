@@ -72,7 +72,7 @@ export default async function AboutPage() {
 
             {/* Profile Section */}
             <section id="profile" className="bg-brand-panel border-y border-brand-border py-12 overflow-hidden">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto px-4 sm:px-8 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 items-center">
                     {/* Image on the Left */}
                     <ScrollReveal direction="left" className="aspect-square card-glass relative flex items-center justify-center p-8 bg-brand-white/10">
                         <Image
@@ -112,7 +112,7 @@ export default async function AboutPage() {
             </section>
 
             {/* Accreditation & Vision */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto px-4 sm:px-8">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8">
                 <ScrollReveal direction="up" delay={0.1} className="p-10 card-glass group">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/5 rounded-full blur-2xl transform translate-x-1/2 -translate-y-1/2" />
                     <ShieldCheck className="w-10 h-10 text-brand-accent mb-6" />
@@ -136,7 +136,7 @@ export default async function AboutPage() {
 
             {/* Infrastructure Section (New Layout) */}
             <section id="infrastructure" className="bg-brand-panel border-y border-brand-border py-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-8">
+                <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8">
                     
                     {/* New Card Layout matching Mission/Vision */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -163,3 +163,4 @@ export default async function AboutPage() {
         </div>
     );
 }
+

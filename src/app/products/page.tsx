@@ -39,7 +39,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
     const categories = await getCategories();
 
     return (
-        <div className="max-w-5xl mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
+        <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
             <ScrollReveal direction="up" className="flex flex-col md:flex-row justify-between items-start mb-6 ">
                 <div>
                     <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl font-normal tracking-tighter text-brand-text mb-6 text-balance">Product <span className="text-brand-accent">Catalog</span></h1>
@@ -122,3 +122,4 @@ async function ProductGrid({ query, category, page }: { query: string; category:
 
     return <ProductsDisplay products={products} totalCount={totalCount} currentPage={page} pageSize={pageSize} />;
 }
+
