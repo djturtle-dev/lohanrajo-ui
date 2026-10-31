@@ -128,8 +128,8 @@ async function CategoryLinks() {
                 where: { isDeleted: false }
             });
         },
-        ['active-categories'],
-        { revalidate: 3600, tags: ['categories'] }
+        ['active-categories-v2'],
+        { revalidate: 60, tags: ['categories'] }
     );
     const dbCategories = await getCategories();
 
@@ -140,7 +140,11 @@ async function CategoryLinks() {
         { name: 'Poles',      label: 'Industrial Poles',icon: 'Zap',    imageUrl: '/images/products/industrial-poles.png' },
     ].map(cat => ({
         ...cat,
-        id: dbCategories.find((db: typeof dbCategories[number]) => db.name === cat.name)?.id
+        id: dbCategories.find((db: typeof dbCategories[number]) => 
+            db.name.toLowerCase() === cat.name.toLowerCase() ||
+            db.name.toLowerCase().includes(cat.name.toLowerCase().replace(/s$/, '')) ||
+            cat.name.toLowerCase().includes(db.name.toLowerCase().replace(/s$/, ''))
+        )?.id
     }));
 
     return <CategoryCards categories={categories} />;

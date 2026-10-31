@@ -32,6 +32,17 @@ const nextConfig: NextConfig = {
         port: '3001',
         pathname: '/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3005',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        pathname: '/**',
+      },
     ],
   },
   async headers() {
@@ -48,15 +59,16 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
+    const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL || (process.env.NODE_ENV === 'production' ? 'https://lohanrajo-admin.netlify.app' : 'http://localhost:3005');
     return {
       fallback: [
         {
           source: '/uploads/:path*',
-          destination: 'http://localhost:3005/uploads/:path*',
+          destination: `${adminUrl}/uploads/:path*`,
         },
         {
           source: '/api/blobs/:path*',
-          destination: 'http://localhost:3005/api/blobs/:path*',
+          destination: `${adminUrl}/api/blobs/:path*`,
         },
       ],
     };

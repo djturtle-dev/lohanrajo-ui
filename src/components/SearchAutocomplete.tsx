@@ -21,6 +21,11 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
     const dropdownRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    // Sync internal query state with prop when URL changes
+    useEffect(() => {
+        setQuery(initialQuery);
+    }, [initialQuery]);
+
     // Debounce search
     useEffect(() => {
         if (query.trim().length < 2) {
@@ -63,8 +68,9 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
         e.preventDefault();
         setIsOpen(false);
         const searchParams = new URLSearchParams();
-        if (query) searchParams.set('query', query);
-        if (initialCategory) searchParams.set('category', initialCategory);
+        if (query.trim()) {
+            searchParams.set('query', query.trim());
+        }
         router.push(`/products?${searchParams.toString()}`);
     };
 
@@ -122,7 +128,7 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
                                 {results.subCategories.map(sub => (
                                     <Link 
                                         key={`sub-${sub.id}`} 
-                                        href={`/products?category=${sub.categoryId}&query=${encodeURIComponent(sub.name)}`}
+                                        href={`/products?category=${sub.categoryId}&subCategory=${sub.id}`}
                                         className="px-4 py-2 hover:bg-brand-panel flex items-center justify-between group transition-colors"
                                         onClick={() => setIsOpen(false)}
                                     >

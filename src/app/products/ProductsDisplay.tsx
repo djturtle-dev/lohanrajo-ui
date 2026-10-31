@@ -37,8 +37,14 @@ export default function ProductsDisplay({
 
     if (products.length === 0) {
         return (
-            <div className="py-24 text-center border border-dashed border-brand-border flex items-center justify-center flex-col">
-                <p className="text-brand-muted mb-4 font-sans uppercase tracking-widest">No products found</p>
+            <div className="py-24 text-center border border-dashed border-brand-border flex items-center justify-center flex-col gap-4">
+                <p className="text-brand-muted font-sans uppercase tracking-widest text-sm">No products found</p>
+                <Link
+                    href="/products"
+                    className="btn-glass-secondary px-6 py-2.5 font-oswald tracking-widest uppercase text-xs inline-flex items-center"
+                >
+                    View All Products
+                </Link>
             </div>
         );
     }
@@ -48,7 +54,7 @@ export default function ProductsDisplay({
             {/* Toolbar */}
             <div className="flex justify-between items-center bg-brand-panel border border-brand-border p-3 clip-chamfer">
                 <p className="text-xs md:text-sm tracking-widest uppercase font-sans text-brand-muted">
-                    Showing {products.length} of {totalCount} Product{totalCount !== 1 && 's'}
+                    Showing {products.length} of {totalCount} Product{totalCount !== 1 ? 's' : ''}
                 </p>
                 <div className="flex gap-2">
                     <button
