@@ -109,7 +109,7 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
             <div className="relative w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8">
                 <ScrollReveal direction="up" duration={0.8}>
                     {/* Monolithic Telemetry Console Deck */}
-                    <div className="relative rounded-2xl border border-brand-border/40 dark:border-white/10 bg-white/60 dark:bg-[#0c0c0c]/80 backdrop-blur-xl overflow-hidden shadow-sm dark:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]">
+                    <div className="relative rounded-2xl border border-brand-border/50 dark:border-white/10 bg-white dark:bg-[#0c0c0c]/90 backdrop-blur-xl overflow-hidden shadow-sm dark:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]">
                         {/* Interactive Top Laser Runner */}
                         <div className="absolute top-0 left-0 right-0 h-[2px] bg-brand-border/20 dark:bg-white/5 overflow-hidden z-20">
                             <div
@@ -120,7 +120,7 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
                         </div>
 
                         {/* Telemetry Status Bar */}
-                        <div className="flex items-center justify-between px-5 sm:px-7 py-3 border-b border-brand-border/30 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
+                        <div className="flex items-center justify-between px-5 sm:px-7 py-3 border-b border-brand-border/30 dark:border-white/10 bg-brand-panel/60 dark:bg-white/[0.02]">
                             <div className="flex items-center gap-2.5">
                                 <span className="relative flex h-2 w-2">
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75" />
@@ -176,7 +176,7 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
 
                                         {/* Main Content: Icon Capsule, Title, Description */}
                                         <div className="z-10 mb-6">
-                                            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-white dark:bg-brand-panel border border-brand-border/60 dark:border-white/10 shadow-sm group-hover:border-brand-accent group-hover:shadow-[0_0_24px_rgba(184,36,29,0.25)] group-hover:-translate-y-1 transition-all duration-500 mb-5">
+                                            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-brand-panel/50 dark:bg-brand-panel border border-brand-border/60 dark:border-white/10 shadow-sm group-hover:border-brand-accent group-hover:shadow-[0_0_24px_rgba(184,36,29,0.25)] group-hover:-translate-y-1 transition-all duration-500 mb-5">
                                                 {getIcon(pillar.icon)}
                                             </div>
                                             <h3 className="font-playfair italic text-2xl sm:text-3xl text-brand-text font-medium tracking-tight mb-3 group-hover:text-brand-accent transition-colors duration-300">
