@@ -18,6 +18,7 @@ import Image from 'next/image';
 import { prisma } from '@/lib/prisma';
 import { getAssetUrl } from '@/lib/utils';
 import ScrollReveal from '@/components/animations/ScrollReveal';
+import AboutPhotoGallery from '@/components/AboutPhotoGallery';
 
 export const metadata: Metadata = {
     title: 'About | LIAT - LOHANRAJO INDUSTRIES AND TECHNOLOGIES',
@@ -47,6 +48,7 @@ export default async function AboutPage() {
         subtitle: 'Precision engineering and manufacturing excellence.',
         profileContent: 'LOHANRAJO INDUSTRIES AND TECHNOLOGIES PRIVATE LIMITED (LIAT) is an ISO 9001:2015 certified engineering and manufacturing company specializing in the design, manufacturing IP rated enclosures, assembly & wiring of control panels, and customized engineering solutions conforming to IP standards.\n\nThe company traces its origins to Lohanrajo Metal Arts, Estd in 1992 by visionary entrepreneurs Mr.L.L.Baskar & Mr.L.L.Sekar. Backed by more than three decades of manufacturing excellence and extensive industry expertise, the organization has built a strong reputation for quality, reliability, innovation and on-time delivery.',
         profileImage: '/our company.png',
+        galleryImages: [],
         establishedText: 'Estd in 1992',
         infrastructureContent: 'Operating from a modern manufacturing facility spread across 7,200 sq.ft at Perungudi, Chennai, TamilNadu, India, the company has consistently expanded its capabilities to meet the evolving needs of its customers.',
         infrastructureItems: ['CNC Fabrication', 'Automated Assembly', 'Polymer & Powder Coating'],
@@ -90,6 +92,13 @@ export default async function AboutPage() {
     const profileParagraphs = data.profileContent
         ? data.profileContent.split('\n').filter((p: string) => p.trim().length > 0)
         : [];
+
+    const allPhotos = Array.from(
+        new Set([
+            data.profileImage,
+            ...(Array.isArray(data.galleryImages) ? data.galleryImages : [])
+        ].filter(Boolean) as string[])
+    );
 
     return (
         <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-24 md:pt-32 pb-24 space-y-20 md:space-y-28">
@@ -150,29 +159,13 @@ export default async function AboutPage() {
             <section id="profile" aria-labelledby="profile-heading" className="relative">
                 <ScrollReveal direction="up" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
                     
-                    {/* Visual Anchor (Left Column, 5 cols) */}
+                    {/* Visual Anchor (Left Column, 5 cols) - Interactive Multi-Photo Gallery */}
                     <div className="lg:col-span-5 flex flex-col justify-between">
-                        <div className="relative card-glass p-6 md:p-8 flex flex-col items-center justify-center h-full min-h-[380px] group overflow-hidden border border-brand-border/60">
-                            {/* Corner Technical Decors */}
-                            <span className="absolute top-3 left-3 text-[10px] font-mono text-brand-muted/50 tracking-wider">01 // LIAT</span>
-                            <span className="absolute top-3 right-3 text-[10px] font-mono text-brand-accent/70 font-semibold tracking-wider">
-                                {data.establishedText || "Estd in 1992"}
-                            </span>
-                            <span className="absolute bottom-3 left-3 w-2 h-2 border-l border-b border-brand-accent" />
-                            <span className="absolute bottom-3 right-3 w-2 h-2 border-r border-b border-brand-accent" />
-
-                            {/* Image Container with Ambient Backlight */}
-                            <div className="relative w-full aspect-[4/3] max-w-md my-auto flex items-center justify-center">
-                                <div className="absolute inset-0 bg-brand-accent/5 rounded-2xl blur-xl group-hover:bg-brand-accent/15 transition-all duration-700" />
-                                <Image
-                                    src={getAssetUrl(data.profileImage) || "/our company.png"}
-                                    alt="LOHANRAJO Industries and Technologies Profile"
-                                    fill
-                                    sizes="(max-width: 1024px) 100vw, 40vw"
-                                    className="object-contain p-4 z-10 transition-transform duration-700 group-hover:scale-105"
-                                />
-                            </div>
-                        </div>
+                        <AboutPhotoGallery
+                            images={allPhotos}
+                            establishedText={data.establishedText || "Estd in 1992"}
+                            altText={data.title || "LOHANRAJO Industries and Technologies"}
+                        />
                     </div>
 
                     {/* Narrative Text (Right Column, 7 cols) */}
@@ -435,6 +428,48 @@ export default async function AboutPage() {
                     })}
                 </div>
             </section>
+
+            {/* SECTION 04: FACILITY & OPERATIONS PHOTO GALLERY (SHOWS WHEN 2+ PHOTOS ARE CONFIGURED) */}
+            {allPhotos.length > 1 && (
+                <section id="gallery" aria-labelledby="gallery-heading" className="space-y-8">
+                    <ScrollReveal direction="up" className="flex items-center justify-between gap-4 pb-2 border-b border-brand-border/40">
+                        <div>
+                            <span className="text-[11px] font-mono uppercase tracking-widest text-brand-accent block">
+                                04 • Facility & Operations
+                            </span>
+                            <h2 id="gallery-heading" className="font-playfair italic text-3xl sm:text-4xl text-brand-text">
+                                Photo <span className="font-sans font-normal text-brand-muted">Gallery</span>
+                            </h2>
+                        </div>
+                        <span className="text-xs font-mono text-brand-muted/70">
+                            {allPhotos.length} Photos
+                        </span>
+                    </ScrollReveal>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {allPhotos.map((photo: string, index: number) => (
+                            <ScrollReveal
+                                key={index}
+                                direction="up"
+                                delay={0.06 * (index + 1)}
+                                className="group relative aspect-[4/3] rounded-2xl overflow-hidden card-glass border border-brand-border/60 hover:border-brand-accent/50 transition-all duration-500"
+                            >
+                                <div className="absolute inset-0 bg-brand-accent/5 rounded-2xl blur-lg group-hover:bg-brand-accent/15 transition-all duration-700 pointer-events-none" />
+                                <Image
+                                    src={getAssetUrl(photo) || '/our company.png'}
+                                    alt={`Facility Image ${index + 1}`}
+                                    fill
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                                />
+                                <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-brand-panel/80 border border-brand-border/40 text-[10px] font-mono text-brand-text/80 backdrop-blur-sm">
+                                    0{index + 1} // VIEW
+                                </div>
+                            </ScrollReveal>
+                        ))}
+                    </div>
+                </section>
+            )}
 
         </div>
     );

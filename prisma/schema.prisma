@@ -64,6 +64,7 @@ model AboutContent {
   subtitle              String
   profileContent        String               @db.Text
   profileImage          String?
+  galleryImages         String[]             @default([])
   establishedText       String               @default("Established Industry Leaders")
   infrastructureContent String               @default("Our expansive manufacturing facility is equipped with state-of-the-art CNC machinery, automated welding stations, and an advanced powder-coating line. This robust infrastructure allows us to maintain strict tolerances and scale production seamlessly.") @db.Text
   infrastructureItems   String[]             @default(["CNC Fabrication", "Automated Assembly", "Polymer & Powder Coating"]) // Kept for backwards compatibility
