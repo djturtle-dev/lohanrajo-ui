@@ -1,19 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 
 export default function AnimatedBackground() {
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            setMousePos({ x: e.clientX, y: e.clientY });
-        };
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
-
     return (
         <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" style={{ backgroundColor: 'var(--th-bg)' }}>
             {/* Mesh Wire Grid Background */}
@@ -58,35 +47,6 @@ export default function AnimatedBackground() {
                     <path d="M96.7 44.8l-8.6-1.5c-.8-3.4-2.1-6.6-3.8-9.6l5.2-7.1c1.4-1.9 1-4.6-.7-6.3L81.2 12.6c-1.8-1.8-4.5-2.1-6.4-.7l-6.9 5.2c-3-1.8-6.2-3.1-9.6-4L56.9 4.3C56.5 1.9 54.4 0 52 0h-10c-2.4 0-4.5 1.9-4.9 4.3l-1.4 8.7c-3.4.8-6.6 2.2-9.6 4l-6.9-5.2c-1.9-1.4-4.6-1.1-6.4.7L5.2 20.3c-1.8 1.8-2.1 4.5-.7 6.3l5.2 7.1c-1.7 3-3 6.2-3.8 9.6L-2.7 44.8C-5.1 45.2-7 47.3-7 49.7v10c0 2.4 1.9 4.5 4.3 4.9l8.6 1.5c.8 3.4 2.1 6.6 3.8 9.6l-5.2 7.1c-1.4 1.9-1 4.6.7 6.3l7.6 7.6c1.8 1.8 4.5 2.1 6.4.7l6.9-5.2c3 1.8 6.2 3.1 9.6 4l1.4 8.7c.4 2.4 2.5 4.3 4.9 4.3h10c2.4 0 4.5-1.9 4.9-4.3l1.4-8.7c3.4-.8 6.6-2.2 9.6-4l6.9 5.2c1.9 1.4 4.6 1.1 6.4-.7l7.6-7.6c1.8-1.8 2.1-4.5.7-6.3l-5.2-7.1c1.7-3 3-6.2 3.8-9.6l8.6-1.5c2.4-.4 4.3-2.5 4.3-4.9v-10c.1-2.4-1.8-4.5-4.2-4.9zM47 67.5C35.7 67.5 26.5 58.3 26.5 47S35.7 26.5 47 26.5 67.5 35.7 67.5 47 58.3 67.5 47 67.5z"/>
                 </svg>
             </motion.div>
-
-            {/* Interactive Cursor Grid Mask - Only illuminates the grid lines with a gradient */}
-            <div 
-                className="absolute inset-0 transition-opacity duration-300"
-                style={{
-                    maskImage: `radial-gradient(circle 300px at ${mousePos.x}px ${mousePos.y}px, black 0%, transparent 100%)`,
-                    WebkitMaskImage: `radial-gradient(circle 300px at ${mousePos.x}px ${mousePos.y}px, black 0%, transparent 100%)`
-                }}
-            >
-                <div className="absolute inset-[-50%] rotate-45">
-                    <motion.div 
-                        animate={{ backgroundPosition: ['0% 0%', '100% 100%'] }}
-                        transition={{ duration: 15, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
-                        className="absolute inset-0 bg-gradient-to-br from-brand-accent2 via-brand-accent/60 to-transparent opacity-100 bg-[length:200%_200%]"
-                        style={{
-                            maskImage: `
-                                linear-gradient(to right, black 1px, transparent 1px),
-                                linear-gradient(to bottom, black 1px, transparent 1px)
-                            `,
-                            maskSize: '30px 30px',
-                            WebkitMaskImage: `
-                                linear-gradient(to right, black 1px, transparent 1px),
-                                linear-gradient(to bottom, black 1px, transparent 1px)
-                            `,
-                            WebkitMaskSize: '30px 30px'
-                        }}
-                    />
-                </div>
-            </div>
 
             {/* Animated shooting stars, snapped to the rotated 30px grid */}
             <div className="absolute inset-[-50%] rotate-45 pointer-events-none">
