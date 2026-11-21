@@ -173,16 +173,16 @@ export default function CategoryCards({ categories }: { categories: Category[] }
                             <div className="relative z-10 flex-grow flex flex-col justify-end p-8">
                                 <div className="flex items-center gap-3 mb-2 opacity-80 group-hover:opacity-100 transition-opacity">
                                     <Icon className="text-brand-accent w-6 h-6" />
-                                    <span className="text-xs font-mono tracking-widest text-white/80 uppercase">Series 0{i+1}</span>
+                                    <span className="text-xs font-mono text-white/80">Series 0{i+1}</span>
                                 </div>
-                                <h3 className="font-sans text-2xl md:text-3xl font-semibold uppercase tracking-tight text-white drop-shadow-md">
+                                <h3 className="font-sans text-2xl md:text-3xl font-semibold text-white drop-shadow-md">
                                     {cat.label}
                                 </h3>
                                 
                                 {/* Hover Reveal Line */}
                                 <div className="mt-4 overflow-hidden h-0 group-hover:h-auto group-hover:mt-6 transition-all duration-500">
-                                    <div className="flex items-center text-xs font-mono tracking-widest uppercase text-brand-accent translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
-                                        Explore Specs <ArrowUpRight className="ml-2 w-4 h-4" />
+                                    <div className="flex items-center text-xs font-mono text-brand-accent translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                                        Explore specs <ArrowUpRight className="ml-2 w-4 h-4" />
                                     </div>
                                 </div>
                             </div>
@@ -203,8 +203,8 @@ export default function CategoryCards({ categories }: { categories: Category[] }
                         <div className="w-16 h-16 rounded-full border border-brand-accent/30 flex items-center justify-center group-hover:bg-brand-accent group-hover:border-transparent transition-colors duration-500">
                             <ArrowUpRight className="w-8 h-8 text-brand-accent group-hover:text-white group-hover:rotate-45 transition-all duration-500" />
                         </div>
-                        <h3 className="font-sans text-xl font-semibold uppercase tracking-widest text-brand-text text-center">
-                            View All <br /> Products
+                        <h3 className="font-sans text-xl font-semibold text-brand-text text-center">
+                            View all <br /> products
                         </h3>
                     </div>
                 </Link>

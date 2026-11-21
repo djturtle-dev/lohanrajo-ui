@@ -84,7 +84,7 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
                                 <div className="mb-6 transform group-hover:-translate-y-1 transition-transform duration-500">
                                     {getIcon(pillar.icon)}
                                 </div>
-                                <h3 className="font-sans text-xl uppercase text-brand-text mb-3 group-hover:text-brand-accent transition-colors duration-500">
+                                <h3 className="font-sans text-xl text-brand-text mb-3 group-hover:text-brand-accent transition-colors duration-500">
                                     {pillar.title}
                                 </h3>
                                 <p className="text-brand-muted text-sm font-mono leading-relaxed">

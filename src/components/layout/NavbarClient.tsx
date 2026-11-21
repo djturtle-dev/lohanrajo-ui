@@ -22,7 +22,7 @@ function NavLink({ href, children, onClick, className, isActive }: NavLinkProps)
             href={href}
             onClick={onClick}
             className={cn(
-                "group relative py-1 hover:text-brand-accent transition-colors text font-bold uppercase font-playfair flex items-center gap-1 flex-shrink-0",
+                "group relative py-1 hover:text-brand-accent transition-colors text font-bold font-playfair flex items-center gap-1 flex-shrink-0",
                 isActive ? "text-brand-accent" : "text-brand-text/80",
                 className
             )}
@@ -147,7 +147,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                             <Link
                                 href="/products"
                                 className={cn(
-                                    "px-6 py-2.5 text-sm font-bold uppercase font-playfair transition-all duration-300 flex-shrink-0 whitespace-nowrap btn-glass-primary cursor-pointer"
+                                    "px-6 py-2.5 text-sm font-bold font-playfair transition-all duration-300 flex-shrink-0 whitespace-nowrap btn-glass-primary cursor-pointer"
                                 )}
                             >
                                 Products
@@ -250,7 +250,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                             key={link.name}
                             href={link.href}
                             className={cn(
-                                "text-4xl font-playfair uppercase transition-colors",
+                                "text-4xl font-playfair transition-colors",
                                 isLinkActive(link.href) ? "text-brand-accent font-bold" : "text-brand-text hover:text-brand-accent"
                             )}
                             onClick={() => setIsOpen(false)}
@@ -261,7 +261,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                     <Link
                         href="/products"
                         className={cn(
-                            "text-4xl font-playfair uppercase transition-colors",
+                            "text-4xl font-playfair transition-colors",
                             pathname.startsWith('/products') ? "text-brand-accent font-bold shadow-[0_0_15px_rgba(184,36,29,0.4)] px-6 py-2 border border-brand-accent rounded-full" : "text-brand-text hover:text-brand-accent"
                         )}
                         onClick={() => setIsOpen(false)}
@@ -271,15 +271,15 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
 
                     <div className="pt-8 border-t border-brand-border w-full flex flex-col items-center gap-6">
                         <div className="flex items-center gap-3">
-                            <span className="text-sm font-playfair uppercase text-brand-muted">Theme</span>
+                            <span className="text-sm font-playfair text-brand-muted">Theme</span>
                             <ThemeToggle />
                         </div>
                         <Link
                             href="/contact"
-                            className="inline-flex items-center text-brand-accent font-playfair font-bold uppercase hover:gap-4 transition-all"
+                            className="inline-flex items-center text-brand-accent font-playfair font-bold hover:gap-4 transition-all"
                             onClick={() => setIsOpen(false)}
                         >
-                            Get an Estimate <ArrowRight className="ml-2 w-6 h-6" />
+                            Get an estimate <ArrowRight className="ml-2 w-6 h-6" />
                         </Link>
                     </div>
                 </div>

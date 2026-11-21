@@ -71,8 +71,8 @@ export default async function Home() {
 
                             {/* CTA */}
                             <div className="mt-6">
-                                <Link href="/products" className="group btn-glass-primary px-6 py-3 md:px-8 font-oswald tracking-widest uppercase inline-flex items-center text-xs md:text-sm">
-                                    Explore <span className="hidden md:inline ml-1">Products</span> <ArrowRight className="ml-2 md:ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
+                                <Link href="/products" className="group btn-glass-primary px-6 py-3 md:px-8 font-playfair font-semibold inline-flex items-center text-xs md:text-sm">
+                                    Explore <span className="hidden md:inline ml-1">products</span> <ArrowRight className="ml-2 md:ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
                                 </Link>
                             </div>
 
@@ -80,11 +80,11 @@ export default async function Home() {
                             <div className="flex gap-10 md:gap-14 mt-8 pt-6 border-t border-brand-border/30">
                                 <div className="flex flex-col">
                                     <span className="text-xl md:text-3xl font-semibold font-sans text-brand-text">50+</span>
-                                    <span className="text-[9px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Industries</span>
+                                    <span className="text-[9px] md:text-xs text-brand-muted font-sans mt-0.5">Industries</span>
                                 </div>
                                 <div className="flex flex-col">
                                     <span className="text-xl md:text-3xl font-semibold font-sans text-brand-text">100%</span>
-                                    <span className="text-[9px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Satisfaction</span>
+                                    <span className="text-[9px] md:text-xs text-brand-muted font-sans mt-0.5">Satisfaction</span>
                                 </div>
                             </div>
                         </div>
@@ -105,9 +105,9 @@ export default async function Home() {
             <section className="px-4 md:px-8 w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto">
                 <ScrollReveal direction="left">
                     <div className="flex justify-between items-end mb-12 border-b border-brand-border pb-6">
-                        <h2 className="font-playfair text-4xl md:text-5xl uppercase text-brand-text">Our Products</h2>
-                        <Link href="/products" className="hidden md:flex items-center text-sm font-sans tracking-widest uppercase text-brand-text hover:text-brand-accent transition-colors">
-                            View All <ArrowRight className="ml-2 w-4 h-4" />
+                        <h2 className="font-playfair text-4xl md:text-5xl text-brand-text">Our products</h2>
+                        <Link href="/products" className="hidden md:flex items-center text-sm font-sans text-brand-text hover:text-brand-accent transition-colors">
+                            View all <ArrowRight className="ml-2 w-4 h-4" />
                         </Link>
                     </div>
                 </ScrollReveal>
