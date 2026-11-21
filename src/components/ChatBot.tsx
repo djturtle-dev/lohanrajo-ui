@@ -235,7 +235,7 @@ export default function ChatBot() {
         <div className="relative w-14 h-14 shrink-0">
           <button
             onClick={() => { setIsOpen(!isOpen); setShowWelcome(false); }}
-            className="btn-glass-primary w-full h-full flex items-center justify-center cursor-pointer shadow-lg rounded-full z-50 transition-transform"
+            className="btn-glass-secondary w-full h-full flex items-center justify-center cursor-pointer shadow-lg rounded-full z-50 transition-transform"
           >
             {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
           </button>

@@ -76,7 +76,7 @@ export default async function Home() {
 
                             {/* CTA */}
                             <div className="mt-6">
-                                <Link href="/products" className="group btn-glass-secondary px-6 py-3 md:px-8 font-oswald tracking-widest uppercase inline-flex items-center text-xs md:text-sm">
+                                <Link href="/products" className="group btn-glass-primary px-6 py-3 md:px-8 font-oswald tracking-widest uppercase inline-flex items-center text-xs md:text-sm">
                                     Explore <span className="hidden md:inline ml-1">Products</span> <ArrowRight className="ml-2 md:ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
                                 </Link>
                             </div>
