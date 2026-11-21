@@ -9,7 +9,7 @@ export default function Footer() {
                 <div className="pr-0 lg:pr-12 lg:border-r lg:border-brand-border/50">
                     <div className="mb-6 block">
                         <Image 
-                            src="/footer logo.png" 
+                            src="/Footer-logo.png" 
                             alt="Lohanrajo Logo" 
                             width={400} 
                             height={120} 
