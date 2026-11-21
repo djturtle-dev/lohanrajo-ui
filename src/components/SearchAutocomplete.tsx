@@ -88,7 +88,7 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
                     onFocus={() => {
                         if (hasResults) setIsOpen(true);
                     }}
-                    placeholder="Search products, categories..."
+                    placeholder="products ..."
                     className="w-full bg-brand-panel border border-brand-border px-4 py-3 pl-10 text-brand-text focus:outline-none focus:border-brand-accent transition-colors block"
                     autoComplete="off"
                 />

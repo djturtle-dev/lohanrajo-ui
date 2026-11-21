@@ -110,7 +110,6 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                 {/* Left Sidebar */}
                 <div className="space-y-6 relative z-[100]">
                     <div>
-                        <h3 className="font-playfair italic font-bold text-brand-text mb-3 text-lg">Search</h3>
                         <SearchAutocomplete initialQuery={query} initialCategory={category} />
                     </div>
 
