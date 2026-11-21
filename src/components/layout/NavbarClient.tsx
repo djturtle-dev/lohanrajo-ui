@@ -135,7 +135,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                                 {link.name}
                                             </NavLink>
                                         ))}
-                                        <div className="flex items-center flex-shrink-0">
+                                        <div className="flex items-center flex-shrink-0 overflow-visible">
                                             <ThemeToggle />
                                         </div>
                                     </div>

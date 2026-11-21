@@ -16,7 +16,8 @@ export default function ThemeToggle() {
             onClick={toggle}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="relative h-10 w-10 rounded-full btn-glass-secondary flex-shrink-0 hover:scale-105 flex items-center justify-center cursor-pointer"
+            className="relative h-10 w-10 rounded-full btn-glass-secondary !overflow-visible flex-shrink-0 hover:scale-105 flex items-center justify-center cursor-pointer"
+            style={{ overflow: 'visible' }}
         >
             <AnimatePresence mode="wait" initial={false}>
                 <motion.span
