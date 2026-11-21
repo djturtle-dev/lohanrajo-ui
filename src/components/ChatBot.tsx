@@ -224,7 +224,7 @@ export default function ChatBot() {
 
   return (
     <>
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-4">
+      <div id="chatbot-container" className="chatbot-container fixed bottom-6 right-6 z-50 flex items-center gap-4">
         <AnimatePresence>
           {showWelcome && !isOpen && (
             <motion.div

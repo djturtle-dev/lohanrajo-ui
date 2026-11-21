@@ -163,6 +163,26 @@
     font-style: italic;
 }
 
+/* Hide chatbot button when product image fullscreen gallery is open */
+body[data-gallery-open="true"] .chatbot-container,
+body[data-gallery-open="true"] #chatbot-container {
+    display: none !important;
+}
+
+/* Image protection against saving and dragging */
+.no-download,
+.no-download img,
+img.no-download {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
+}
+
 @layer base {
     html {
         color-scheme: light;
