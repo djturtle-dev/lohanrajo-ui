@@ -5,6 +5,17 @@ const nextConfig: NextConfig = {
     turbopackUseSystemTlsCerts: true,
   },
   images: {
+    localPatterns: [
+      {
+        pathname: '/api/blobs/**',
+      },
+      {
+        pathname: '/uploads/**',
+      },
+      {
+        pathname: '/**',
+      },
+    ],
     remotePatterns: [
       {
         protocol: 'https',
