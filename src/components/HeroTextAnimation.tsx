@@ -87,7 +87,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                         <motion.span
                             key={elementIdx++}
                             variants={itemVariants}
-                            className="inline-block mr-[0.2em] last:mr-0 text-brand-text font-bold"
+                            className="inline-block mr-[0.25em] last:mr-0 text-brand-accent italic font-bold"
                         >
                             {word}
                         </motion.span>
@@ -101,7 +101,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                         <motion.span
                             key={elementIdx++}
                             variants={itemVariants}
-                            className="inline-block text-brand-text mr-[0.2em] last:mr-0"
+                            className="inline-block text-brand-text mr-[0.25em] last:mr-0 italic font-medium"
                         >
                             {word}
                         </motion.span>
@@ -124,7 +124,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                     exit="exit"
                     className="absolute w-fit flex flex-nowrap whitespace-nowrap justify-start text-left"
                 >
-                    <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-brand-text leading-none flex flex-nowrap whitespace-nowrap justify-start">
+                    <h1 className="font-playfair italic text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-none flex flex-nowrap whitespace-nowrap justify-start">
                         {parseAndAnimateLine(displayLines[index])}
                     </h1>
                 </motion.div>

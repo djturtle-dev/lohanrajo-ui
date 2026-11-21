@@ -19,6 +19,7 @@
     --font-sans:   var(--font-poppins), sans-serif;
     --font-serif:  var(--font-forum), serif;
     --font-mono:   var(--font-inter), sans-serif;
+    --font-playfair: var(--font-playfair), serif;
 }
 
 /* =============================================

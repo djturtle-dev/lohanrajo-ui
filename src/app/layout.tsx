@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, Poppins, Forum } from "next/font/google";
+import { Cormorant_Garamond, Inter, Poppins, Forum, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -12,6 +12,7 @@ const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "500"
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-poppins" });
 const forum = Forum({ subsets: ["latin"], weight: ["400"], variable: "--font-forum" });
+const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800", "900"], style: ['normal', 'italic'], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
     title: "LIAT - LOHANRAJO INDUSTRIES AND TECHNOLOGIES | Industrial Enclosures & Panels",
@@ -38,7 +39,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning className={`${inter.variable} ${cormorant.variable} ${poppins.variable} ${forum.variable}`}>
+        <html lang="en" suppressHydrationWarning className={`${inter.variable} ${cormorant.variable} ${poppins.variable} ${forum.variable} ${playfair.variable}`}>
             <head>
                 {/* Anti-flash script: must run synchronously before paint */}
                 <script dangerouslySetInnerHTML={{ __html: themeScript }} />

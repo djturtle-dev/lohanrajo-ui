@@ -140,8 +140,20 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                 Products
                             </Link>
 
-                            {/* Theme toggle — always visible on desktop */}
-                            <ThemeToggle />
+                            {/* Theme toggle — hidden when navbar is minimized / collapsed */}
+                            <AnimatePresence>
+                                {!isCollapsed && (
+                                    <motion.div
+                                        initial={{ opacity: 0, width: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, width: "auto", scale: 1 }}
+                                        exit={{ opacity: 0, width: 0, scale: 0.8 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="overflow-hidden flex-shrink-0 flex items-center"
+                                    >
+                                        <ThemeToggle />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                             
                             <AnimatePresence>
                                 {isScrolled && (
@@ -167,9 +179,21 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                         </div>
                     </div>
 
-                    {/* Mobile controls: theme toggle + burger */}
+                    {/* Mobile controls: theme toggle (hidden on smallest screen / when minimized) + burger */}
                     <div className="md:hidden flex items-center gap-2 ml-2">
-                        <ThemeToggle />
+                        <AnimatePresence>
+                            {!isScrolled && (
+                                <motion.div
+                                    initial={{ opacity: 0, width: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, width: "auto", scale: 1 }}
+                                    exit={{ opacity: 0, width: 0, scale: 0.8 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="hidden sm:flex overflow-hidden flex-shrink-0 items-center"
+                                >
+                                    <ThemeToggle />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                         <button
                             className="p-2 rounded-full btn-glass-secondary flex-shrink-0 transition-transform hover:scale-105 flex items-center justify-center cursor-pointer z-50"
                             onClick={() => setIsOpen(!isOpen)}
@@ -214,7 +238,11 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                         Products
                     </Link>
 
-                    <div className="pt-8 border-t border-brand-border w-full flex justify-center">
+                    <div className="pt-8 border-t border-brand-border w-full flex flex-col items-center gap-6">
+                        <div className="flex items-center gap-3">
+                            <span className="text-sm font-oswald uppercase tracking-widest text-brand-muted">Theme</span>
+                            <ThemeToggle />
+                        </div>
                         <Link
                             href="/contact"
                             className="inline-flex items-center text-brand-accent font-oswald font-bold tracking-widest uppercase hover:gap-4 transition-all"

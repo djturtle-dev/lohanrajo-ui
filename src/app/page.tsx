@@ -80,6 +80,18 @@ export default async function Home() {
                                     Explore <span className="hidden md:inline ml-1">Products</span> <ArrowRight className="ml-2 md:ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
                                 </Link>
                             </div>
+
+                            {/* Metrics */}
+                            <div className="flex gap-10 md:gap-14 mt-8 pt-6 border-t border-brand-border/30">
+                                <div className="flex flex-col">
+                                    <span className="text-xl md:text-3xl font-bold font-sans text-brand-text">50+</span>
+                                    <span className="text-[9px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Industries</span>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-xl md:text-3xl font-bold font-sans text-brand-text">100%</span>
+                                    <span className="text-[9px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Satisfaction</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -89,25 +101,6 @@ export default async function Home() {
                     </div>
                 </section>
 
-                {/* Metrics shelf */}
-                <section className="relative w-full border-b border-brand-border/30 bg-brand-bg">
-                    <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8 py-10 flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
-                        <div className="flex gap-12 md:gap-16 shrink-0">
-                            <div className="flex flex-col">
-                                <span className="text-2xl md:text-4xl font-bold font-sans text-brand-text">50+</span>
-                                <span className="text-[10px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-1">Industries</span>
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-2xl md:text-4xl font-bold font-sans text-brand-text">100%</span>
-                                <span className="text-[10px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-1">Satisfaction</span>
-                            </div>
-                        </div>
-                        <div className="hidden md:block h-12 w-px bg-brand-border/50" />
-                        <p className="text-brand-muted text-sm leading-relaxed max-w-lg">
-                            LOHANRAJO merges uncompromised quality with state-of-the-art manufacturing. Our mission is to deliver enclosures and metal solutions that are exceptionally resilient and seamlessly functional.
-                        </p>
-                    </div>
-                </section>
             </div>
 
             {/* Spatial Node Map Section */}
