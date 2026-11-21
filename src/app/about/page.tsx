@@ -172,19 +172,6 @@ export default async function AboutPage() {
                                     className="object-contain p-4 z-10 transition-transform duration-700 group-hover:scale-105"
                                 />
                             </div>
-
-                            {/* Founder Recognition Pill */}
-                            {data.founderNames && (
-                                <div className="w-full mt-4 pt-4 border-t border-brand-border/40 flex items-center justify-between text-xs font-sans text-brand-muted">
-                                    <span className="inline-flex items-center gap-1.5 font-medium text-brand-text truncate">
-                                        <Award className="w-4 h-4 text-brand-accent shrink-0" />
-                                        <span className="truncate">{data.founderNames}</span>
-                                    </span>
-                                    <span className="font-mono text-[11px] text-brand-accent shrink-0 pl-2">
-                                        {data.establishedText || "1992"}
-                                    </span>
-                                </div>
-                            )}
                         </div>
                     </div>
 
