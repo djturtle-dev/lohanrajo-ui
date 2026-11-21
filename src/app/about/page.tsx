@@ -55,10 +55,10 @@ export default async function AboutPage() {
         }));
 
     return (
-        <div className="flex flex-col gap-12 pt-32 md:pt-40">
+        <div className="flex flex-col gap-12 pt-24 md:pt-28">
             {/* Header */}
             <ScrollReveal direction="up" className="max-w-4xl mx-auto text-center px-4 mb-12">
-                <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl font-normal tracking-tighter text-brand-text mb-6 text-balance">
+                <h1 className="font-playfair italic text-4xl md:text-5xl lg:text-6xl text-brand-text mb-6 text-balance">
                     {data.title.split(' ').map((word: string, i: number) =>
                         word.toLowerCase() === 'excellence' ? (
                             <span key={i} className="text-brand-accent">{word} </span>

@@ -66,12 +66,12 @@ export default function ContactPage() {
     }
 
     return (
-        <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
+        <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-24 md:pt-28 pb-16">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
                 {/* Left Column: Form */}
                 <ScrollReveal direction="left" className="lg:col-span-7 space-y-12">
                     <div>
-                        <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl font-normal tracking-tighter text-brand-text mb-6 text-balance">Get in <span className="text-brand-accent">Touch</span></h1>
+                        <h1 className="font-playfair italic text-4xl md:text-5xl lg:text-6xl text-brand-text mb-6 text-balance">Get in <span className="text-brand-accent">touch</span></h1>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-8">

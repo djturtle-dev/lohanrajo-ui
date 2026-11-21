@@ -105,7 +105,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
             : `Showing ${startItem}–${endItem} of ${totalCount} products`;
 
     return (
-        <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
+        <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-24 md:pt-28 pb-16">
             <ScrollReveal direction="up" className="flex flex-col md:flex-row justify-between items-start mb-6">
                 <div>
                     <h1 className="font-playfair italic text-4xl md:text-5xl lg:text-6xl text-brand-text mb-6 text-balance">

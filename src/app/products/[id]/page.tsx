@@ -27,7 +27,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     }
 
     return (
-        <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
+        <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-24 md:pt-28 pb-16">
             <ScrollReveal direction="down" delay={0.1}>
                 <Link href="/products" className="inline-flex items-center text-brand-muted hover:text-brand-text mb-8 transition-colors font-sans text-sm">
                     <ArrowLeft className="w-4 h-4 mr-2" /> Back to catalog

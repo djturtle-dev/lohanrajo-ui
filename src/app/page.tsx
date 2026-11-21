@@ -47,10 +47,10 @@ export default async function Home() {
     };
 
     return (
-        <div className="flex flex-col gap-24">
+        <div className="flex flex-col gap-16 md:gap-20">
             {/* Full-Bleed Cinematic Hero + Metrics Shelf */}
             <div>
-                <section className="relative w-full h-[100svh] min-h-[600px] max-h-[1100px] overflow-hidden">
+                <section className="relative w-full h-[100svh] min-h-[580px] max-h-[1050px] overflow-hidden">
                     {/* Full-bleed video background */}
                     <HeroBlobVideo />
 
@@ -61,7 +61,7 @@ export default async function Home() {
                     <div className="absolute inset-0 z-10 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, var(--th-bg) 100%)' }} />
 
                     {/* Bottom-left content */}
-                    <div className="absolute inset-0 z-20 flex flex-col justify-end w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8 pb-20 md:pb-28">
+                    <div className="absolute inset-0 z-20 flex flex-col justify-end w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8 pt-20 pb-12 md:pb-16">
                         <div className="max-w-2xl">
                             {/* Animated hero text */}
                             <HeroTextAnimation lines={homeContent.heroLines} />
