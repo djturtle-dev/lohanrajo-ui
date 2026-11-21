@@ -100,11 +100,11 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
     };
 
     return (
-        <section ref={containerRef} className="relative w-full py-0 overflow-hidden bg-transparent">
+        <section ref={containerRef} className="relative w-full py-4 md:py-6 overflow-hidden bg-white dark:bg-transparent border-y border-brand-border/30 dark:border-transparent transition-colors duration-300">
             <div className="relative w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8">
                 <ScrollReveal direction="up" duration={0.8}>
                     {/* Monolithic Telemetry Console Deck */}
-                    <div className="relative rounded-2xl border border-brand-border/50 dark:border-white/10 bg-white dark:bg-[#0c0c0c]/90 backdrop-blur-xl overflow-hidden shadow-sm dark:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]">
+                    <div className="relative rounded-2xl border border-brand-border/40 dark:border-white/10 bg-white dark:bg-[#0c0c0c]/90 backdrop-blur-xl overflow-hidden shadow-sm dark:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]">
                         {/* Interactive Top Laser Runner */}
                         <div className="absolute top-0 left-0 right-0 h-[2px] bg-brand-border/20 dark:bg-white/5 overflow-hidden z-20">
                             <div
