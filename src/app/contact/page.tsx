@@ -1,9 +1,31 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { submitFeedback } from '@/app/actions';
-import { MapPin, Phone, Mail, AlertTriangle, CheckCircle2, XCircle, ChevronDown } from 'lucide-react';
+import { 
+    MapPin, 
+    Phone, 
+    Mail, 
+    AlertTriangle, 
+    CheckCircle2, 
+    XCircle, 
+    ChevronDown, 
+    Search, 
+    X, 
+    Package, 
+    Loader2 
+} from 'lucide-react';
 import ScrollReveal from '@/components/animations/ScrollReveal';
+import { getAssetUrl } from '@/lib/utils';
+
+interface TaggedProduct {
+    id: string;
+    name: string;
+    images?: string[];
+    category?: { name: string } | null;
+    subCategory?: { name: string } | null;
+}
 
 /* --- 2D Vector Flag Components --- */
 function IndiaFlag({ className = "w-5 h-3.5" }: { className?: string }) {
@@ -157,6 +179,19 @@ export default function ContactPage() {
     const countryDropdownRef = useRef<HTMLDivElement>(null);
     const [phoneNumber, setPhoneNumber] = useState('');
     
+    // Product Slash Command State
+    const [message, setMessage] = useState('');
+    const [taggedProducts, setTaggedProducts] = useState<TaggedProduct[]>([]);
+    const [isSlashMenuOpen, setIsSlashMenuOpen] = useState(false);
+    const [slashQuery, setSlashQuery] = useState('');
+    const [slashMatchIndex, setSlashMatchIndex] = useState(0);
+    const [searchResults, setSearchResults] = useState<TaggedProduct[]>([]);
+    const [highlightedIndex, setHighlightedIndex] = useState(0);
+    const [isSearching, setIsSearching] = useState(false);
+
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const slashMenuRef = useRef<HTMLDivElement>(null);
+    
     const isCaptchaValid = captcha !== null && captchaInput.trim() === captcha.answer;
     const isCaptchaWrong = captchaInput.trim() !== '' && captcha !== null && captchaInput.trim() !== captcha.answer;
     const isPhoneValid = phoneNumber.length === 10;
@@ -167,6 +202,19 @@ export default function ContactPage() {
             const type = params.get('type');
             if (type && ['ENQUIRY', 'CONTACT', 'CAREER', 'SUPPORT'].includes(type)) {
                 setSelectedType(type);
+            }
+
+            // Pre-tag product if linked via query string e.g. /contact?product=Name
+            const prodParam = params.get('product');
+            if (prodParam) {
+                fetch(`/api/products/search?q=${encodeURIComponent(prodParam)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success && data.products && data.products.length > 0) {
+                            setTaggedProducts([data.products[0]]);
+                        }
+                    })
+                    .catch(() => {});
             }
         }
     }, []);
@@ -180,14 +228,121 @@ export default function ContactPage() {
             if (countryDropdownRef.current && !countryDropdownRef.current.contains(event.target as Node)) {
                 setIsCountryOpen(false);
             }
+            if (
+                slashMenuRef.current && 
+                !slashMenuRef.current.contains(event.target as Node) &&
+                textareaRef.current && 
+                !textareaRef.current.contains(event.target as Node)
+            ) {
+                setIsSlashMenuOpen(false);
+            }
         }
-        if (isCountryOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
+        document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [isCountryOpen]);
+    }, []);
+
+    // Search products when slash menu is open or query changes
+    useEffect(() => {
+        if (!isSlashMenuOpen) return;
+        let isCurrent = true;
+        setIsSearching(true);
+        
+        const timer = setTimeout(() => {
+            fetch(`/api/products/search?q=${encodeURIComponent(slashQuery)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (isCurrent && data.success) {
+                        setSearchResults(data.products || []);
+                        setHighlightedIndex(0);
+                    }
+                })
+                .catch(err => {
+                    console.error("Search fetch error:", err);
+                })
+                .finally(() => {
+                    if (isCurrent) setIsSearching(false);
+                });
+        }, 120);
+
+        return () => {
+            isCurrent = false;
+            clearTimeout(timer);
+        };
+    }, [slashQuery, isSlashMenuOpen]);
+
+    const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const val = e.target.value;
+        const cursorPos = e.target.selectionStart ?? val.length;
+        setMessage(val);
+
+        // Check text up to cursor for a slash command
+        const textBeforeCursor = val.slice(0, cursorPos);
+        const slashMatch = textBeforeCursor.match(/(?:^|\s)\/([^\s\/]*)$/);
+
+        if (slashMatch) {
+            const query = slashMatch[1];
+            const matchIndex = textBeforeCursor.lastIndexOf('/' + query);
+            setSlashMatchIndex(matchIndex);
+            setSlashQuery(query);
+            setIsSlashMenuOpen(true);
+            setHighlightedIndex(0);
+        } else {
+            setIsSlashMenuOpen(false);
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (!isSlashMenuOpen) return;
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            setHighlightedIndex(prev => (prev + 1) % Math.max(1, searchResults.length));
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            setHighlightedIndex(prev => (prev - 1 + searchResults.length) % Math.max(1, searchResults.length));
+        } else if (e.key === 'Enter' || e.key === 'Tab') {
+            if (searchResults.length > 0 && searchResults[highlightedIndex]) {
+                e.preventDefault();
+                selectProduct(searchResults[highlightedIndex]);
+            }
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            setIsSlashMenuOpen(false);
+        }
+    };
+
+    const selectProduct = (product: TaggedProduct) => {
+        setTaggedProducts(prev => {
+            if (prev.some(p => p.id === product.id)) return prev;
+            return [...prev, product];
+        });
+
+        // Clean up the "/query" trigger from the textarea text
+        if (textareaRef.current) {
+            const cursorPos = textareaRef.current.selectionStart ?? message.length;
+            const textBefore = message.slice(0, slashMatchIndex);
+            const textAfter = message.slice(cursorPos);
+            const newText = (textBefore + (textAfter.startsWith(' ') || textBefore.endsWith(' ') ? '' : ' ') + textAfter).trimStart();
+            setMessage(newText);
+
+            setTimeout(() => {
+                if (textareaRef.current) {
+                    textareaRef.current.focus();
+                    const newPos = textBefore.length;
+                    textareaRef.current.setSelectionRange(newPos, newPos);
+                }
+            }, 50);
+        }
+
+        setIsSlashMenuOpen(false);
+        setSlashQuery('');
+    };
+
+    const removeProductTag = (id: string) => {
+        setTaggedProducts(prev => prev.filter(p => p.id !== id));
+    };
 
     const activeCountry = COUNTRIES.find((c) => c.dialCode === countryCode) || COUNTRIES[0];
     const ActiveFlag = activeCountry.Flag;
@@ -214,11 +369,25 @@ export default function ContactPage() {
         setFormStatus('submitting');
 
         const formData = new FormData(e.currentTarget);
+
+        // Append tagged products info to content
+        const currentContent = (formData.get('content') as string)?.trim() || message.trim();
+        if (taggedProducts.length > 0) {
+            const productList = taggedProducts
+                .map((p) => `• ${p.name}${p.category?.name ? ` [${p.category.name}]` : ''}`)
+                .join('\n');
+            const enhancedContent = `${currentContent}\n\n---\nReferenced Products:\n${productList}`;
+            formData.set('content', enhancedContent);
+            formData.set('taggedProductIds', JSON.stringify(taggedProducts.map(p => p.id)));
+        }
+
         const result = await submitFeedback(formData);
 
         if (result.success) {
             setFormStatus('success');
             (e.target as HTMLFormElement).reset();
+            setMessage('');
+            setTaggedProducts([]);
             setPhoneNumber('');
             setCountryCode('+91');
             refreshCaptcha();
@@ -386,9 +555,152 @@ export default function ContactPage() {
                             </div>
                         )}
 
-                        <div className="space-y-3">
-                            <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Tell us more<span className="text-brand-accent ml-1">*</span></label>
-                            <textarea required name="content" rows={4} className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors resize-none rounded-2xl text-sm" placeholder="Share details about your requirement..."></textarea>
+                        <div className="space-y-3 relative">
+                            <div className="flex items-center justify-between px-1">
+                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block">
+                                    Tell us more<span className="text-brand-accent ml-1">*</span>
+                                </label>
+                                <span className="inline-flex items-center gap-1.5 text-[11px] font-sans text-brand-muted/70">
+                                    Press <kbd className="px-1.5 py-0.5 text-[10px] font-mono rounded bg-brand-panel border border-brand-border font-semibold text-brand-accent shadow-xs">/</kbd> to tag products
+                                </span>
+                            </div>
+
+                            {/* Tagged Products Chips */}
+                            {taggedProducts.length > 0 && (
+                                <div className="flex flex-wrap gap-2 pt-1 pb-1 animate-in fade-in duration-200">
+                                    {taggedProducts.map((p) => {
+                                        const thumb = p.images?.[0] ? getAssetUrl(p.images[0]) : null;
+                                        return (
+                                            <div 
+                                                key={p.id}
+                                                className="inline-flex items-center gap-2 pl-1.5 pr-2.5 py-1 rounded-full bg-brand-panel border border-brand-accent/40 shadow-xs text-xs font-sans text-brand-text group transition-all hover:border-brand-accent"
+                                            >
+                                                <div className="w-5 h-5 rounded-full overflow-hidden bg-brand-bg shrink-0 border border-brand-border/60 flex items-center justify-center">
+                                                    {thumb ? (
+                                                        <Image
+                                                            src={thumb}
+                                                            alt={p.name}
+                                                            width={20}
+                                                            height={20}
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    ) : (
+                                                        <Package className="w-3 h-3 text-brand-muted" />
+                                                    )}
+                                                </div>
+                                                <span className="font-medium text-brand-text truncate max-w-[180px] sm:max-w-[240px]">
+                                                    {p.name}
+                                                </span>
+                                                {p.category?.name && (
+                                                    <span className="text-[10px] text-brand-muted hidden sm:inline">
+                                                        • {p.category.name}
+                                                    </span>
+                                                )}
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeProductTag(p.id)}
+                                                    aria-label={`Remove tag ${p.name}`}
+                                                    className="w-4 h-4 rounded-full flex items-center justify-center text-brand-muted hover:text-brand-accent hover:bg-brand-accent/10 transition-colors ml-0.5 cursor-pointer"
+                                                >
+                                                    <X className="w-3 h-3" />
+                                                </button>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+
+                            <div className="relative">
+                                <textarea 
+                                    ref={textareaRef}
+                                    required 
+                                    name="content" 
+                                    rows={4} 
+                                    value={message}
+                                    onChange={handleMessageChange}
+                                    onKeyDown={handleKeyDown}
+                                    className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors resize-none rounded-2xl text-sm" 
+                                    placeholder="Share details about your requirement... (press / to tag a product)"
+                                />
+
+                                {/* Slash Command Product Picker Dropdown */}
+                                {isSlashMenuOpen && (
+                                    <div 
+                                        ref={slashMenuRef}
+                                        className="absolute left-0 right-0 bottom-full mb-2 z-30 card-glass border border-brand-border shadow-2xl rounded-2xl overflow-hidden p-2 backdrop-blur-xl animate-in fade-in-0 zoom-in-95 duration-150"
+                                    >
+                                        <div className="px-3 py-2 border-b border-brand-border/40 flex items-center justify-between text-xs font-sans text-brand-muted">
+                                            <div className="flex items-center gap-2">
+                                                <Search className="w-3.5 h-3.5 text-brand-accent" />
+                                                <span className="font-medium text-brand-text">
+                                                    {slashQuery ? `Search products: "/${slashQuery}"` : "Tag a Product"}
+                                                </span>
+                                            </div>
+                                            <div className="hidden sm:flex items-center gap-2 text-[10px] text-brand-muted/60">
+                                                <span>↑↓ navigate</span>
+                                                <span>↵ select</span>
+                                                <span>esc close</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="max-h-56 overflow-y-auto py-1 scrollbar-thin">
+                                            {isSearching ? (
+                                                <div className="py-6 flex items-center justify-center gap-2 text-xs font-sans text-brand-muted">
+                                                    <Loader2 className="w-3.5 h-3.5 animate-spin text-brand-accent" />
+                                                    <span>Searching catalog...</span>
+                                                </div>
+                                            ) : searchResults.length > 0 ? (
+                                                searchResults.map((product, idx) => {
+                                                    const thumb = product.images?.[0] ? getAssetUrl(product.images[0]) : null;
+                                                    const isSelected = idx === highlightedIndex;
+                                                    return (
+                                                        <div
+                                                            key={product.id}
+                                                            onMouseEnter={() => setHighlightedIndex(idx)}
+                                                            onClick={() => selectProduct(product)}
+                                                            className={`flex items-center gap-3 px-3 py-2 rounded-xl cursor-pointer transition-colors ${
+                                                                isSelected
+                                                                    ? 'bg-brand-accent/15 border border-brand-accent/40 text-brand-text'
+                                                                    : 'hover:bg-brand-panel/60 text-brand-text border border-transparent'
+                                                            }`}
+                                                        >
+                                                            <div className="w-9 h-9 rounded-lg overflow-hidden bg-brand-bg shrink-0 border border-brand-border/60 flex items-center justify-center">
+                                                                {thumb ? (
+                                                                    <Image
+                                                                        src={thumb}
+                                                                        alt={product.name}
+                                                                        width={36}
+                                                                        height={36}
+                                                                        className="w-full h-full object-cover"
+                                                                    />
+                                                                ) : (
+                                                                    <Package className="w-4 h-4 text-brand-muted" />
+                                                                )}
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <p className="font-sans font-medium text-xs sm:text-sm text-brand-text truncate">
+                                                                    {product.name}
+                                                                </p>
+                                                                <p className="font-sans text-[10px] text-brand-muted truncate">
+                                                                    {product.category?.name || "Product"}
+                                                                    {product.subCategory?.name && ` • ${product.subCategory.name}`}
+                                                                </p>
+                                                            </div>
+                                                            <span className="text-[10px] font-mono text-brand-accent opacity-0 group-hover:opacity-100 sm:inline hidden">
+                                                                Tag +
+                                                            </span>
+                                                        </div>
+                                                    );
+                                                })
+                                            ) : (
+                                                <div className="py-6 text-center text-xs font-sans text-brand-muted">
+                                                    No products found matching &ldquo;{slashQuery}&rdquo;
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         <div className="space-y-6">
