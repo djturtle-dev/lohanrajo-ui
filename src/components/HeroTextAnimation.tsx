@@ -101,7 +101,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                         <motion.span
                             key={elementIdx++}
                             variants={itemVariants}
-                            className="inline-block text-brand-text mr-[0.25em] last:mr-0 italic font-medium"
+                            className="inline-block text-brand-text mr-[0.25em] last:mr-0 italic font-bold"
                         >
                             {word}
                         </motion.span>
