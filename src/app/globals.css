@@ -154,6 +154,15 @@
     background-color: var(--th-panel);
 }
 
+@utility font-playfair {
+    font-family: var(--font-playfair), serif;
+    font-style: italic;
+}
+
+.font-playfair {
+    font-style: italic;
+}
+
 @layer base {
     html {
         color-scheme: light;

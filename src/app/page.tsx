@@ -71,7 +71,7 @@ export default async function Home() {
 
                             {/* CTA */}
                             <div className="mt-6">
-                                <Link href="/products" className="group btn-glass-primary px-6 py-3 md:px-8 font-playfair font-semibold inline-flex items-center text-xs md:text-sm">
+                                <Link href="/products" className="group btn-glass-primary px-6 py-3 md:px-8 font-playfair italic font-semibold inline-flex items-center text-xs md:text-sm">
                                     Explore <span className="hidden md:inline ml-1">products</span> <ArrowRight className="ml-2 md:ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
                                 </Link>
                             </div>
@@ -105,7 +105,7 @@ export default async function Home() {
             <section className="px-4 md:px-8 w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto">
                 <ScrollReveal direction="left">
                     <div className="flex justify-between items-end mb-12 border-b border-brand-border pb-6">
-                        <h2 className="font-playfair text-4xl md:text-5xl text-brand-text">Our products</h2>
+                        <h2 className="font-playfair italic text-4xl md:text-5xl text-brand-text">Our products</h2>
                         <Link href="/products" className="hidden md:flex items-center text-sm font-sans text-brand-text hover:text-brand-accent transition-colors">
                             View all <ArrowRight className="ml-2 w-4 h-4" />
                         </Link>
