@@ -466,13 +466,22 @@ function ContactFormContent() {
 
         const formData = new FormData(e.currentTarget);
 
-        // Append tagged products info to content
+        // Append tagged products info to content with JSON metadata for Admin Mailbox
         const currentContent = (formData.get('content') as string)?.trim() || message.trim();
         if (taggedProducts.length > 0) {
+            const productMetadata = JSON.stringify(
+                taggedProducts.map((p) => ({
+                    id: p.id,
+                    name: p.name,
+                    image: p.images?.[0] || '',
+                    category: p.category?.name || '',
+                    subCategory: p.subCategory?.name || ''
+                }))
+            );
             const productList = taggedProducts
                 .map((p) => `• ${p.name}${p.category?.name ? ` [${p.category.name}]` : ''}`)
                 .join('\n');
-            const enhancedContent = `${currentContent}\n\n---\nReferenced Products:\n${productList}`;
+            const enhancedContent = `${currentContent}\n\n<!-- TAGGED_PRODUCTS_JSON: ${productMetadata} -->\n\n---\nReferenced Products:\n${productList}`;
             formData.set('content', enhancedContent);
             formData.set('taggedProductIds', JSON.stringify(taggedProducts.map(p => p.id)));
         }
