@@ -13,13 +13,15 @@ export default function HeroContent({ heading }: HeroContentProps) {
         <div className={styles.heroContainer}>
             <div className={styles.heroContent}>
                 {/* 1. Heading */}
-                <h1 className={styles.heading}>
-                    {heading || (
-                        <>
-                            Precision in <span className="text-brand-accent">Metal Arts</span>
-                        </>
-                    )}
-                </h1>
+                {heading ? (
+                    <div className={styles.headingWrapper}>
+                        {heading}
+                    </div>
+                ) : (
+                    <h1 className={styles.heading}>
+                        Precision in <span className="text-brand-accent">Metal Arts</span>
+                    </h1>
+                )}
 
                 {/* 2. Short Red Underline Bar */}
                 <div className={styles.underlineBar} aria-hidden="true" />

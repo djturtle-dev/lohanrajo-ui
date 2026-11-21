@@ -114,7 +114,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
     };
 
     return (
-        <div className="relative h-10 sm:h-14 md:h-16 lg:h-20 xl:h-24 w-fit flex items-center justify-start mb-1 perspective-1000 overflow-visible">
+        <div className="relative h-10 sm:h-14 md:h-16 lg:h-20 xl:h-24 w-full max-w-full flex items-center justify-start mb-1 perspective-1000 overflow-hidden">
             <AnimatePresence>
                 <motion.div
                     key={index}
@@ -122,9 +122,9 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="absolute w-fit flex flex-nowrap whitespace-nowrap justify-start text-left"
+                    className="absolute w-fit max-w-full flex flex-nowrap whitespace-nowrap justify-start text-left"
                 >
-                    <h1 className="font-playfair italic text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-none flex flex-nowrap whitespace-nowrap justify-start">
+                    <h1 className="font-playfair italic text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-none flex flex-nowrap whitespace-nowrap justify-start max-w-full">
                         {parseAndAnimateLine(displayLines[index])}
                     </h1>
                 </motion.div>

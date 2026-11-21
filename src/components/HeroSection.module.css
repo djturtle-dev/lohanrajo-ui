@@ -15,6 +15,14 @@
     inset: 0;
     z-index: 20;
     pointer-events: none;
+    overflow-x: clip;
+}
+
+.headingWrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0 0 16px 0;
 }
 
 .heroContent {

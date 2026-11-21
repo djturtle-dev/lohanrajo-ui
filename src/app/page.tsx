@@ -48,10 +48,10 @@ export default async function Home() {
     };
 
     return (
-        <div className="flex flex-col gap-16 md:gap-20">
+        <div className="flex flex-col gap-16 md:gap-20 w-full max-w-full overflow-x-hidden">
             {/* Full-Bleed Cinematic Hero + Metrics Shelf */}
-            <div>
-                <section className="relative w-full h-[100svh] min-h-[580px] max-h-[1050px] overflow-hidden">
+            <div className="w-full max-w-full overflow-hidden">
+                <section className="relative w-full max-w-full h-[100svh] min-h-[580px] max-h-[1050px] overflow-hidden">
                     {/* Full-bleed video background */}
                     <HeroBlobVideo />
 

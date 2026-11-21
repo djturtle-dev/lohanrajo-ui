@@ -48,12 +48,12 @@ export default function RootLayout({
                 {/* Anti-flash script: must run synchronously before paint */}
                 <script dangerouslySetInnerHTML={{ __html: themeScript }} />
             </head>
-            <body suppressHydrationWarning className={`font-sans bg-brand-bg text-brand-text selection:bg-brand-accent selection:text-brand-bg flex flex-col min-h-screen antialiased`}>
+            <body suppressHydrationWarning className={`font-sans bg-brand-bg text-brand-text selection:bg-brand-accent selection:text-brand-bg flex flex-col min-h-screen antialiased overflow-x-hidden max-w-full`}>
                 <ThemeProvider>
                     <AnimatedBackground />
                     <ClarityScript />
                     <Navbar />
-                    <main className="flex-grow pb-16 w-full">
+                    <main className="flex-grow pb-16 w-full max-w-full overflow-x-hidden">
                         {children}
                     </main>
                     <Footer />
