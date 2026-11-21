@@ -26,7 +26,8 @@ export default function ThemeToggle() {
                     animate={{ opacity: 1, rotate: 0, scale: 1 }}
                     exit={{ opacity: 0, rotate: 30, scale: 0.6 }}
                     transition={{ duration: 0.2, ease: 'easeOut' }}
-                    className="flex items-center justify-center"
+                    className="flex items-center justify-center overflow-visible"
+                    style={{ overflow: 'visible' }}
                 >
                     {theme === 'dark' ? (
                         <Sun className="w-4 h-4 text-amber-400" />

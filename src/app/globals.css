@@ -250,6 +250,7 @@ img.no-download {
 
     .btn-glass-secondary {
         @apply relative overflow-visible rounded-full font-bold transition-all duration-300 backdrop-blur-md;
+        overflow: visible !important;
         color: var(--th-text);
         background: linear-gradient(135deg, var(--th-btn-sec-bg-from) 0%, var(--th-btn-sec-bg-mid) 50%, var(--th-btn-sec-bg-to) 100%);
         border: 1px solid var(--th-btn-sec-border);

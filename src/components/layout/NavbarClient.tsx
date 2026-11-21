@@ -102,20 +102,20 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                 }}
                 transition={NAV_SPRING}
                 className={cn(
-                    "fixed left-1/2 -translate-x-1/2 z-50 flex items-center px-4 md:px-8 overflow-hidden",
+                    "fixed left-1/2 -translate-x-1/2 z-50 flex items-center px-4 md:px-8 overflow-visible",
                     isScrolled
                         ? "nav-glass"
                         : "backdrop-blur-xl bg-brand-bg/90 border-b border-brand-border/40"
                 )}
             >
-                <div className="flex items-center justify-between w-full gap-4 md:gap-8 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto">
+                <div className="flex items-center justify-between w-full gap-4 md:gap-8 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto overflow-visible">
                     <div className="flex items-center flex-shrink-0">
                         {/* Logo & Stats passed as children from Server component */}
                         {children}
                     </div>
 
                     {/* Desktop nav */}
-                    <div className="hidden md:flex items-center overflow-visible">
+                    <div className="hidden md:flex items-center overflow-visible" style={{ overflow: 'visible' }}>
                         <AnimatePresence initial={false}>
                             {!isCollapsed && (
                                 <motion.div
@@ -123,9 +123,10 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                     animate={{ opacity: 1, width: "auto" }}
                                     exit={{ opacity: 0, width: 0 }}
                                     transition={NAV_SPRING}
-                                    className="overflow-hidden flex items-center"
+                                    className="overflow-visible flex items-center"
+                                    style={{ overflow: 'visible' }}
                                 >
-                                    <div className="flex items-center gap-6 pr-5 whitespace-nowrap flex-shrink-0">
+                                    <div className="flex items-center gap-6 pr-5 whitespace-nowrap flex-shrink-0 overflow-visible" style={{ overflow: 'visible' }}>
                                         {navLinks.map((link) => (
                                             <NavLink
                                                 key={link.name}
@@ -135,7 +136,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                                 {link.name}
                                             </NavLink>
                                         ))}
-                                        <div className="flex items-center flex-shrink-0 overflow-visible">
+                                        <div className="flex items-center flex-shrink-0 overflow-visible" style={{ overflow: 'visible' }}>
                                             <ThemeToggle />
                                         </div>
                                     </div>
@@ -196,7 +197,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                     </div>
 
                     {/* Mobile controls: theme toggle (hidden on smallest screen / when minimized) + burger */}
-                    <div className="md:hidden flex items-center gap-2 ml-2">
+                    <div className="md:hidden flex items-center gap-2 ml-2 overflow-visible" style={{ overflow: 'visible' }}>
                         <AnimatePresence initial={false}>
                             {!isScrolled && (
                                 <motion.div
@@ -205,6 +206,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                     exit={{ opacity: 0, width: 0, scale: 0.8 }}
                                     transition={NAV_SPRING}
                                     className="hidden sm:flex overflow-visible flex-shrink-0 items-center"
+                                    style={{ overflow: 'visible' }}
                                 >
                                     <ThemeToggle />
                                 </motion.div>
@@ -270,8 +272,8 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                         Products
                     </Link>
 
-                    <div className="pt-8 border-t border-brand-border w-full flex flex-col items-center gap-6">
-                        <div className="flex items-center gap-3">
+                    <div className="pt-8 border-t border-brand-border w-full flex flex-col items-center gap-6 overflow-visible" style={{ overflow: 'visible' }}>
+                        <div className="flex items-center gap-3 overflow-visible" style={{ overflow: 'visible' }}>
                             <span className="text-sm font-playfair italic text-brand-muted">Theme</span>
                             <ThemeToggle />
                         </div>
