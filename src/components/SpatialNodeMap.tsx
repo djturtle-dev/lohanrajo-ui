@@ -1,14 +1,7 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
 import { Factory, ShieldCheck, Lightbulb, Award, Cpu, Sparkles, Layers } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ScrollReveal from '@/components/animations/ScrollReveal';
-
-if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-}
 
 interface Pillar {
     icon: string;
@@ -41,31 +34,6 @@ const DEFAULT_METAS: Record<string, PillarMeta> = {
 };
 
 export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const laserTrackRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (!containerRef.current || !laserTrackRef.current) return;
-
-        const ctx = gsap.context(() => {
-            gsap.fromTo(laserTrackRef.current,
-                { scaleX: 0, transformOrigin: 'left center' },
-                {
-                    scaleX: 1,
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: 'top 85%',
-                        end: 'bottom 75%',
-                        scrub: 0.8,
-                    }
-                }
-            );
-        }, containerRef);
-
-        return () => ctx.revert();
-    }, []);
-
     const getIcon = (iconName: string) => {
         const cls = 'w-6 h-6 sm:w-7 sm:h-7 text-brand-accent transition-transform duration-500 group-hover:scale-110';
         switch (iconName?.toLowerCase()) {
@@ -100,20 +68,11 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
     };
 
     return (
-        <section ref={containerRef} className="relative w-full py-4 md:py-6 overflow-hidden bg-white dark:bg-transparent border-y border-brand-border/30 dark:border-transparent transition-colors duration-300">
+        <section className="relative w-full py-4 md:py-6 overflow-hidden bg-white dark:bg-transparent border-y border-brand-border/30 dark:border-transparent transition-colors duration-300">
             <div className="relative w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8">
                 <ScrollReveal direction="up" duration={0.8}>
                     {/* Monolithic Telemetry Console Deck */}
                     <div className="relative rounded-2xl border border-brand-border/40 dark:border-white/10 bg-white dark:bg-[#0c0c0c]/90 backdrop-blur-xl overflow-hidden shadow-sm dark:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]">
-                        {/* Interactive Top Laser Runner */}
-                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-brand-border/20 dark:bg-white/5 overflow-hidden z-20">
-                            <div
-                                ref={laserTrackRef}
-                                className="h-full w-full bg-gradient-to-r from-brand-accent via-brand-accent2 to-brand-accent origin-left"
-                                style={{ transform: 'scaleX(0)' }}
-                            />
-                        </div>
-
                         {/* 3 Interlocking Telemetry Bays */}
                         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-brand-border/30 dark:divide-white/10">
                             {pillars.map((pillar, i) => {
@@ -164,9 +123,6 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
                                                 ))}
                                             </div>
                                         </div>
-
-                                        {/* Interactive Hover Laser Beam */}
-                                        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-brand-accent via-brand-accent2 to-brand-accent group-hover:w-full transition-all duration-700 ease-out z-20" />
                                     </div>
                                 );
                             })}
