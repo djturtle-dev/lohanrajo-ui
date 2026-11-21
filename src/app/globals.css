@@ -171,18 +171,20 @@ body[data-gallery-open="true"] #chatbot-container {
     display: none !important;
 }
 
-/* Image protection against saving and dragging */
+/* Image protection against saving and dragging (Desktop & Mobile) */
 .no-download,
 .no-download img,
-img.no-download {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    user-drag: none;
-    -webkit-touch-callout: none;
+img.no-download,
+.protect-image,
+.protect-image img {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+    -khtml-user-drag: none !important;
+    user-drag: none !important;
+    -webkit-touch-callout: none !important; /* Disables iOS Safari 'Save Image / Add to Photos' long-press callout */
 }
 
 /* Anti-screenshot & Snipping Tool focus-loss auto-blur shield */
