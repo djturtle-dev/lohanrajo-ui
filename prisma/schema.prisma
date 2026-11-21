@@ -85,10 +85,19 @@ model InfrastructureCard {
 }
 
 model HomeContent {
-  id        String   @id @default("singleton")
-  heroLines String[] @default(["Precision in *Metal Arts*", "*BMS* Panels", "*IP Standard* Enclosures", "Reflectors, *Poles*", "*Oil,* CPG Panels"])
-  pillars   Json     @default("[{\"icon\":\"Factory\",\"title\":\"Infrastructure\",\"desc\":\"State-of-the-art manufacturing facilities ensuring uncompromised precision and scale.\"},{\"icon\":\"ShieldCheck\",\"title\":\"ISO Certified\",\"desc\":\"ISO 9001:2015 certified quality management systems meeting rigorous international standards.\"},{\"icon\":\"Lightbulb\",\"title\":\"Founded 1992\",\"desc\":\"Over three decades of pioneering innovative metal solutions for the evolving industrial landscape.\"}]")
-  updatedAt DateTime @updatedAt
+  id               String   @id @default("singleton")
+  heroLines        String[] @default(["Precision in *Metal Arts*", "*BMS* Panels", "*IP Standard* Enclosures", "Reflectors, *Poles*", "*Oil,* CPG Panels"])
+  pillars          Json     @default("[{\"icon\":\"Factory\",\"title\":\"Infrastructure\",\"desc\":\"State-of-the-art manufacturing facilities ensuring uncompromised precision and scale.\"},{\"icon\":\"ShieldCheck\",\"title\":\"ISO Certified\",\"desc\":\"ISO 9001:2015 certified quality management systems meeting rigorous international standards.\"},{\"icon\":\"Lightbulb\",\"title\":\"Founded 1992\",\"desc\":\"Over three decades of pioneering innovative metal solutions for the evolving industrial landscape.\"}]")
+  featuredProducts Json?    // Array of { id?: string, label: string, name?: string, icon?: string, imageUrl?: string, href?: string }
+  updatedAt        DateTime @updatedAt
+}
+
+model FooterContent {
+  id           String   @id @default("singleton")
+  companyDesc  String   @default("Passionate about manufacturing high quality engineering products since 1992. Chennai, India.")
+  contactLinks Json     @default("[{\"label\":\"lohanrajoliat@gmail.com\",\"href\":\"mailto:lohanrajoliat@gmail.com\"},{\"label\":\"Send a Message\",\"href\":\"/contact\"},{\"label\":\"Careers\",\"href\":\"/contact?type=CAREER\"}]")
+  productLinks Json     @default("[{\"label\":\"BMS Panels\",\"href\":\"/products\"},{\"label\":\"IP Enclosures\",\"href\":\"/products\"},{\"label\":\"Reflectors\",\"href\":\"/products\"},{\"label\":\"Industrial Poles\",\"href\":\"/products\"}]")
+  updatedAt    DateTime @updatedAt
 }
 
 model ContactSubmission {

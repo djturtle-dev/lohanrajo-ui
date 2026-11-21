@@ -12,6 +12,7 @@ const SpatialNodeMap = dynamic(() => import('@/components/SpatialNodeMap'));
 
 import CategoryCards from '@/components/CategoryCards';
 import HeroBlobVideo from '@/components/HeroBlobVideo';
+import { getAssetUrl } from '@/lib/utils';
 
 import { unstable_cache } from 'next/cache';
 import * as Icons from 'lucide-react';
@@ -113,17 +114,34 @@ async function TestimonialsSection() {
 }
 
 async function CategoryLinks() {
-    const getCategories = unstable_cache(
-        async () => {
-            return await prisma.category.findMany({
-                where: { isDeleted: false }
-            });
-        },
-        ['active-categories-v2'],
-        { revalidate: 60, tags: ['categories'] }
-    );
-    const dbCategories = await getCategories();
+    let homeContent: any = null;
+    let dbCategories: any[] = [];
 
+    try {
+        const [content, cats] = await Promise.all([
+            (prisma as any).homeContent.findFirst(),
+            prisma.category.findMany({ where: { isDeleted: false } })
+        ]);
+        homeContent = content;
+        dbCategories = cats;
+    } catch {
+        // Fallback if DB is unavailable
+    }
+
+    // Check if custom featured products are configured in DB
+    const customFeatured = homeContent?.featuredProducts;
+    if (Array.isArray(customFeatured) && customFeatured.length > 0) {
+        const categories = customFeatured.map((item: any) => ({
+            name: item.name || item.label,
+            label: item.label || item.name,
+            icon: item.icon || 'Server',
+            id: item.categoryId || item.id,
+            imageUrl: getAssetUrl(item.imageUrl) || item.imageUrl
+        }));
+        return <CategoryCards categories={categories} />;
+    }
+
+    // Default categories fallback
     const categories = [
         { name: 'Panels',     label: 'BMS Panels',      icon: 'Server', imageUrl: '/images/products/bms-panels.png' },
         { name: 'Enclosures', label: 'IP Enclosures',   icon: 'Box',    imageUrl: '/images/products/ip-enclosures.png' },

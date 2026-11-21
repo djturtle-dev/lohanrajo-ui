@@ -1,7 +1,42 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { prisma } from '@/lib/prisma';
 
-export default function Footer() {
+export default async function Footer() {
+    let footerData: any = null;
+    try {
+        footerData = await (prisma as any).footerContent.findUnique({
+            where: { id: 'singleton' }
+        });
+    } catch {
+        // Fallback to static defaults if DB or connection is unavailable
+    }
+
+    const defaultContactLinks = [
+        { label: 'lohanrajoliat@gmail.com', href: 'mailto:lohanrajoliat@gmail.com' },
+        { label: 'Send a Message', href: '/contact' },
+        { label: 'Careers', href: '/contact?type=CAREER' },
+    ];
+
+    const defaultProductLinks = [
+        { label: 'BMS Panels', href: '/products' },
+        { label: 'IP Enclosures', href: '/products' },
+        { label: 'Reflectors', href: '/products' },
+        { label: 'Industrial Poles', href: '/products' },
+    ];
+
+    const contactLinks: Array<{ label: string; href: string }> = 
+        (footerData?.contactLinks && Array.isArray(footerData.contactLinks) && footerData.contactLinks.length > 0)
+            ? footerData.contactLinks
+            : defaultContactLinks;
+
+    const productLinks: Array<{ label: string; href: string }> = 
+        (footerData?.productLinks && Array.isArray(footerData.productLinks) && footerData.productLinks.length > 0)
+            ? footerData.productLinks
+            : defaultProductLinks;
+
+    const companyDesc = footerData?.companyDesc || "Passionate about manufacturing high quality engineering products since 1992. Chennai, India.";
+
     return (
         <footer className="relative z-10 border-t border-brand-border bg-brand-panel py-12 px-4 sm:px-8 mt-auto">
             <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
@@ -18,7 +53,7 @@ export default function Footer() {
                         />
                     </div>
                     <p className="text-brand-muted text-sm leading-relaxed font-mono">
-                        Passionate about manufacturing high quality engineering products since 1992. Chennai, India.
+                        {companyDesc}
                     </p>
                 </div>
                 
@@ -36,18 +71,34 @@ export default function Footer() {
                     <div>
                         <h4 className="font-sans font-bold text-sm tracking-widest uppercase text-brand-text mb-4">Contact</h4>
                         <ul className="space-y-2 text-sm text-brand-muted font-mono">
-                            <li><a href="mailto:lohanrajoliat@gmail.com" className="hover:text-brand-accent transition-colors block break-words">lohanrajoliat@gmail.com</a></li>
-                            <li><Link href="/contact" className="hover:text-brand-accent transition-colors block">Send a Message</Link></li>
-                            <li><Link href="/contact?type=CAREER" className="hover:text-brand-accent transition-colors block">Careers</Link></li>
+                            {contactLinks.map((link, idx) => {
+                                const isExternal = link.href.startsWith('mailto:') || link.href.startsWith('http');
+                                return (
+                                    <li key={idx}>
+                                        {isExternal ? (
+                                            <a href={link.href} className="hover:text-brand-accent transition-colors block break-words">
+                                                {link.label}
+                                            </a>
+                                        ) : (
+                                            <Link href={link.href} className="hover:text-brand-accent transition-colors block break-words">
+                                                {link.label}
+                                            </Link>
+                                        )}
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </div>
                     <div>
                         <h4 className="font-sans font-bold text-sm tracking-widest uppercase text-brand-text mb-4">Products</h4>
                         <ul className="space-y-2 text-sm text-brand-muted font-mono">
-                            <li><Link href="/products" className="hover:text-brand-accent transition-colors block">BMS Panels</Link></li>
-                            <li><Link href="/products" className="hover:text-brand-accent transition-colors block">IP Enclosures</Link></li>
-                            <li><Link href="/products" className="hover:text-brand-accent transition-colors block">Reflectors</Link></li>
-                            <li><Link href="/products" className="hover:text-brand-accent transition-colors block">Industrial Poles</Link></li>
+                            {productLinks.map((link, idx) => (
+                                <li key={idx}>
+                                    <Link href={link.href} className="hover:text-brand-accent transition-colors block break-words">
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>
@@ -58,4 +109,3 @@ export default function Footer() {
         </footer>
     );
 }
-
