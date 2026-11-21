@@ -135,7 +135,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                             <li className="shrink-0 snap-start">
                                 <Link
                                     href="/products"
-                                    className={`text-sm tracking-wide block py-1 whitespace-nowrap font-sans ${
+                                    className={`text-sm tracking-wide block py-1 whitespace-nowrap lg:whitespace-normal break-words font-sans ${
                                         !category && !subCategory && !query
                                             ? 'text-brand-accent font-bold'
                                             : 'text-brand-muted hover:text-brand-text'
@@ -150,7 +150,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                                     <li key={cat.id} className="shrink-0 snap-start">
                                         <Link
                                             href={`/products?category=${cat.id}`}
-                                            className={`text-sm tracking-wide block py-1 whitespace-nowrap font-sans ${
+                                            className={`text-sm tracking-wide block py-1 whitespace-nowrap lg:whitespace-normal break-words font-sans ${
                                                 isCategoryActive && !subCategory
                                                     ? 'text-brand-accent font-bold'
                                                     : 'text-brand-muted hover:text-brand-text'
@@ -164,7 +164,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                                                     <li key={sub.id}>
                                                         <Link
                                                             href={`/products?category=${cat.id}&subCategory=${sub.id}`}
-                                                            className={`text-xs block py-0.5 font-sans ${
+                                                            className={`text-xs block py-0.5 font-sans break-words ${
                                                                 subCategory === sub.id
                                                                     ? 'text-brand-accent font-semibold'
                                                                     : 'text-brand-muted/70 hover:text-brand-text'

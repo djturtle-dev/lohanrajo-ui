@@ -97,12 +97,12 @@ export default function ProductsDisplay({
                                     </span>
                                 )}
                             </div>
-                            <div className="p-4 md:p-6 flex-grow flex flex-col justify-between relative z-20">
-                                <div>
-                                    <p className="text-brand-accent text-[10px] md:text-xs font-semibold mb-1 md:mb-2 drop-shadow-md">
+                            <div className="p-4 md:p-6 flex-grow flex flex-col justify-between relative z-20 min-w-0">
+                                <div className="min-w-0">
+                                    <p className="text-brand-accent text-[10px] md:text-xs font-semibold mb-1 md:mb-2 drop-shadow-md truncate" title={`${product.category.name}${product.subCategory ? ` • ${product.subCategory.name}` : ''}`}>
                                         {product.category.name}{product.subCategory && ` • ${product.subCategory.name}`}
                                     </p>
-                                    <h3 className="text-brand-text font-sans text-sm md:text-lg mb-2 line-clamp-2">{product.name}</h3>
+                                    <h3 className="text-brand-text font-sans text-sm md:text-lg mb-2 line-clamp-2 break-words">{product.name}</h3>
                                 </div>
                                 <div className="h-px w-8 bg-brand-border group-hover:w-full group-hover:bg-brand-accent transition-all duration-500 mt-4" />
                             </div>

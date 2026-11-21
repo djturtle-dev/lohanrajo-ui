@@ -170,12 +170,12 @@ export default function CategoryCards({ categories }: { categories: Category[] }
                             </div>
 
                             {/* Content Area */}
-                            <div className="relative z-10 flex-grow flex flex-col justify-end p-8">
+                            <div className="relative z-10 flex-grow flex flex-col justify-end p-8 min-w-0">
                                 <div className="flex items-center gap-3 mb-2 opacity-80 group-hover:opacity-100 transition-opacity">
-                                    <Icon className="text-brand-accent w-6 h-6" />
+                                    <Icon className="text-brand-accent w-6 h-6 shrink-0" />
                                     <span className="text-xs font-mono text-white/80">Series 0{i+1}</span>
                                 </div>
-                                <h3 className="font-sans text-2xl md:text-3xl font-semibold text-white drop-shadow-md">
+                                <h3 className="font-sans text-xl sm:text-2xl md:text-3xl font-semibold text-white drop-shadow-md break-words line-clamp-2">
                                     {cat.label}
                                 </h3>
                                 
