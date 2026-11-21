@@ -187,19 +187,16 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                 </Link>
             </ScrollReveal>
 
-            {/* Layout Grid:
-                Section A (2/6 columns on lg+): 1x1 to 1x4 Main Image
-                Section B (4/6 columns on lg+): 1x2 Title, 2x2 Desc, 3x2 Extra Images, 4x2 Request Button
-            */}
-            <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 lg:gap-12 items-start">
+            {/* Layout Grid: 2 Clean Sections (Left: Image, Right: Content) starting from top */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
                 
                 {/* ============================================================== */}
-                {/* SECTION A (2/6): Rows 1x1 to 1x4 - Main Image Card             */}
+                {/* SECTION 1: Product Image (Left)                                */}
                 {/* ============================================================== */}
-                <div className="lg:col-span-2 lg:sticky lg:top-28">
+                <div className="flex flex-col justify-start lg:sticky lg:top-28">
                     <ScrollReveal direction="left" delay={0.15}>
                         <div 
-                            className="relative aspect-square sm:aspect-[4/5] lg:aspect-[4/5] bg-brand-panel border border-brand-border rounded-2xl flex flex-col items-center justify-center overflow-hidden group select-none shadow-lg cursor-pointer"
+                            className="relative aspect-square sm:aspect-[4/3] lg:aspect-square bg-brand-panel border border-brand-border rounded-2xl flex flex-col items-center justify-center overflow-hidden group select-none shadow-lg cursor-pointer"
                             onClick={() => openModal(currentIndex)}
                             onTouchStart={onTouchStart}
                             onTouchMove={onTouchMove}
@@ -218,7 +215,7 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                                         src={activeImageSrc}
                                         alt={`${product.name} - Image ${currentIndex + 1}`}
                                         fill
-                                        sizes="(max-width: 1024px) 100vw, 35vw"
+                                        sizes="(max-width: 1024px) 100vw, 50vw"
                                         className="object-contain p-4 z-0 transition-all duration-500 group-hover:scale-[1.03] select-none"
                                         priority={currentIndex === 0}
                                         draggable={false}
@@ -241,7 +238,10 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                             {rawImages.length > 0 && (
                                 <button
                                     type="button"
-                                    onClick={() => openModal(currentIndex)}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        openModal(currentIndex);
+                                    }}
                                     aria-label="View full screen with zoom"
                                     className="absolute top-3 right-3 z-10 p-2 rounded-full bg-brand-panel/80 hover:bg-brand-accent hover:text-white border border-brand-border text-brand-text transition-all duration-300 shadow-md backdrop-blur-sm cursor-pointer"
                                 >
@@ -295,132 +295,99 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                 </div>
 
                 {/* ============================================================== */}
-                {/* SECTION B (4/6): Rows 1x2, 2x2, 3x2, 4x2                        */}
+                {/* SECTION 2: Product Content (Right, unboxed, top-aligned)       */}
                 {/* ============================================================== */}
-                <div className="lg:col-span-4 flex flex-col space-y-8">
-                    
-                    {/* ---------------------------------------------------------- */}
-                    {/* ROW 1 (1x2): Line 1 (Cat, Sub-cat) • Line 2 Product Name   */}
-                    {/* ---------------------------------------------------------- */}
-                    <ScrollReveal direction="right" delay={0.15}>
-                        <div className="card-glass p-6 sm:p-8 border border-brand-border/70 rounded-2xl relative overflow-hidden">
-                            {/* Ambient Top Flare */}
-                            <div className="absolute top-0 right-0 w-48 h-48 bg-brand-accent/5 rounded-full blur-3xl pointer-events-none" />
+                <ScrollReveal direction="right" delay={0.2} className="flex flex-col justify-start space-y-6">
+                    {/* Line 1: Category & Sub Category Badge */}
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-accent/10 border border-brand-accent/30 text-brand-accent font-sans text-xs font-semibold tracking-wider uppercase w-fit">
+                        <span>{product.category.name}</span>
+                        {product.subCategory && (
+                            <>
+                                <span className="opacity-50">•</span>
+                                <span>{product.subCategory.name}</span>
+                            </>
+                        )}
+                    </div>
 
-                            {/* Line 1: Category & Sub Category */}
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-accent/10 border border-brand-accent/30 text-brand-accent font-sans text-xs font-semibold tracking-wider uppercase mb-3">
-                                <span>{product.category.name}</span>
-                                {product.subCategory && (
-                                    <>
-                                        <span className="opacity-50">•</span>
-                                        <span>{product.subCategory.name}</span>
-                                    </>
-                                )}
-                            </div>
+                    {/* Line 2: Product Name */}
+                    <h1 className="font-playfair italic text-3xl sm:text-4xl md:text-5xl text-brand-text text-balance">
+                        {product.name}
+                    </h1>
 
-                            {/* Line 2: Product Name */}
-                            <h1 className="font-playfair italic text-3xl sm:text-4xl md:text-5xl text-brand-text mb-4 text-balance">
-                                {product.name}
-                            </h1>
+                    <div className="h-px w-full bg-brand-border/60" />
 
-                            <div className="h-px w-full bg-brand-border/60 mt-4" />
-                        </div>
-                    </ScrollReveal>
+                    {/* Product Description */}
+                    <div className="space-y-2">
+                        <span className="text-[11px] font-mono uppercase tracking-widest text-brand-muted/70 block">
+                            Specification &amp; Overview
+                        </span>
+                        <div
+                            className="prose prose-invert prose-brand text-brand-muted max-w-none font-sans text-sm sm:text-base leading-relaxed
+                            prose-headings:font-playfair prose-headings:italic
+                            prose-a:text-brand-accent prose-strong:text-brand-text"
+                            dangerouslySetInnerHTML={{ __html: product.description }}
+                        />
+                    </div>
 
-                    {/* ---------------------------------------------------------- */}
-                    {/* ROW 2 (2x2): Product Description                           */}
-                    {/* ---------------------------------------------------------- */}
-                    <ScrollReveal direction="right" delay={0.25}>
-                        <div className="card-glass p-6 sm:p-8 border border-brand-border/70 rounded-2xl relative">
-                            <span className="text-[11px] font-mono uppercase tracking-widest text-brand-muted/70 block mb-3">
-                                Specification & Overview
-                            </span>
-                            <div
-                                className="prose prose-invert prose-brand text-brand-muted max-w-none font-sans text-sm sm:text-base leading-relaxed
-                                prose-headings:font-playfair prose-headings:italic
-                                prose-a:text-brand-accent prose-strong:text-brand-text"
-                                dangerouslySetInnerHTML={{ __html: product.description }}
-                            />
-                        </div>
-                    </ScrollReveal>
-
-                    {/* ---------------------------------------------------------- */}
-                    {/* ROW 3 (3x2): Extra Images in Smaller Grids                 */}
-                    {/* ---------------------------------------------------------- */}
-                    <ScrollReveal direction="right" delay={0.35}>
-                        <div className="card-glass p-6 sm:p-8 border border-brand-border/70 rounded-2xl">
-                            <div className="flex items-center justify-between mb-4 pb-2 border-b border-brand-border/40">
+                    {/* Extra Images in Smaller Grids */}
+                    {rawImages.length > 1 && (
+                        <div className="pt-2 space-y-3">
+                            <div className="flex items-center justify-between pb-1 border-b border-brand-border/40">
                                 <span className="text-xs font-sans uppercase tracking-widest text-brand-text font-semibold flex items-center gap-2">
                                     <Images className="w-4 h-4 text-brand-accent" />
                                     Product Views &amp; Details
                                 </span>
                                 <span className="font-mono text-xs text-brand-muted">
-                                    {rawImages.length} {rawImages.length === 1 ? 'image' : 'images'}
+                                    {rawImages.length} images
                                 </span>
                             </div>
 
-                            {rawImages.length > 0 ? (
-                                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
-                                    {rawImages.map((img, i) => {
-                                        const thumbSrc = getAssetUrl(img);
-                                        const isActive = i === currentIndex;
-                                        return (
-                                            <button
-                                                key={i}
-                                                type="button"
-                                                onClick={() => setCurrentIndex(i)}
-                                                className={`relative aspect-square rounded-xl overflow-hidden border bg-brand-panel transition-all duration-200 cursor-pointer p-1.5 group/thumb ${
-                                                    isActive
-                                                        ? 'border-brand-accent ring-2 ring-brand-accent/50 scale-105 shadow-md z-10'
-                                                        : 'border-brand-border/60 opacity-70 hover:opacity-100 hover:border-brand-accent/60'
-                                                }`}
-                                                aria-label={`Select photo ${i + 1}`}
-                                            >
-                                                <Image
-                                                    src={thumbSrc}
-                                                    alt={`${product.name} thumbnail ${i + 1}`}
-                                                    fill
-                                                    sizes="(max-width: 640px) 30vw, (max-width: 1024px) 20vw, 12vw"
-                                                    className="object-contain p-1 pointer-events-none select-none transition-transform group-hover/thumb:scale-105"
-                                                    draggable={false}
-                                                />
-                                                <span className="absolute bottom-1 right-1 text-[9px] font-mono px-1 rounded bg-black/60 text-white pointer-events-none">
-                                                    0{i + 1}
-                                                </span>
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-                            ) : (
-                                <p className="text-xs font-sans text-brand-muted">No additional gallery photos available.</p>
-                            )}
-                        </div>
-                    </ScrollReveal>
-
-                    {/* ---------------------------------------------------------- */}
-                    {/* ROW 4 (4x2): "Request" Button                              */}
-                    {/* ---------------------------------------------------------- */}
-                    <ScrollReveal direction="right" delay={0.45}>
-                        <div className="card-glass p-6 sm:p-8 border border-brand-border/70 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
-                            <div>
-                                <h3 className="font-playfair italic text-xl sm:text-2xl text-brand-text mb-1">
-                                    Need customization or pricing?
-                                </h3>
-                                <p className="text-xs sm:text-sm font-sans text-brand-muted">
-                                    Our engineers provide tailored technical drawings, IP testing, and turnkey enclosure builds.
-                                </p>
+                            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
+                                {rawImages.map((img, i) => {
+                                    const thumbSrc = getAssetUrl(img);
+                                    const isActive = i === currentIndex;
+                                    return (
+                                        <button
+                                            key={i}
+                                            type="button"
+                                            onClick={() => setCurrentIndex(i)}
+                                            className={`relative aspect-square rounded-xl overflow-hidden border bg-brand-panel transition-all duration-200 cursor-pointer p-1.5 group/thumb ${
+                                                isActive
+                                                    ? 'border-brand-accent ring-2 ring-brand-accent/50 scale-105 shadow-md z-10'
+                                                    : 'border-brand-border/60 opacity-70 hover:opacity-100 hover:border-brand-accent/60'
+                                            }`}
+                                            aria-label={`Select photo ${i + 1}`}
+                                        >
+                                            <Image
+                                                src={thumbSrc}
+                                                alt={`${product.name} thumbnail ${i + 1}`}
+                                                fill
+                                                sizes="(max-width: 640px) 30vw, (max-width: 1024px) 20vw, 12vw"
+                                                className="object-contain p-1 pointer-events-none select-none transition-transform group-hover/thumb:scale-105"
+                                                draggable={false}
+                                            />
+                                            <span className="absolute bottom-1 right-1 text-[9px] font-mono px-1 rounded bg-black/60 text-white pointer-events-none">
+                                                0{i + 1}
+                                            </span>
+                                        </button>
+                                    );
+                                })}
                             </div>
-                            <Link 
-                                href={`/contact?product=${encodeURIComponent(product.name)}`}
-                                className="w-full sm:w-auto shrink-0 px-8 py-3.5 rounded-full btn-glass-primary font-playfair italic font-semibold text-center text-sm sm:text-base flex items-center justify-center gap-2 group shadow-lg"
-                            >
-                                <span>Request a Quote</span>
-                                <Send className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
-                            </Link>
                         </div>
-                    </ScrollReveal>
+                    )}
 
-                </div>
+                    {/* Direct Request Button */}
+                    <div className="pt-4">
+                        <Link 
+                            href={`/contact?product=${encodeURIComponent(product.name)}`}
+                            className="w-full sm:w-auto px-10 py-4 rounded-full btn-glass-primary font-playfair italic font-semibold text-center text-sm sm:text-base inline-flex items-center justify-center gap-2 group shadow-lg"
+                        >
+                            <span>Request a Quote</span>
+                            <Send className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                    </div>
+                </ScrollReveal>
+
             </div>
 
             {/* ============================================================== */}
