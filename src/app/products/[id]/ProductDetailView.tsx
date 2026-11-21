@@ -306,8 +306,8 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                         )}
                     </div>
 
-                    {/* Line 2: Product Name */}
-                    <h1 className="font-playfair italic text-3xl sm:text-4xl md:text-5xl text-brand-text text-balance">
+                    {/* Line 2: Product Name (Poppins bold) */}
+                    <h1 className="font-sans font-bold text-3xl sm:text-4xl md:text-5xl text-brand-text text-balance tracking-tight">
                         {product.name}
                     </h1>
 
@@ -404,7 +404,7 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                             {/* Top Control Bar: Product Title, Zoom Controls, Close Button */}
                             <div className="w-full flex items-center justify-between px-4 sm:px-8 py-4 border-b border-white/10 z-[10002] bg-black/60 backdrop-blur-sm">
                                 <div className="flex items-center gap-3">
-                                    <span className="font-playfair italic text-white text-base sm:text-lg truncate max-w-[200px] sm:max-w-md">
+                                    <span className="font-sans font-bold text-white text-base sm:text-lg truncate max-w-[200px] sm:max-w-md">
                                         {product.name}
                                     </span>
                                     <span className="font-mono text-xs text-white/50 px-2 py-0.5 rounded-full border border-white/20">

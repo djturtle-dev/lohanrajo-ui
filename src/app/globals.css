@@ -19,6 +19,7 @@
 
     /* Typography tokens: standardized to Poppins (sans/UI/body) and Playfair Display (serif/editorial/hero) */
     --font-sans:     var(--font-poppins), sans-serif;
+    --font-poppins:  var(--font-poppins), sans-serif;
     --font-oswald:   var(--font-poppins), sans-serif;
     --font-mono:     var(--font-poppins), sans-serif;
     --font-serif:    var(--font-playfair), serif;
