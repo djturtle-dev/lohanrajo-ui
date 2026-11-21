@@ -95,6 +95,7 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
                 <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-muted pointer-events-none" />
                 <button
                     type="submit"
+                    aria-label="Search products"
                     className="absolute right-1.5 top-1/2 -translate-y-1/2 btn-glass-secondary px-3.5 py-1 text-xs font-playfair italic font-bold rounded-full cursor-pointer hover:scale-105 active:scale-95 transition-transform"
                 >
                     Search

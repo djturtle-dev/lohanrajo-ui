@@ -48,8 +48,22 @@ export default async function Home() {
         return <Icon size={40} strokeWidth={1} />;
     };
 
+    const videoJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'VideoObject',
+        name: 'LIAT Precision Manufacturing & Engineering Facility',
+        description: 'Showcase of precision CNC machinery, automated laser cutting, and industrial enclosure manufacturing at LIAT.',
+        thumbnailUrl: ['https://lohanrajo.netlify.app/Footer-logo.png'],
+        uploadDate: '2024-01-01T00:00:00Z',
+        contentUrl: 'https://lohanrajo.netlify.app/1.mp4',
+    };
+
     return (
         <div className="flex flex-col gap-16 md:gap-20 w-full max-w-full overflow-x-hidden">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
+            />
             {/* Full-Bleed Cinematic Hero + Metrics Shelf */}
             <div className="w-full max-w-full overflow-hidden">
                 <section className="relative w-full max-w-full h-[100svh] min-h-[580px] max-h-[1050px] overflow-hidden">

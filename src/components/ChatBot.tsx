@@ -243,6 +243,7 @@ export default function ChatBot() {
         <div className="relative w-14 h-14 shrink-0">
           <button
             onClick={() => { setIsOpen(!isOpen); setShowWelcome(false); }}
+            aria-label={isOpen ? "Close AI assistant chat" : "Open AI assistant chat"}
             className="btn-glass-secondary w-full h-full flex items-center justify-center cursor-pointer shadow-lg rounded-full z-50 transition-transform"
           >
             {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
@@ -269,7 +270,7 @@ export default function ChatBot() {
                   <p className="text-xs text-brand-muted/70 font-sans">Ask about products & contact</p>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-brand-muted/60 hover:text-brand-text transition-colors p-1 rounded-full hover:bg-brand-white/10 cursor-pointer">
+              <button onClick={() => setIsOpen(false)} aria-label="Close chat window" className="text-brand-muted/60 hover:text-brand-text transition-colors p-1 rounded-full hover:bg-brand-white/10 cursor-pointer">
                 <X size={20} />
               </button>
             </div>
@@ -345,6 +346,7 @@ export default function ChatBot() {
                   <button
                     type="submit"
                     disabled={isLoading || !input.trim()}
+                    aria-label="Send message"
                     className="btn-glass-primary absolute right-1.5 p-2 disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
                   >
                     <Send size={15} />

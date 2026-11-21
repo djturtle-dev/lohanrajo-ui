@@ -23,7 +23,15 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
         return () => clearInterval(interval);
     }, [displayLines.length]);
 
-    if (!isMounted) return <div className="h-10 sm:h-14 md:h-16 lg:h-20 xl:h-24" />;
+    if (!isMounted) {
+        return (
+            <div className="relative h-10 sm:h-14 md:h-16 lg:h-20 xl:h-24 w-full max-w-full flex items-center justify-start mb-1 overflow-hidden">
+                <h1 className="font-playfair italic text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-none text-brand-text">
+                    Precision in <span className="text-brand-accent italic font-bold">Metal Arts</span>
+                </h1>
+            </div>
+        );
+    }
 
     // Animation variants for staggering
     const containerVariants = {

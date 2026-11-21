@@ -66,6 +66,7 @@ export default async function Footer() {
                             <li><Link href="/about#infrastructure" className="hover:text-brand-accent transition-colors block">Infrastructure</Link></li>
                             <li><Link href="/about#mission" className="hover:text-brand-accent transition-colors block">Mission</Link></li>
                             <li><Link href="/about#vision" className="hover:text-brand-accent transition-colors block">Vision</Link></li>
+                            <li><Link href="/privacy" className="hover:text-brand-accent transition-colors block">Privacy Policy</Link></li>
                         </ul>
                     </div>
                     <div>
@@ -103,8 +104,12 @@ export default async function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto mt-12 pt-8 border-t border-brand-border text-xs text-brand-muted flex flex-col md:flex-row justify-start items-center md:items-start text-center md:text-left font-mono tracking-widest uppercase">
+            <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto mt-12 pt-8 border-t border-brand-border text-xs text-brand-muted flex flex-col sm:flex-row justify-between items-center text-center sm:text-left font-mono tracking-widest uppercase gap-4">
                 <div>&copy; {new Date().getFullYear()} LOHANRAJO INDUSTRIES AND TECHNOLOGIES PRIVATE LIMITED. All rights reserved.</div>
+                <div className="flex items-center gap-6">
+                    <Link href="/privacy" className="hover:text-brand-accent transition-colors">Privacy Policy</Link>
+                    <a href="/llms.txt" className="hover:text-brand-accent transition-colors">AI Context (llms.txt)</a>
+                </div>
             </div>
         </footer>
     );

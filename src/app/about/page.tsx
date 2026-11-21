@@ -21,8 +21,23 @@ import ScrollReveal from '@/components/animations/ScrollReveal';
 import AboutPhotoGallery from '@/components/AboutPhotoGallery';
 
 export const metadata: Metadata = {
-    title: 'About | LIAT - LOHANRAJO INDUSTRIES AND TECHNOLOGIES',
-    description: 'Learn about our profile, infrastructure, mission, and vision.',
+    title: 'About Us | Precision Engineering & Manufacturing Excellence',
+    description: 'Learn about LIAT (est. 1992): ISO 9001:2015 certified engineering, CNC fabrication infrastructure, continuous PU gasketing, and custom IP rated enclosures.',
+    alternates: {
+        canonical: '/about',
+    },
+    openGraph: {
+        title: 'About LIAT | 30+ Years of Manufacturing Excellence',
+        description: 'ISO 9001:2015 certified manufacturer of IP rated enclosures and BMS panels with three decades of precision engineering expertise.',
+        url: 'https://lohanrajo.netlify.app/about',
+        images: ['/Footer-logo.png'],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'About LIAT | 30+ Years of Manufacturing Excellence',
+        description: 'ISO 9001:2015 certified manufacturer of IP rated enclosures and BMS panels.',
+        images: ['/Footer-logo.png'],
+    },
 };
 
 export default async function AboutPage() {
@@ -100,8 +115,26 @@ export default async function AboutPage() {
         ].filter(Boolean) as string[])
     );
 
+    const aboutJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        name: 'About LIAT - Lohanrajo Industries and Technologies',
+        url: 'https://lohanrajo.netlify.app/about',
+        description: 'Profile, infrastructure, and history of LIAT (est. 1992): ISO 9001:2015 certified manufacturer of IP rated enclosures and BMS panels.',
+        mainEntity: {
+            '@type': 'Organization',
+            name: 'Lohanrajo Industries and Technologies Private Limited',
+            foundingDate: '1992',
+            url: 'https://lohanrajo.netlify.app',
+        },
+    };
+
     return (
         <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-24 md:pt-32 pb-24 space-y-20 md:space-y-28">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+            />
             
             {/* HERO / MASTHEAD */}
             <header className="relative max-w-5xl mx-auto text-center px-4 pt-4 pb-8 flex flex-col items-center">

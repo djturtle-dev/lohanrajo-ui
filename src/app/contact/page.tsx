@@ -832,7 +832,7 @@ function ContactFormContent() {
                                             {isCaptchaWrong && <XCircle className="w-5 h-5 text-red-500 animate-in zoom-in" />}
                                         </div>
                                     </div>
-                                    <button type="button" onClick={refreshCaptcha} className="btn-glass-secondary px-4 py-2 rounded-full text-xs font-sans uppercase tracking-widest shrink-0">
+                                    <button type="button" onClick={refreshCaptcha} aria-label="Refresh Captcha" className="btn-glass-secondary px-4 py-2 rounded-full text-xs font-sans uppercase tracking-widest shrink-0">
                                         Refresh
                                     </button>
                                 </div>
@@ -851,6 +851,7 @@ function ContactFormContent() {
 
                             <button
                                 type="submit"
+                                aria-label="Send Message"
                                 disabled={formStatus === 'submitting' || !isCaptchaValid || !isPhoneValid}
                                 className="w-full btn-glass-secondary px-8 py-5 font-sans font-bold tracking-[0.2em] uppercase transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed group flex items-center justify-center gap-3"
                             >
@@ -1034,7 +1035,18 @@ function ContactFormContent() {
 
 export default function ContactPage() {
     return (
-        <Suspense fallback={<div className="w-full min-h-screen" />}>
+        <Suspense fallback={
+            <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-24 md:pt-28 pb-16">
+                <div>
+                    <h1 className="font-playfair italic text-4xl md:text-5xl lg:text-6xl text-brand-text mb-6 text-balance">
+                        Get in <span className="text-brand-accent">touch</span>
+                    </h1>
+                    <p className="text-brand-muted text-sm max-w-xl">
+                        Connect with LIAT for custom IP rated industrial enclosure inquiries, BMS control panel specifications, and engineering consultations.
+                    </p>
+                </div>
+            </div>
+        }>
             <ContactFormContent />
         </Suspense>
     );

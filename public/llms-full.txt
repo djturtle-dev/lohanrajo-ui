@@ -1,0 +1,58 @@
+# LIAT - Lohanrajo Industries and Technologies Private Limited (Full Context for AI Agents)
+
+## Organization Overview
+- **Legal Entity**: Lohanrajo Industries and Technologies Private Limited (LIAT)
+- **Founding Heritage**: Established in 1992 as Lohanrajo Metal Arts by Mr. L.L. Baskar & Mr. L.L. Sekar.
+- **Experience**: Over three decades (30+ years) of specialized industrial engineering and precision metal manufacturing.
+- **Quality Standard**: ISO 9001:2015 certified Quality Management System.
+- **Headquarters & Plant**: Plot No. 213, 214 & 215, 3rd Main Road, Burma Colony, Perungudi, Chennai - 600096, Tamil Nadu, India.
+- **Primary Contact**: 
+  - Phone: +91 44 2496 2590 / +91 44 2496 2591
+  - Email: lohanrajoliat@gmail.com
+  - Website: https://lohanrajo.netlify.app
+
+## Product Range & Technical Specifications
+
+### 1. Building Management System (BMS) & DDC Panels
+- **Application**: HVAC control, smart building automation, smart metering, sensor interface, and centralized facility management.
+- **Configurations**: Wall mounted, floor standing, single door, double door, and compartmentalized.
+- **Standard Ingress Ratings**: IP54, IP55, and IP65.
+- **Materials**: High-grade Cold Rolled Close Annealed (CRCA) mild steel (1.2mm to 2.5mm thickness) or Stainless Steel (SS304/SS316).
+- **Cooling / Thermal Management**: Louvers with integrated insect filters, exhaust fans with fan hoods, or provision for industrial panel air conditioners.
+
+### 2. IP Rated Standard & Custom Enclosures
+- **Ratings Available**: IP55 (dust protected, water jets), IP65 (dust tight, water jets), IP66 (dust tight, powerful water jets), IP67 (dust tight, temporary immersion).
+- **Gasketing Technology**: CNC Automated Polyurethane (PU) Form-in-Place Foam Gasketing ensuring seamless, jointless protection against moisture, dust, and chemical ingress.
+- **Locking & Hardware**: 3-point locking systems, quarter-turn locks, lift-off concealed stainless steel hinges offering 120° to 180° opening angles.
+- **Mounting Options**: Wall-mounting brackets, floor-mounting plinths (100mm / 200mm), pole mounting kits.
+
+### 3. Stainless Steel (SS304 & SS316) Enclosures
+- **Application**: Pharmaceutical clean rooms, chemical processing plants, offshore/marine installations, and food & beverage facilities.
+- **Grades**: 
+  - AISI SS304 (General corrosive environments, food processing).
+  - AISI SS316 / SS316L (High chloride, marine, and aggressive chemical environments).
+- **Finish**: 240-grit satin / hairline brush finish, electro-polished, or mirror finish.
+- **Canopy**: Inclined canopies (sloped roofs) designed to prevent liquid stagnation and bacterial accumulation in hygienic environments.
+
+### 4. Junction Boxes & Terminal Enclosures
+- Compact industrial junction boxes for power distribution, signal routing, and instrumentation.
+- Pre-punched cable entry gland plates or custom knockout configurations.
+- Earth studs provided on enclosure body and door.
+
+### 5. Lighting Reflectors & Industrial Poles
+- High-efficiency parabolic and symmetrical reflectors engineered for industrial high-bay and street luminaires.
+- Custom octagonal, swaged, and conical poles for industrial illumination and outdoor surveillance.
+
+## Manufacturing Facilities & Quality Controls
+1. **Sheet Metal Processing**: CNC turret punch presses and high-precision fiber laser cutting machines delivering tight geometric tolerances (±0.1 mm).
+2. **Forming**: Multi-axis CNC hydraulic press brakes with computerized angle correction.
+3. **Welding**: TIG, MIG, and resistance spot welding performed by certified welders, with ground seamless corners.
+4. **Surface Treatment**: Automated 7-tank chemical pre-treatment (degreasing, derusting, phosphating/passivation) for superior corrosion resistance.
+5. **Powder Coating**: Pure polyester and epoxy-polyester electrostatic powder coating (standard shades: RAL 7032, RAL 7035, or custom architect-specified RAL colors) cured in temperature-controlled conveyorized ovens.
+
+## Website Navigation & Agent Workflows
+- **Catalog Page**: `https://lohanrajo.netlify.app/products`
+  - Supports search via `?q=[term]`, category filtering via `?category=[uuid]`, and pagination via `?page=[num]`.
+- **Direct RFQ / Quotation Form**: `https://lohanrajo.netlify.app/contact`
+  - URL Parameters: `?productId=[uuid]&product=[EncodedName]` automatically tags products for prompt inquiry handling.
+  - Interactive Slash Command (`/`) inside the message box enables searching and attaching product tags directly.

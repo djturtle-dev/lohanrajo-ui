@@ -157,7 +157,11 @@ export default function CategoryCards({ categories }: { categories: Category[] }
                                 <div className="absolute inset-0 z-0">
                                     <img 
                                         src={cat.imageUrl} 
-                                        alt={cat.label}
+                                        alt={`LIAT ${cat.label} Industrial Solutions`}
+                                        loading="lazy"
+                                        decoding="async"
+                                        width={600}
+                                        height={400}
                                         className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-700"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent" />

@@ -174,6 +174,7 @@ export default function HeroBlobVideo() {
                 muted
                 playsInline
                 preload="auto"
+                poster="/Footer-logo.png"
                 suppressHydrationWarning
                 className="absolute inset-0 w-full h-full min-w-full min-h-full max-w-full max-h-full object-cover opacity-40 dark:opacity-35 transition-opacity duration-700 pointer-events-none"
             />

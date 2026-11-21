@@ -10,8 +10,23 @@ import { unstable_cache } from 'next/cache';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Catalog | LIAT - LOHANRAJO INDUSTRIES AND TECHNOLOGIES',
-    description: 'Explore our catalog of BMS Panels, IP Enclosures, Reflectors, and custom metal solutions.',
+    title: 'Product Catalog | IP Rated Enclosures & Control Panels',
+    description: 'Explore our catalog of BMS Panels, IP55/IP65/IP66 Enclosures, Reflectors, and customized sheet metal solutions conforming to international standards.',
+    alternates: {
+        canonical: '/products',
+    },
+    openGraph: {
+        title: 'Product Catalog | IP Rated Enclosures & Control Panels',
+        description: 'Explore our catalog of BMS Panels, IP55/IP65/IP66 Enclosures, Reflectors, and customized sheet metal solutions.',
+        url: 'https://lohanrajo.netlify.app/products',
+        images: ['/Footer-logo.png'],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Product Catalog | IP Rated Enclosures & Control Panels',
+        description: 'Explore our catalog of BMS Panels, IP55/IP65/IP66 Enclosures, Reflectors, and customized sheet metal solutions.',
+        images: ['/Footer-logo.png'],
+    },
 };
 
 const pageSize = 6;
@@ -160,7 +175,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                     </div>
                 </div>
 
-                <main className="lg:col-span-3">
+                <div className="lg:col-span-3" role="region" aria-label="Product listings">
                     {/* Active Filters Bar */}
                     {(query || category || subCategory) && (
                         <div className="flex flex-wrap items-center gap-2 mb-6 p-3 bg-white dark:bg-brand-panel border border-brand-border clip-chamfer shadow-sm">
@@ -228,7 +243,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                             searchBar={<SearchAutocomplete initialQuery={query} initialCategory={category} />}
                         />
                     </Suspense>
-                </main>
+                </div>
             </div>
         </div>
     );

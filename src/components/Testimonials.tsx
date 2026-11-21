@@ -147,9 +147,9 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
                             <Image
                                 src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${encodeURIComponent(t.authorName || 'User')}`}
                                 alt={t.authorName || 'Reviewer'}
-                                fill
-                                sizes="48px"
-                                className="object-cover"
+                                width={48}
+                                height={48}
+                                className="object-cover w-full h-full"
                                 draggable={false}
                                 unoptimized
                             />

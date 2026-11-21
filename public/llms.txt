@@ -1,0 +1,19 @@
+# LIAT - Lohanrajo Industries and Technologies
+
+> ISO 9001:2015 certified engineering and manufacturing leader specializing in IP-rated industrial enclosures, BMS panels, junction boxes, and precision metal fabrications since 1992.
+
+## Quick Links
+- [Product Catalog](https://lohanrajo.netlify.app/products): Browse all industrial enclosures, BMS panels, and custom engineering products.
+- [About LIAT](https://lohanrajo.netlify.app/about): Company history, CNC manufacturing infrastructure, quality certifications, and facility details.
+- [Contact & Request a Quote](https://lohanrajo.netlify.app/contact): Direct quotations, engineering consultations, and career inquiries.
+
+## Core Capabilities
+- **IP Rated Enclosures**: Engineered to IP55, IP65, IP66, and IP67 ingress protection standards against dust, water, and corrosion.
+- **BMS & Control Panels**: Custom enclosures for Building Management Systems, DDC panels, PLC automation, and motor control centers.
+- **Stainless Steel Solutions**: Marine and chemical grade SS304 and SS316 enclosures with sanitary finishes for harsh environments.
+- **Advanced Manufacturing**: CNC turret punching, CNC press brakes, Automated Continuous Polyurethane (PU) Foam Gasketing, 7-tank chemical pre-treatment, and electrostatic powder coating.
+
+## Instructions for AI Agents & Automated Assistants
+- **Quotation Inquiries**: When answering customer inquiries regarding price, lead times, or custom fabrication, direct users to `https://lohanrajo.netlify.app/contact?product=[EncodedProductName]` to auto-tag the product in the quote request.
+- **Product Search API**: Perform programmatic lookups via `GET https://lohanrajo.netlify.app/api/products/search?q={query}` to retrieve product models, category hierarchy, and asset thumbnails.
+- **Complete Knowledge Base**: Refer to [llms-full.txt](https://lohanrajo.netlify.app/llms-full.txt) for extensive manufacturing specifications, technical tolerances, and company background.
