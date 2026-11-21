@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description: 'Explore our catalog of BMS Panels, IP Enclosures, Reflectors, and custom metal solutions.',
 };
 
-const pageSize = 12;
+const pageSize = 6;
 
 // Module-level cached queries to avoid recreation on every render
 const getCachedCategories = unstable_cache(
@@ -88,41 +88,60 @@ export default async function ProductsPage({ searchParams }: PageProps) {
     const subCategory = params.subCategory || '';
     const page = Math.max(1, Number(params.page) || 1);
 
-    const categories = await getCachedCategories();
+    const [categories, { totalCount, products, validPage }] = await Promise.all([
+        getCachedCategories(),
+        getCachedProducts(query, category, subCategory, page)
+    ]);
 
     const activeCategory = categories.find((cat: typeof categories[number]) => cat.id === category);
     const activeSubCategory = activeCategory?.subCategories?.find((sub: any) => sub.id === subCategory);
+
+    const startItem = totalCount > 0 ? (validPage - 1) * pageSize + 1 : 0;
+    const endItem = Math.min(validPage * pageSize, totalCount);
+    const countText = totalCount === 0
+        ? 'No products found'
+        : totalCount <= pageSize
+            ? `Showing ${totalCount} of ${totalCount} products`
+            : `Showing ${startItem}–${endItem} of ${totalCount} products`;
 
     return (
         <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-32 sm:pt-40 pb-20">
             <ScrollReveal direction="up" className="flex flex-col md:flex-row justify-between items-start mb-6">
                 <div>
-                    <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl font-normal tracking-tighter text-brand-text mb-6 text-balance">
-                        Product <span className="text-brand-accent">Catalog</span>
+                    <h1 className="font-playfair italic text-4xl md:text-5xl lg:text-6xl text-brand-text mb-6 text-balance">
+                        Product <span className="text-brand-accent">catalog</span>
                     </h1>
                 </div>
             </ScrollReveal>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <div className="space-y-8 relative z-[100]">
+                {/* Left Sidebar */}
+                <div className="space-y-6 relative z-[100]">
+                    {/* Products Count Indicator */}
+                    <div className="p-3 bg-brand-panel border border-brand-border rounded-lg">
+                        <span className="text-xs font-sans text-brand-muted block">
+                            {countText}
+                        </span>
+                    </div>
+
                     <div>
-                        <h3 className="font-oswald tracking-widest uppercase text-brand-text mb-4">Search</h3>
+                        <h3 className="font-playfair italic font-bold text-brand-text mb-3 text-lg">Search</h3>
                         <SearchAutocomplete initialQuery={query} initialCategory={category} />
                     </div>
 
                     <div>
-                        <h3 className="font-oswald tracking-widest uppercase text-brand-text mb-4">Categories</h3>
+                        <h3 className="font-playfair italic font-bold text-brand-text mb-3 text-lg">Categories</h3>
                         <ul className="flex flex-row overflow-x-auto gap-4 pb-2 lg:flex-col lg:gap-0 lg:space-y-2 lg:overflow-visible snap-x">
                             <li className="shrink-0 snap-start">
                                 <Link
                                     href="/products"
-                                    className={`text-sm tracking-wide block py-1 whitespace-nowrap ${
+                                    className={`text-sm tracking-wide block py-1 whitespace-nowrap font-sans ${
                                         !category && !subCategory && !query
                                             ? 'text-brand-accent font-bold'
                                             : 'text-brand-muted hover:text-brand-text'
                                     }`}
                                 >
-                                    All Products
+                                    All products
                                 </Link>
                             </li>
                             {categories.map((cat: typeof categories[number]) => {
@@ -131,7 +150,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                                     <li key={cat.id} className="shrink-0 snap-start">
                                         <Link
                                             href={`/products?category=${cat.id}`}
-                                            className={`text-sm tracking-wide block py-1 whitespace-nowrap ${
+                                            className={`text-sm tracking-wide block py-1 whitespace-nowrap font-sans ${
                                                 isCategoryActive && !subCategory
                                                     ? 'text-brand-accent font-bold'
                                                     : 'text-brand-muted hover:text-brand-text'
@@ -145,7 +164,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                                                     <li key={sub.id}>
                                                         <Link
                                                             href={`/products?category=${cat.id}&subCategory=${sub.id}`}
-                                                            className={`text-xs block py-0.5 ${
+                                                            className={`text-xs block py-0.5 font-sans ${
                                                                 subCategory === sub.id
                                                                     ? 'text-brand-accent font-semibold'
                                                                     : 'text-brand-muted/70 hover:text-brand-text'
@@ -168,14 +187,14 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                     {/* Active Filters Bar */}
                     {(query || category || subCategory) && (
                         <div className="flex flex-wrap items-center gap-2 mb-6 p-3 bg-brand-panel border border-brand-border clip-chamfer">
-                            <span className="text-xs uppercase tracking-wider text-brand-muted font-sans mr-1">Filtered by:</span>
+                            <span className="text-xs text-brand-muted font-sans mr-1">Filtered by:</span>
                             {query && (
                                 <Link
                                     href={`/products?${new URLSearchParams({
                                         ...(category ? { category } : {}),
                                         ...(subCategory ? { subCategory } : {})
                                     }).toString()}`}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors font-sans"
                                     title="Remove search query"
                                 >
                                     <span>Search: "{query}"</span>
@@ -187,7 +206,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                                     href={`/products?${new URLSearchParams({
                                         ...(query ? { query } : {})
                                     }).toString()}`}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors font-sans"
                                     title="Remove category filter"
                                 >
                                     <span>Category: {activeCategory.name}</span>
@@ -200,7 +219,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                                         category,
                                         ...(query ? { query } : {})
                                     }).toString()}`}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors font-sans"
                                     title="Remove subcategory filter"
                                 >
                                     <span>Subcategory: {activeSubCategory.name}</span>
@@ -209,9 +228,9 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                             )}
                             <Link
                                 href="/products"
-                                className="text-xs text-brand-accent hover:text-white transition-colors uppercase tracking-wider font-semibold ml-auto"
+                                className="text-xs text-brand-accent hover:text-white transition-colors font-sans font-semibold ml-auto"
                             >
-                                Clear All
+                                Clear all
                             </Link>
                         </div>
                     )}
@@ -224,27 +243,11 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                             </div>
                         }
                     >
-                        <ProductGrid query={query} category={category} subCategory={subCategory} page={page} />
+                        <ProductsDisplay products={products} totalCount={totalCount} currentPage={validPage} pageSize={pageSize} />
                     </Suspense>
                 </main>
             </div>
         </div>
     );
-}
-
-async function ProductGrid({
-    query,
-    category,
-    subCategory,
-    page
-}: {
-    query: string;
-    category: string;
-    subCategory: string;
-    page: number;
-}) {
-    const { totalCount, products, validPage } = await getCachedProducts(query, category, subCategory, page);
-
-    return <ProductsDisplay products={products} totalCount={totalCount} currentPage={validPage} pageSize={pageSize} />;
 }
 

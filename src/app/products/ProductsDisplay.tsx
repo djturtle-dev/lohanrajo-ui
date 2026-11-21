@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { LayoutGrid, List } from 'lucide-react';
+import { LayoutGrid, List, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getAssetUrl } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';
 import { Prisma } from '@prisma/client';
@@ -38,12 +38,12 @@ export default function ProductsDisplay({
     if (products.length === 0) {
         return (
             <div className="py-24 text-center border border-dashed border-brand-border flex items-center justify-center flex-col gap-4">
-                <p className="text-brand-muted font-sans uppercase tracking-widest text-sm">No products found</p>
+                <p className="text-brand-muted font-sans text-sm">No products found</p>
                 <Link
                     href="/products"
-                    className="btn-glass-secondary px-6 py-2.5 font-oswald tracking-widest uppercase text-xs inline-flex items-center"
+                    className="btn-glass-secondary px-6 py-2.5 font-playfair italic text-xs inline-flex items-center"
                 >
-                    View All Products
+                    View all products
                 </Link>
             </div>
         );
@@ -52,24 +52,23 @@ export default function ProductsDisplay({
     return (
         <div className="space-y-6">
             {/* Toolbar */}
-            <div className="flex justify-between items-center bg-brand-panel border border-brand-border p-3 clip-chamfer">
-                <p className="text-xs md:text-sm tracking-widest uppercase font-sans text-brand-muted">
-                    Showing {products.length} of {totalCount} Product{totalCount !== 1 ? 's' : ''}
-                </p>
-                <div className="flex gap-2">
-                    <button
-                        onClick={() => setViewMode('list')}
-                        className={`p-2 border transition-colors ${viewMode === 'list' ? 'border-brand-accent text-brand-accent bg-brand-accent/10' : 'border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary'}`}
-                        aria-label="List View"
-                    >
-                        <List className="w-4 h-4 md:w-5 md:h-5" />
-                    </button>
+            <div className="flex justify-end items-center bg-brand-panel border border-brand-border p-2.5 clip-chamfer">
+                <div className="flex gap-1.5">
                     <button
                         onClick={() => setViewMode('grid')}
-                        className={`p-2 border transition-colors ${viewMode === 'grid' ? 'border-brand-accent text-brand-accent bg-brand-accent/10' : 'border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary'}`}
-                        aria-label="Grid View"
+                        className={`p-2 border transition-colors cursor-pointer rounded ${viewMode === 'grid' ? 'border-brand-accent text-brand-accent bg-brand-accent/10' : 'border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary'}`}
+                        aria-label="Grid view"
+                        title="Grid view"
                     >
                         <LayoutGrid className="w-4 h-4 md:w-5 md:h-5" />
+                    </button>
+                    <button
+                        onClick={() => setViewMode('list')}
+                        className={`p-2 border transition-colors cursor-pointer rounded ${viewMode === 'list' ? 'border-brand-accent text-brand-accent bg-brand-accent/10' : 'border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary'}`}
+                        aria-label="List view"
+                        title="List view"
+                    >
+                        <List className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                 </div>
             </div>
@@ -93,17 +92,17 @@ export default function ProductsDisplay({
                                         className="object-cover z-0 transition-all duration-500 group-hover:scale-105"
                                     />
                                 ) : (
-                                    <span className="text-brand-muted font-sans tracking-widest uppercase text-xs z-0 border border-brand-border px-4 py-2">
-                                        No Image
+                                    <span className="text-brand-muted font-sans text-xs z-0 border border-brand-border px-4 py-2">
+                                        No image
                                     </span>
                                 )}
                             </div>
                             <div className="p-4 md:p-6 flex-grow flex flex-col justify-between relative z-20">
                                 <div>
-                                    <p className="text-brand-accent text-[10px] md:text-xs font-bold tracking-widest uppercase mb-1 md:mb-2 drop-shadow-md">
+                                    <p className="text-brand-accent text-[10px] md:text-xs font-semibold mb-1 md:mb-2 drop-shadow-md">
                                         {product.category.name}{product.subCategory && ` • ${product.subCategory.name}`}
                                     </p>
-                                    <h3 className="text-brand-text font-sans text-sm md:text-lg uppercase tracking-wide mb-2 line-clamp-2">{product.name}</h3>
+                                    <h3 className="text-brand-text font-sans text-sm md:text-lg mb-2 line-clamp-2">{product.name}</h3>
                                 </div>
                                 <div className="h-px w-8 bg-brand-border group-hover:w-full group-hover:bg-brand-accent transition-all duration-500 mt-4" />
                             </div>
@@ -129,19 +128,19 @@ export default function ProductsDisplay({
                                         className="object-cover z-0 transition-all duration-500 group-hover:scale-105"
                                     />
                                 ) : (
-                                    <span className="text-brand-muted font-sans tracking-widest uppercase text-xs z-0 border border-brand-border px-2 py-1">No Image</span>
+                                    <span className="text-brand-muted font-sans text-xs z-0 border border-brand-border px-2 py-1">No image</span>
                                 )}
                             </div>
                             <div className="p-4 md:p-6 flex flex-col justify-center flex-grow min-w-0 relative z-20">
                                 <div className="flex justify-between items-start mb-2 gap-2">
-                                    <p className="text-brand-accent text-xs font-bold tracking-widest uppercase drop-shadow-md">
+                                    <p className="text-brand-accent text-xs font-semibold drop-shadow-md">
                                         {product.category.name}{product.subCategory && ` • ${product.subCategory.name}`}
                                     </p>
-                                    <span className="hidden md:block text-brand-muted text-[10px] border border-brand-border px-2 py-1 tracking-widest font-sans uppercase shrink-0">
-                                        View Details
+                                    <span className="hidden md:block text-brand-muted text-[10px] border border-brand-border px-2 py-1 font-sans shrink-0">
+                                        View details
                                     </span>
                                 </div>
-                                <h3 className="text-brand-text font-sans text-base md:text-xl uppercase tracking-wide mb-2 md:mb-3 truncate">{product.name}</h3>
+                                <h3 className="text-brand-text font-sans text-base md:text-xl mb-2 md:mb-3 truncate">{product.name}</h3>
                                 <div
                                     className="text-brand-muted text-xs line-clamp-2 font-mono
                                     [&_h1]:font-sans [&_h2]:font-sans [&_h3]:font-sans [&_strong]:text-brand-text [&_a]:text-brand-accent"
@@ -155,34 +154,58 @@ export default function ProductsDisplay({
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-2 mt-8 md:mt-12 font-sans tracking-widest uppercase text-sm">
+                <div className="flex justify-center items-center gap-2 mt-8 md:mt-12 font-sans text-sm">
                     {currentPage > 1 ? (
                         <Link
                             href={buildUrl(currentPage - 1)}
-                            className="px-4 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel clip-chamfer"
+                            className="px-3.5 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel rounded-lg flex items-center gap-1 text-xs font-medium"
                         >
-                            Previous
+                            <ChevronLeft className="w-4 h-4" />
+                            <span>Previous</span>
                         </Link>
                     ) : (
-                        <span className="px-4 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 clip-chamfer">
-                            Previous
+                        <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 rounded-lg flex items-center gap-1 text-xs font-medium">
+                            <ChevronLeft className="w-4 h-4" />
+                            <span>Previous</span>
                         </span>
                     )}
 
-                    <span className="px-4 py-2 text-brand-text font-mono text-xs">
-                        Page {currentPage} of {totalPages}
-                    </span>
+                    {/* Page Numbers */}
+                    <div className="flex items-center gap-1">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
+                            const isCurrent = p === currentPage;
+                            return isCurrent ? (
+                                <span
+                                    key={p}
+                                    className="w-9 h-9 flex items-center justify-center rounded-lg bg-brand-accent text-white font-semibold text-xs shadow-sm"
+                                    aria-current="page"
+                                >
+                                    {p}
+                                </span>
+                            ) : (
+                                <Link
+                                    key={p}
+                                    href={buildUrl(p)}
+                                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary bg-brand-panel transition-colors text-xs font-medium"
+                                >
+                                    {p}
+                                </Link>
+                            );
+                        })}
+                    </div>
 
                     {currentPage < totalPages ? (
                         <Link
                             href={buildUrl(currentPage + 1)}
-                            className="px-4 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel clip-chamfer"
+                            className="px-3.5 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel rounded-lg flex items-center gap-1 text-xs font-medium"
                         >
-                            Next
+                            <span>Next</span>
+                            <ChevronRight className="w-4 h-4" />
                         </Link>
                     ) : (
-                        <span className="px-4 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 clip-chamfer">
-                            Next
+                        <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 rounded-lg flex items-center gap-1 text-xs font-medium">
+                            <span>Next</span>
+                            <ChevronRight className="w-4 h-4" />
                         </span>
                     )}
                 </div>
