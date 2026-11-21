@@ -52,7 +52,7 @@ export default function ProductsDisplay({
     return (
         <div className="space-y-6">
             {/* Toolbar */}
-            <div className="flex justify-end items-center bg-brand-panel border border-brand-border p-2.5 clip-chamfer">
+            <div className="flex justify-start items-center bg-brand-panel border border-brand-border p-2.5 clip-chamfer">
                 <div className="flex gap-1.5">
                     <button
                         onClick={() => setViewMode('grid')}
