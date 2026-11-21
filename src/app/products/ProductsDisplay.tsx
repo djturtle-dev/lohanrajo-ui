@@ -17,12 +17,14 @@ export default function ProductsDisplay({
     products,
     totalCount,
     currentPage,
-    pageSize
+    pageSize,
+    searchBar
 }: {
     products: ProductWithRelations[];
     totalCount: number;
     currentPage: number;
     pageSize: number;
+    searchBar?: React.ReactNode;
 }) {
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
     const searchParams = useSearchParams();
@@ -43,99 +45,105 @@ export default function ProductsDisplay({
         return `/products?${sp.toString()}`;
     };
 
-    if (products.length === 0) {
-        return (
-            <div className="py-24 text-center border border-dashed border-brand-border flex items-center justify-center flex-col gap-4">
-                <p className="text-brand-muted font-sans text-sm">No products found</p>
-                <Link
-                    href="/products"
-                    className="btn-glass-secondary px-6 py-2.5 font-playfair italic text-xs inline-flex items-center"
-                >
-                    View all products
-                </Link>
-            </div>
-        );
-    }
-
     return (
         <div className="space-y-6">
-            {/* Top Bar with Pagination Status & Floating Grid/List Toggle */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-brand-border/40">
-                {/* Left: Visible Top Pagination Status & Quick Page Switcher */}
-                <div className="flex items-center gap-3">
-                    <span className="text-xs font-sans text-brand-muted tracking-wide">
-                        {countText}
-                    </span>
-                    {totalPages > 1 && (
-                        <div className="flex items-center gap-1.5 font-sans">
-                            {currentPage > 1 ? (
-                                <Link
-                                    href={buildUrl(currentPage - 1)}
-                                    className="p-1 rounded border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-accent bg-brand-panel transition-colors"
-                                    title="Previous page"
-                                    aria-label="Previous page"
-                                >
-                                    <ChevronLeft className="w-3.5 h-3.5" />
-                                </Link>
-                            ) : (
-                                <span className="p-1 rounded border border-brand-border/30 text-brand-muted/30 cursor-not-allowed bg-brand-panel/40">
-                                    <ChevronLeft className="w-3.5 h-3.5" />
-                                </span>
-                            )}
-                            <span className="text-[11px] font-mono text-brand-muted px-1.5 py-0.5 rounded bg-brand-panel border border-brand-border/40">
-                                {currentPage} / {totalPages}
-                            </span>
-                            {currentPage < totalPages ? (
-                                <Link
-                                    href={buildUrl(currentPage + 1)}
-                                    className="p-1 rounded border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-accent bg-brand-panel transition-colors"
-                                    title="Next page"
-                                    aria-label="Next page"
-                                >
-                                    <ChevronRight className="w-3.5 h-3.5" />
-                                </Link>
-                            ) : (
-                                <span className="p-1 rounded border border-brand-border/30 text-brand-muted/30 cursor-not-allowed bg-brand-panel/40">
-                                    <ChevronRight className="w-3.5 h-3.5" />
-                                </span>
-                            )}
-                        </div>
-                    )}
-                </div>
+            {/* Top Bar: Search Bar on same line as Grid/List Toggle & Pagination */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-brand-border/40">
+                {/* Search Bar (Contact Form Ref & Glass Themed) */}
+                {searchBar && (
+                    <div className="w-full lg:max-w-md xl:max-w-lg">
+                        {searchBar}
+                    </div>
+                )}
 
-                {/* Right: Floating Glass Capsule Toggle for Grid / List View */}
-                <div className="ml-auto inline-flex items-center p-1 rounded-xl bg-white dark:bg-brand-panel border border-brand-border/60 shadow-sm backdrop-blur-md">
-                    <button
-                        onClick={() => setViewMode('grid')}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-sans font-medium transition-all cursor-pointer ${
-                            viewMode === 'grid'
-                                ? 'bg-brand-accent text-white shadow-xs'
-                                : 'text-brand-muted hover:text-brand-text hover:bg-black/5 dark:hover:bg-white/5'
-                        }`}
-                        aria-label="Grid view"
-                        title="Grid view"
-                    >
-                        <LayoutGrid className="w-3.5 h-3.5" />
-                        <span className="hidden sm:inline">Grid</span>
-                    </button>
-                    <button
-                        onClick={() => setViewMode('list')}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-sans font-medium transition-all cursor-pointer ${
-                            viewMode === 'list'
-                                ? 'bg-brand-accent text-white shadow-xs'
-                                : 'text-brand-muted hover:text-brand-text hover:bg-black/5 dark:hover:bg-white/5'
-                        }`}
-                        aria-label="List view"
-                        title="List view"
-                    >
-                        <List className="w-3.5 h-3.5" />
-                        <span className="hidden sm:inline">List</span>
-                    </button>
+                {/* Right Group: Pagination Quick Info + Primary/Secondary Themed Toggle */}
+                <div className="flex items-center justify-between lg:justify-end gap-3 sm:gap-4 flex-wrap ml-auto">
+                    {/* Top Pagination Status & Quick Page Switcher */}
+                    <div className="flex items-center gap-2">
+                        <span className="text-xs font-sans text-brand-muted tracking-wide whitespace-nowrap">
+                            {countText}
+                        </span>
+                        {totalPages > 1 && (
+                            <div className="flex items-center gap-1 font-sans">
+                                {currentPage > 1 ? (
+                                    <Link
+                                        href={buildUrl(currentPage - 1)}
+                                        className="w-7 h-7 rounded-full btn-glass-secondary text-brand-muted hover:text-brand-text flex items-center justify-center transition-transform hover:scale-105"
+                                        title="Previous page"
+                                        aria-label="Previous page"
+                                    >
+                                        <ChevronLeft className="w-3.5 h-3.5" />
+                                    </Link>
+                                ) : (
+                                    <span className="w-7 h-7 rounded-full border border-brand-border/30 text-brand-muted/30 cursor-not-allowed bg-brand-panel/40 flex items-center justify-center">
+                                        <ChevronLeft className="w-3.5 h-3.5" />
+                                    </span>
+                                )}
+                                <span className="text-[11px] font-mono text-brand-muted px-2 py-0.5 rounded-full bg-brand-panel border border-brand-border/40">
+                                    {currentPage} / {totalPages}
+                                </span>
+                                {currentPage < totalPages ? (
+                                    <Link
+                                        href={buildUrl(currentPage + 1)}
+                                        className="w-7 h-7 rounded-full btn-glass-secondary text-brand-muted hover:text-brand-text flex items-center justify-center transition-transform hover:scale-105"
+                                        title="Next page"
+                                        aria-label="Next page"
+                                    >
+                                        <ChevronRight className="w-3.5 h-3.5" />
+                                    </Link>
+                                ) : (
+                                    <span className="w-7 h-7 rounded-full border border-brand-border/30 text-brand-muted/30 cursor-not-allowed bg-brand-panel/40 flex items-center justify-center">
+                                        <ChevronRight className="w-3.5 h-3.5" />
+                                    </span>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Site Button Themed Toggle: btn-glass-primary for active, btn-glass-secondary for inactive */}
+                    <div className="inline-flex items-center gap-1.5 p-1 rounded-full bg-brand-panel/50 border border-brand-border/40">
+                        <button
+                            onClick={() => setViewMode('grid')}
+                            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-all cursor-pointer ${
+                                viewMode === 'grid'
+                                    ? 'btn-glass-primary text-white shadow-xs'
+                                    : 'btn-glass-secondary text-brand-text'
+                            }`}
+                            aria-label="Grid view"
+                            title="Grid view"
+                        >
+                            <LayoutGrid className="w-3.5 h-3.5" />
+                            <span>Grid</span>
+                        </button>
+                        <button
+                            onClick={() => setViewMode('list')}
+                            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-all cursor-pointer ${
+                                viewMode === 'list'
+                                    ? 'btn-glass-primary text-white shadow-xs'
+                                    : 'btn-glass-secondary text-brand-text'
+                            }`}
+                            aria-label="List view"
+                            title="List view"
+                        >
+                            <List className="w-3.5 h-3.5" />
+                            <span>List</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* Grid View */}
-            {viewMode === 'grid' ? (
+            {/* Empty State */}
+            {products.length === 0 ? (
+                <div className="py-24 text-center border border-dashed border-brand-border flex items-center justify-center flex-col gap-4">
+                    <p className="text-brand-muted font-sans text-sm">No products found</p>
+                    <Link
+                        href="/products"
+                        className="btn-glass-secondary px-6 py-2.5 font-playfair italic text-xs inline-flex items-center"
+                    >
+                        View all products
+                    </Link>
+                </div>
+            ) : viewMode === 'grid' ? (
                 <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     {products.map(product => (
                         <Link

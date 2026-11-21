@@ -108,11 +108,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* Left Sidebar */}
-                <div className="space-y-6 relative z-[100]">
-                    <div>
-                        <SearchAutocomplete initialQuery={query} initialCategory={category} />
-                    </div>
-
+                <div className="space-y-6 relative z-30">
                     <div>
                         <h3 className="font-playfair italic font-bold text-brand-text mb-3 text-lg">Categories</h3>
                         <ul className="flex flex-row overflow-x-auto gap-4 pb-2 lg:flex-col lg:gap-0 lg:space-y-2 lg:overflow-visible snap-x">
@@ -227,7 +223,13 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                             </div>
                         }
                     >
-                        <ProductsDisplay products={products} totalCount={totalCount} currentPage={validPage} pageSize={pageSize} />
+                        <ProductsDisplay 
+                            products={products} 
+                            totalCount={totalCount} 
+                            currentPage={validPage} 
+                            pageSize={pageSize}
+                            searchBar={<SearchAutocomplete initialQuery={query} initialCategory={category} />}
+                        />
                     </Suspense>
                 </main>
             </div>

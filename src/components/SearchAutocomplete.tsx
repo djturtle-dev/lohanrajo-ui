@@ -77,8 +77,8 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
     const hasResults = results && (results.products.length > 0 || results.categories.length > 0 || results.subCategories.length > 0);
 
     return (
-        <div className="relative">
-            <form onSubmit={handleSubmit} className="relative z-20">
+        <div className="relative w-full">
+            <form onSubmit={handleSubmit} className="relative z-20 flex items-center">
                 <input
                     ref={inputRef}
                     type="text"
@@ -89,12 +89,18 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
                         if (hasResults) setIsOpen(true);
                     }}
                     placeholder="products ..."
-                    className="w-full bg-brand-panel border border-brand-border px-4 py-3 pl-10 text-brand-text focus:outline-none focus:border-brand-accent transition-colors block"
+                    className="w-full bg-th-input border border-brand-border px-4 py-2.5 pl-10 pr-24 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm font-sans shadow-xs"
                     autoComplete="off"
                 />
-                <Search className="absolute left-3 top-3.5 w-4 h-4 text-brand-muted" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-muted pointer-events-none" />
+                <button
+                    type="submit"
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 btn-glass-secondary px-3.5 py-1 text-xs font-playfair italic font-bold rounded-full cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                >
+                    Search
+                </button>
                 {isLoading && (
-                    <div className="absolute right-3 top-3.5 w-4 h-4 border-2 border-brand-muted border-t-brand-accent rounded-full animate-spin" />
+                    <div className="absolute right-20 top-1/2 -translate-y-1/2 w-3.5 h-3.5 border-2 border-brand-muted border-t-brand-accent rounded-full animate-spin pointer-events-none" />
                 )}
             </form>
 
@@ -102,12 +108,12 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
             {isOpen && hasResults && (
                 <div 
                     ref={dropdownRef}
-                    className="absolute top-full left-0 right-0 mt-2 bg-[#0a0a0a] border border-brand-border/50 rounded-xl shadow-2xl z-50 overflow-hidden"
+                    className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#0c0c0c] border border-brand-border/60 rounded-2xl shadow-2xl z-50 overflow-hidden backdrop-blur-xl"
                 >
-                    <div className="max-h-96 overflow-y-auto py-2">
+                    <div className="max-h-96 overflow-y-auto py-2 divide-y divide-brand-border/20">
                         {results.categories.length > 0 && (
-                            <div className="mb-2">
-                                <h4 className="px-4 py-1 text-xs font-oswald tracking-widest uppercase text-brand-muted/60 bg-brand-dark/50">Categories</h4>
+                            <div className="pb-2">
+                                <h4 className="px-4 py-1 text-xs font-sans font-semibold tracking-wider uppercase text-brand-muted/70 bg-brand-panel/40">Categories</h4>
                                 {results.categories.map(cat => (
                                     <Link 
                                         key={`cat-${cat.id}`} 
@@ -115,7 +121,7 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
                                         className="px-4 py-2 hover:bg-brand-panel flex items-center justify-between group transition-colors"
                                         onClick={() => setIsOpen(false)}
                                     >
-                                        <span className="text-white/90 font-sans text-sm tracking-wide">{cat.name}</span>
+                                        <span className="text-brand-text font-sans text-sm tracking-wide group-hover:text-brand-accent transition-colors">{cat.name}</span>
                                         <ChevronRight className="w-4 h-4 text-brand-accent opacity-0 group-hover:opacity-100 transition-opacity" />
                                     </Link>
                                 ))}
@@ -123,8 +129,8 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
                         )}
 
                         {results.subCategories.length > 0 && (
-                            <div className="mb-2">
-                                <h4 className="px-4 py-1 text-xs font-oswald tracking-widest uppercase text-brand-muted/60 bg-brand-dark/50">Sub-Categories</h4>
+                            <div className="py-2">
+                                <h4 className="px-4 py-1 text-xs font-sans font-semibold tracking-wider uppercase text-brand-muted/70 bg-brand-panel/40">Sub-Categories</h4>
                                 {results.subCategories.map(sub => (
                                     <Link 
                                         key={`sub-${sub.id}`} 
@@ -132,7 +138,7 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
                                         className="px-4 py-2 hover:bg-brand-panel flex items-center justify-between group transition-colors"
                                         onClick={() => setIsOpen(false)}
                                     >
-                                        <span className="text-white/90 font-sans text-sm tracking-wide">{sub.name}</span>
+                                        <span className="text-brand-text font-sans text-sm tracking-wide group-hover:text-brand-accent transition-colors">{sub.name}</span>
                                         <ChevronRight className="w-4 h-4 text-brand-accent opacity-0 group-hover:opacity-100 transition-opacity" />
                                     </Link>
                                 ))}
@@ -140,8 +146,8 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
                         )}
 
                         {results.products.length > 0 && (
-                            <div>
-                                <h4 className="px-4 py-1 text-xs font-oswald tracking-widest uppercase text-brand-muted/60 bg-brand-dark/50">Products</h4>
+                            <div className="pt-2">
+                                <h4 className="px-4 py-1 text-xs font-sans font-semibold tracking-wider uppercase text-brand-muted/70 bg-brand-panel/40">Products</h4>
                                 {results.products.map(prod => (
                                     <Link 
                                         key={`prod-${prod.id}`} 
@@ -149,17 +155,17 @@ export default function SearchAutocomplete({ initialQuery = '', initialCategory 
                                         className="px-4 py-2 hover:bg-brand-panel flex items-center justify-between group transition-colors"
                                         onClick={() => setIsOpen(false)}
                                     >
-                                        <span className="text-white/90 font-sans text-sm tracking-wide">{prod.name}</span>
+                                        <span className="text-brand-text font-sans text-sm tracking-wide group-hover:text-brand-accent transition-colors">{prod.name}</span>
                                         <ChevronRight className="w-4 h-4 text-brand-accent opacity-0 group-hover:opacity-100 transition-opacity" />
                                     </Link>
                                 ))}
                             </div>
                         )}
                     </div>
-                    <div className="border-t border-brand-border/50 p-2 bg-brand-dark/30">
+                    <div className="border-t border-brand-border/40 p-2.5 bg-brand-panel/30">
                         <button 
                             onClick={handleSubmit}
-                            className="w-full text-center text-xs font-sans tracking-widest uppercase text-brand-accent hover:text-white transition-colors"
+                            className="w-full text-center text-xs font-sans font-semibold tracking-wider uppercase text-brand-accent hover:underline transition-colors"
                         >
                             See all results for "{query}"
                         </button>
