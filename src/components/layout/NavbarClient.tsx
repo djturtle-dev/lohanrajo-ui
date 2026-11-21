@@ -45,13 +45,14 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
     const [isScrolled, setIsScrolled] = useState(false);
     const [isManuallyExpanded, setIsManuallyExpanded] = useState(false);
     const lastScrollY = useRef(0);
+    const expandedAtScrollY = useRef(0);
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         const scrolled = latest > 30;
         setIsScrolled(scrolled);
 
-        // Auto-collapse if they scroll down further while manually expanded
-        if (latest > lastScrollY.current + 10 && isManuallyExpanded) {
+        // Auto-collapse only if they scroll significantly after manually expanding
+        if (isManuallyExpanded && Math.abs(latest - expandedAtScrollY.current) > 80) {
             setIsManuallyExpanded(false);
         }
         lastScrollY.current = latest;
@@ -62,6 +63,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
     // Close menu on route change
     useEffect(() => {
         setIsOpen(false);
+        setIsManuallyExpanded(false);
     }, [pathname]);
 
     const navLinks = [
@@ -82,7 +84,9 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                 initial={false}
                 animate={{
                     top: isScrolled ? 16 : 0,
-                    width: isScrolled ? "min(92%, 600px)" : "100%",
+                    width: isScrolled 
+                        ? (isManuallyExpanded ? "min(96%, 1060px)" : "min(92%, 520px)") 
+                        : "100%",
                     borderRadius: isScrolled ? 9999 : 0,
                     height: isScrolled ? 64 : 76,
                     boxShadow: isScrolled
@@ -180,7 +184,12 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                             stiffness: 280,
                                             damping: 26
                                         }}
-                                        onClick={() => setIsManuallyExpanded(!isManuallyExpanded)}
+                                        onClick={() => {
+                                            if (!isManuallyExpanded) {
+                                                expandedAtScrollY.current = scrollY.get();
+                                            }
+                                            setIsManuallyExpanded(!isManuallyExpanded);
+                                        }}
                                         className="h-10 rounded-full btn-glass-secondary flex-shrink-0 hover:scale-105 flex items-center justify-center cursor-pointer ml-1 overflow-hidden"
                                         aria-label="Toggle Navigation"
                                     >
