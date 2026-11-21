@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, Suspense } from 'react';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { submitFeedback } from '@/app/actions';
 import { 
     MapPin, 
@@ -193,6 +193,81 @@ function ContactFormContent() {
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const slashMenuRef = useRef<HTMLDivElement>(null);
+
+    // Leave / Navigation Warning State
+    const router = useRouter();
+    const [showLeaveModal, setShowLeaveModal] = useState(false);
+    const [pendingNavigationUrl, setPendingNavigationUrl] = useState<string | null>(null);
+    const bypassWarningRef = useRef(false);
+
+    // Warn before closing browser / tab or reloading
+    useEffect(() => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (taggedProducts.length > 0 && !bypassWarningRef.current) {
+                e.preventDefault();
+                e.returnValue = '';
+                return '';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [taggedProducts.length]);
+
+    // Intercept in-app navigation link clicks when product tags exist
+    useEffect(() => {
+        if (taggedProducts.length === 0) return;
+
+        const handleLinkClick = (e: MouseEvent) => {
+            if (bypassWarningRef.current) return;
+
+            const anchor = (e.target as HTMLElement)?.closest('a');
+            if (!anchor) return;
+
+            const href = anchor.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || anchor.target === '_blank') {
+                return;
+            }
+
+            try {
+                const currentUrl = new URL(window.location.href);
+                const targetUrl = new URL(anchor.href, window.location.href);
+
+                // If navigating to a different page
+                if (targetUrl.pathname !== currentUrl.pathname) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setPendingNavigationUrl(anchor.href);
+                    setShowLeaveModal(true);
+                }
+            } catch {
+                // Ignore parse errors
+            }
+        };
+
+        document.addEventListener('click', handleLinkClick, true);
+        return () => {
+            document.removeEventListener('click', handleLinkClick, true);
+        };
+    }, [taggedProducts]);
+
+    const handleConfirmLeave = () => {
+        bypassWarningRef.current = true;
+        const target = pendingNavigationUrl;
+        setTaggedProducts([]);
+        setShowLeaveModal(false);
+
+        if (target) {
+            router.push(target);
+        }
+    };
+
+    const handleCancelLeave = () => {
+        setShowLeaveModal(false);
+        setPendingNavigationUrl(null);
+    };
     
     const isCaptchaValid = captcha !== null && captchaInput.trim() === captcha.answer;
     const isCaptchaWrong = captchaInput.trim() !== '' && captcha !== null && captchaInput.trim() !== captcha.answer;
@@ -405,6 +480,7 @@ function ContactFormContent() {
         const result = await submitFeedback(formData);
 
         if (result.success) {
+            bypassWarningRef.current = true;
             setFormStatus('success');
             (e.target as HTMLFormElement).reset();
             setMessage('');
@@ -856,6 +932,93 @@ function ContactFormContent() {
                     </div>
                 </ScrollReveal>
             </div>
+
+            {/* Unsaved Tagged Product Leave Warning Modal */}
+            {showLeaveModal && (
+                <div 
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="leave-modal-title"
+                    className="fixed inset-0 z-[99999] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in-0 duration-200"
+                >
+                    <div 
+                        className="card-glass border border-brand-border/80 shadow-2xl rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-6 animate-in zoom-in-95 duration-200 relative overflow-hidden text-center"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* Ambient Background Flare */}
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/10 rounded-full blur-2xl pointer-events-none" />
+
+                        {/* Warning Icon Badge */}
+                        <div className="w-14 h-14 mx-auto rounded-2xl btn-glass-secondary border border-brand-accent/40 flex items-center justify-center text-brand-accent shadow-md">
+                            <AlertTriangle className="w-7 h-7 text-brand-accent" />
+                        </div>
+
+                        {/* Title & Description */}
+                        <div className="space-y-2">
+                            <h3 id="leave-modal-title" className="font-playfair italic text-2xl text-brand-text font-bold">
+                                Remove tagged product?
+                            </h3>
+                            <p className="font-sans text-xs sm:text-sm text-brand-muted leading-relaxed">
+                                You have tagged product(s) in your enquiry. Moving to a different page will remove them. Do you want to remove this product and leave?
+                            </p>
+                        </div>
+
+                        {/* Preview of Tagged Products */}
+                        {taggedProducts.length > 0 && (
+                            <div className="bg-brand-panel/70 border border-brand-border/60 rounded-2xl p-3 max-h-36 overflow-y-auto space-y-2 scrollbar-thin text-left">
+                                {taggedProducts.map((p) => {
+                                    const thumb = p.images?.[0] ? getAssetUrl(p.images[0]) : null;
+                                    return (
+                                        <div key={p.id} className="flex items-center gap-2.5">
+                                            <div className="w-7 h-7 rounded-lg overflow-hidden bg-brand-bg shrink-0 border border-brand-border/60 flex items-center justify-center">
+                                                {thumb ? (
+                                                    <Image
+                                                        src={thumb}
+                                                        alt={p.name}
+                                                        width={28}
+                                                        height={28}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                ) : (
+                                                    <Package className="w-3.5 h-3.5 text-brand-muted" />
+                                                )}
+                                            </div>
+                                            <div className="min-w-0 flex-1">
+                                                <p className="font-sans font-medium text-xs text-brand-text truncate">
+                                                    {p.name}
+                                                </p>
+                                                {p.category?.name && (
+                                                    <p className="text-[10px] text-brand-muted truncate">
+                                                        {p.category.name}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+
+                        {/* Action Buttons */}
+                        <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                            <button
+                                type="button"
+                                onClick={handleCancelLeave}
+                                className="w-full btn-glass-primary py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider transition-transform hover:scale-[1.02] cursor-pointer shadow-md"
+                            >
+                                Stay on Page
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleConfirmLeave}
+                                className="w-full py-3 rounded-full text-xs font-sans font-medium uppercase tracking-wider text-brand-muted hover:text-brand-accent border border-brand-border/60 hover:border-brand-accent/50 transition-colors cursor-pointer"
+                            >
+                                Yes, Remove &amp; Leave
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
