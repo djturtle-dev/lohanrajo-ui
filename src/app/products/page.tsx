@@ -96,14 +96,6 @@ export default async function ProductsPage({ searchParams }: PageProps) {
     const activeCategory = categories.find((cat: typeof categories[number]) => cat.id === category);
     const activeSubCategory = activeCategory?.subCategories?.find((sub: any) => sub.id === subCategory);
 
-    const startItem = totalCount > 0 ? (validPage - 1) * pageSize + 1 : 0;
-    const endItem = Math.min(validPage * pageSize, totalCount);
-    const countText = totalCount === 0
-        ? 'No products found'
-        : totalCount <= pageSize
-            ? `Showing ${totalCount} of ${totalCount} products`
-            : `Showing ${startItem}–${endItem} of ${totalCount} products`;
-
     return (
         <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 sm:px-8 pt-24 md:pt-28 pb-16">
             <ScrollReveal direction="up" className="flex flex-col md:flex-row justify-between items-start mb-6">
@@ -117,13 +109,6 @@ export default async function ProductsPage({ searchParams }: PageProps) {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* Left Sidebar */}
                 <div className="space-y-6 relative z-[100]">
-                    {/* Products Count Indicator */}
-                    <div className="p-3 bg-brand-panel border border-brand-border rounded-lg">
-                        <span className="text-xs font-sans text-brand-muted block">
-                            {countText}
-                        </span>
-                    </div>
-
                     <div>
                         <h3 className="font-playfair italic font-bold text-brand-text mb-3 text-lg">Search</h3>
                         <SearchAutocomplete initialQuery={query} initialCategory={category} />

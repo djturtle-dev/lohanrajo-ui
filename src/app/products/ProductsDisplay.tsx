@@ -29,6 +29,14 @@ export default function ProductsDisplay({
 
     const totalPages = Math.ceil(totalCount / pageSize);
 
+    const startItem = totalCount > 0 ? (currentPage - 1) * pageSize + 1 : 0;
+    const endItem = Math.min(currentPage * pageSize, totalCount);
+    const countText = totalCount === 0
+        ? 'No products found'
+        : totalCount <= pageSize
+            ? `Showing ${totalCount} of ${totalCount} products`
+            : `Showing ${startItem}–${endItem} of ${totalCount} products`;
+
     const buildUrl = (page: number) => {
         const sp = new URLSearchParams(searchParams.toString());
         sp.set('page', page.toString());
@@ -152,61 +160,71 @@ export default function ProductsDisplay({
                 </div>
             )}
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-2 mt-8 md:mt-12 font-sans text-sm">
-                    {currentPage > 1 ? (
-                        <Link
-                            href={buildUrl(currentPage - 1)}
-                            className="px-3.5 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel rounded-lg flex items-center gap-1 text-xs font-medium"
-                        >
-                            <ChevronLeft className="w-4 h-4" />
-                            <span>Previous</span>
-                        </Link>
-                    ) : (
-                        <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 rounded-lg flex items-center gap-1 text-xs font-medium">
-                            <ChevronLeft className="w-4 h-4" />
-                            <span>Previous</span>
-                        </span>
-                    )}
+            {/* Pagination & Results Count */}
+            {totalCount > 0 && (
+                <div className="flex flex-col items-center justify-center gap-3.5 mt-10 md:mt-14 pt-6 border-t border-brand-border/40">
+                    {/* Showing X–Y of Z products */}
+                    <span className="text-xs font-sans text-brand-muted tracking-wide">
+                        {countText}
+                    </span>
 
-                    {/* Page Numbers */}
-                    <div className="flex items-center gap-1">
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
-                            const isCurrent = p === currentPage;
-                            return isCurrent ? (
-                                <span
-                                    key={p}
-                                    className="w-9 h-9 flex items-center justify-center rounded-lg bg-brand-accent text-white font-semibold text-xs shadow-sm"
-                                    aria-current="page"
-                                >
-                                    {p}
-                                </span>
-                            ) : (
+                    {/* Pagination Controls */}
+                    {totalPages > 1 && (
+                        <div className="flex justify-center items-center gap-2 font-sans text-sm">
+                            {currentPage > 1 ? (
                                 <Link
-                                    key={p}
-                                    href={buildUrl(p)}
-                                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary bg-brand-panel transition-colors text-xs font-medium"
+                                    href={buildUrl(currentPage - 1)}
+                                    className="px-3.5 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel rounded-lg flex items-center gap-1 text-xs font-medium"
                                 >
-                                    {p}
+                                    <ChevronLeft className="w-4 h-4" />
+                                    <span>Previous</span>
                                 </Link>
-                            );
-                        })}
-                    </div>
+                            ) : (
+                                <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 rounded-lg flex items-center gap-1 text-xs font-medium">
+                                    <ChevronLeft className="w-4 h-4" />
+                                    <span>Previous</span>
+                                </span>
+                            )}
 
-                    {currentPage < totalPages ? (
-                        <Link
-                            href={buildUrl(currentPage + 1)}
-                            className="px-3.5 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel rounded-lg flex items-center gap-1 text-xs font-medium"
-                        >
-                            <span>Next</span>
-                            <ChevronRight className="w-4 h-4" />
-                        </Link>
-                    ) : (
-                        <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 rounded-lg flex items-center gap-1 text-xs font-medium">
-                            <span>Next</span>
-                            <ChevronRight className="w-4 h-4" />
-                        </span>
+                            {/* Page Numbers */}
+                            <div className="flex items-center gap-1">
+                                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
+                                    const isCurrent = p === currentPage;
+                                    return isCurrent ? (
+                                        <span
+                                            key={p}
+                                            className="w-9 h-9 flex items-center justify-center rounded-lg bg-brand-accent text-white font-semibold text-xs shadow-sm"
+                                            aria-current="page"
+                                        >
+                                            {p}
+                                        </span>
+                                    ) : (
+                                        <Link
+                                            key={p}
+                                            href={buildUrl(p)}
+                                            className="w-9 h-9 flex items-center justify-center rounded-lg border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary bg-brand-panel transition-colors text-xs font-medium"
+                                        >
+                                            {p}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+
+                            {currentPage < totalPages ? (
+                                <Link
+                                    href={buildUrl(currentPage + 1)}
+                                    className="px-3.5 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel rounded-lg flex items-center gap-1 text-xs font-medium"
+                                >
+                                    <span>Next</span>
+                                    <ChevronRight className="w-4 h-4" />
+                                </Link>
+                            ) : (
+                                <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 rounded-lg flex items-center gap-1 text-xs font-medium">
+                                    <span>Next</span>
+                                    <ChevronRight className="w-4 h-4" />
+                                </span>
+                            )}
+                        </div>
                     )}
                 </div>
             )}
