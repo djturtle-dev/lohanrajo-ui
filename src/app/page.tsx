@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import HeroTextAnimation from '@/components/HeroTextAnimation';
+import HeroContent from '@/components/HeroContent';
 import { prisma } from '@/lib/prisma';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import dynamic from 'next/dynamic';
@@ -60,35 +61,8 @@ export default async function Home() {
                     {/* Vignette */}
                     <div className="absolute inset-0 z-10 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, var(--th-bg) 100%)' }} />
 
-                    {/* Bottom-left content */}
-                    <div className="absolute inset-0 z-20 flex flex-col justify-end w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8 pt-20 pb-12 md:pb-16">
-                        <div className="max-w-2xl">
-                            {/* Animated hero text */}
-                            <HeroTextAnimation lines={homeContent.heroLines} />
-
-                            {/* Red accent line */}
-                            <div className="w-16 h-[2px] bg-brand-accent mt-3 mb-6" />
-
-                            {/* CTA */}
-                            <div className="mt-6">
-                                <Link href="/products" className="group btn-glass-primary px-6 py-3 md:px-8 font-playfair italic font-semibold inline-flex items-center text-xs md:text-sm">
-                                    Explore <span className="hidden md:inline ml-1">products</span> <ArrowRight className="ml-2 md:ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
-                                </Link>
-                            </div>
-
-                            {/* Metrics */}
-                            <div className="flex gap-10 md:gap-14 mt-8 pt-6 border-t border-brand-border/30">
-                                <div className="flex flex-col">
-                                    <span className="text-xl md:text-3xl font-semibold font-sans text-brand-text">50+</span>
-                                    <span className="text-[9px] md:text-xs text-brand-muted font-sans mt-0.5">Industries</span>
-                                </div>
-                                <div className="flex flex-col">
-                                    <span className="text-xl md:text-3xl font-semibold font-sans text-brand-text">100%</span>
-                                    <span className="text-[9px] md:text-xs text-brand-muted font-sans mt-0.5">Satisfaction</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {/* Hero Content with unified left edge */}
+                    <HeroContent heading={<HeroTextAnimation lines={homeContent.heroLines} />} />
 
                     {/* Scroll indicator */}
                     <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce">

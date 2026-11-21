@@ -1,0 +1,193 @@
+.heroContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding-left: clamp(20px, 3.5vw, 48px);
+    padding-right: clamp(20px, 3.5vw, 48px);
+    padding-top: 80px;
+    padding-bottom: clamp(40px, 6vh, 64px);
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 900px;
+    width: 100%;
+    box-sizing: border-box;
+    pointer-events: auto;
+}
+
+.heading {
+    margin: 0 0 16px 0;
+    padding: 0;
+    font-family: var(--font-playfair), serif;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--th-text, #ffffff);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-align: left;
+    font-size: clamp(40px, 5.5vw, 80px);
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.underlineBar {
+    width: 96px;
+    height: 3px;
+    background-color: var(--color-brand-accent, #b8241d);
+    border-radius: 2px;
+    margin: 0 0 24px 0;
+    flex-shrink: 0;
+}
+
+.ctaButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    align-self: flex-start;
+    width: fit-content;
+    padding: 14px 32px;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #000000 0%, #5b1411 50%, #b8241d 100%);
+    color: #ffffff;
+    font-family: var(--font-playfair), serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        inset 0 -8px 16px rgba(184, 36, 29, 0.8),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(150, 0, 0, 0.5),
+        0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    flex-shrink: 0;
+}
+
+.ctaButton:hover {
+    background: linear-gradient(135deg, #111111 0%, #711915 50%, #d42e26 100%);
+    box-shadow: 
+        inset 0 -8px 16px rgba(184, 36, 29, 0.9),
+        inset 0 2px 6px rgba(255, 255, 255, 0.7),
+        0 0 30px rgba(184, 36, 29, 0.8),
+        0 10px 20px -3px rgba(0, 0, 0, 0.6);
+    transform: translateY(-2px);
+}
+
+.ctaArrow {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.ctaButton:hover .ctaArrow {
+    transform: translateX(4px);
+}
+
+.dividerLine {
+    width: 100%;
+    max-width: 440px;
+    height: 1px;
+    background-color: var(--th-border, rgba(200, 200, 200, 0.3));
+    margin: 28px 0 24px 0;
+    align-self: flex-start;
+    flex-shrink: 0;
+}
+
+.statsRow {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-self: flex-start;
+    gap: 80px;
+    margin: 0;
+    padding: 0;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.statValue {
+    font-family: var(--font-poppins), sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 600;
+    color: var(--th-text, #ffffff);
+    line-height: 1.1;
+}
+
+.statLabel {
+    font-family: var(--font-poppins), sans-serif;
+    font-size: 13px;
+    color: var(--th-muted, rgba(255, 255, 255, 0.7));
+    margin-top: 4px;
+    text-align: left;
+}
+
+/* ====================================================
+   MEDIA QUERIES (Exact breakpoint alignment)
+   ==================================================== */
+
+/* Desktop (≥1024px) */
+@media (min-width: 1024px) {
+    .heroContainer {
+        padding-left: 48px;
+        padding-right: 48px;
+    }
+    .heading {
+        font-size: 80px;
+    }
+    .statsRow {
+        gap: 80px;
+    }
+}
+
+/* Tablet (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .heroContainer {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+    .heading {
+        font-size: 60px;
+    }
+    .statsRow {
+        gap: 80px;
+    }
+}
+
+/* Mobile (<768px) */
+@media (max-width: 767px) {
+    .heroContainer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .heading {
+        font-size: 40px;
+        line-height: 1.12;
+    }
+    .statsRow {
+        gap: 40px;
+    }
+    .dividerLine {
+        max-width: 100%;
+        margin: 22px 0 18px 0;
+    }
+}
