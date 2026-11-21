@@ -78,6 +78,13 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
         return pathname.startsWith(href);
     };
 
+    const NAV_SPRING = {
+        type: "spring" as const,
+        stiffness: 260,
+        damping: 28,
+        mass: 0.7
+    };
+
     return (
         <>
             <motion.nav
@@ -93,12 +100,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                         ? "0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.15)"
                         : "0 1px 3px 0 rgba(0, 0, 0, 0.05)",
                 }}
-                transition={{
-                    type: "spring",
-                    stiffness: 240,
-                    damping: 28,
-                    mass: 0.8
-                }}
+                transition={NAV_SPRING}
                 className={cn(
                     "fixed left-1/2 -translate-x-1/2 z-50 flex items-center px-4 md:px-8 overflow-hidden",
                     isScrolled
@@ -120,25 +122,23 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                         <AnimatePresence initial={false}>
                             {!isCollapsed && (
                                 <motion.div
-                                    initial={{ opacity: 0, width: 0, filter: "blur(4px)" }}
-                                    animate={{ opacity: 1, width: "auto", filter: "blur(0px)" }}
-                                    exit={{ opacity: 0, width: 0, filter: "blur(4px)" }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 28
-                                    }}
-                                    className="overflow-hidden flex items-center gap-6 pr-6 whitespace-nowrap"
+                                    initial={{ opacity: 0, width: 0 }}
+                                    animate={{ opacity: 1, width: "auto" }}
+                                    exit={{ opacity: 0, width: 0 }}
+                                    transition={NAV_SPRING}
+                                    className="overflow-hidden flex items-center"
                                 >
-                                    {navLinks.map((link) => (
-                                        <NavLink
-                                            key={link.name}
-                                            href={link.href}
-                                            isActive={isLinkActive(link.href)}
-                                        >
-                                            {link.name}
-                                        </NavLink>
-                                    ))}
+                                    <div className="flex items-center gap-6 pr-6 whitespace-nowrap flex-shrink-0">
+                                        {navLinks.map((link) => (
+                                            <NavLink
+                                                key={link.name}
+                                                href={link.href}
+                                                isActive={isLinkActive(link.href)}
+                                            >
+                                                {link.name}
+                                            </NavLink>
+                                        ))}
+                                    </div>
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -160,11 +160,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                         initial={{ opacity: 0, width: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, width: "auto", scale: 1 }}
                                         exit={{ opacity: 0, width: 0, scale: 0.8 }}
-                                        transition={{
-                                            type: "spring",
-                                            stiffness: 260,
-                                            damping: 28
-                                        }}
+                                        transition={NAV_SPRING}
                                         className="overflow-visible flex-shrink-0 flex items-center"
                                     >
                                         <ThemeToggle />
@@ -175,32 +171,42 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                             {/* Mini toggle button when scrolled */}
                             <AnimatePresence initial={false}>
                                 {isScrolled && (
-                                    <motion.button
+                                    <motion.div
                                         initial={{ opacity: 0, width: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, width: 40, scale: 1 }}
+                                        animate={{ opacity: 1, width: "auto", scale: 1 }}
                                         exit={{ opacity: 0, width: 0, scale: 0.8 }}
-                                        transition={{
-                                            type: "spring",
-                                            stiffness: 280,
-                                            damping: 26
-                                        }}
-                                        onClick={() => {
-                                            if (!isManuallyExpanded) {
-                                                expandedAtScrollY.current = scrollY.get();
-                                            }
-                                            setIsManuallyExpanded(!isManuallyExpanded);
-                                        }}
-                                        className="h-10 rounded-full btn-glass-secondary flex-shrink-0 hover:scale-105 flex items-center justify-center cursor-pointer ml-1 overflow-hidden"
-                                        aria-label="Toggle Navigation"
+                                        transition={NAV_SPRING}
+                                        className="overflow-visible flex-shrink-0 flex items-center ml-1"
                                     >
-                                        <motion.div
-                                            animate={{ rotate: isManuallyExpanded ? 180 : 0 }}
-                                            transition={{ duration: 0.25 }}
-                                            className="flex items-center justify-center min-w-[20px]"
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                if (!isManuallyExpanded) {
+                                                    expandedAtScrollY.current = scrollY.get();
+                                                }
+                                                setIsManuallyExpanded(!isManuallyExpanded);
+                                            }}
+                                            className="w-10 h-10 rounded-full btn-glass-secondary flex-shrink-0 hover:scale-105 active:scale-95 transition-transform flex items-center justify-center cursor-pointer"
+                                            aria-label="Toggle Navigation"
                                         >
-                                            {isManuallyExpanded ? <X className="w-5 h-5" style={{ color: 'var(--th-text)' }} /> : <Menu className="w-5 h-5" style={{ color: 'var(--th-text)' }} />}
-                                        </motion.div>
-                                    </motion.button>
+                                            <AnimatePresence mode="wait" initial={false}>
+                                                <motion.div
+                                                    key={isManuallyExpanded ? 'close' : 'menu'}
+                                                    initial={{ rotate: isManuallyExpanded ? -90 : 90, opacity: 0, scale: 0.7 }}
+                                                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                                                    exit={{ rotate: isManuallyExpanded ? 90 : -90, opacity: 0, scale: 0.7 }}
+                                                    transition={{ duration: 0.18, ease: "easeOut" }}
+                                                    className="flex items-center justify-center w-5 h-5 flex-shrink-0"
+                                                >
+                                                    {isManuallyExpanded ? (
+                                                        <X className="w-5 h-5" style={{ color: 'var(--th-text)' }} />
+                                                    ) : (
+                                                        <Menu className="w-5 h-5" style={{ color: 'var(--th-text)' }} />}
+                                                    )}
+                                                </motion.div>
+                                            </AnimatePresence>
+                                        </button>
+                                    </motion.div>
                                 )}
                             </AnimatePresence>
                         </div>
@@ -214,11 +220,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                     initial={{ opacity: 0, width: 0, scale: 0.8 }}
                                     animate={{ opacity: 1, width: "auto", scale: 1 }}
                                     exit={{ opacity: 0, width: 0, scale: 0.8 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 28
-                                    }}
+                                    transition={NAV_SPRING}
                                     className="hidden sm:flex overflow-visible flex-shrink-0 items-center"
                                 >
                                     <ThemeToggle />
@@ -226,11 +228,27 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                             )}
                         </AnimatePresence>
                         <button
-                            className="p-2 rounded-full btn-glass-secondary flex-shrink-0 transition-transform hover:scale-105 flex items-center justify-center cursor-pointer z-50"
+                            type="button"
+                            className="w-10 h-10 rounded-full btn-glass-secondary flex-shrink-0 transition-transform hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer z-50"
                             onClick={() => setIsOpen(!isOpen)}
                             aria-label="Toggle Menu"
                         >
-                            {isOpen ? <X className="w-5 h-5" style={{ color: 'var(--th-text)' }} /> : <Menu className="w-5 h-5" style={{ color: 'var(--th-text)' }} />}
+                            <AnimatePresence mode="wait" initial={false}>
+                                <motion.div
+                                    key={isOpen ? 'close' : 'menu'}
+                                    initial={{ rotate: isOpen ? -90 : 90, opacity: 0, scale: 0.7 }}
+                                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                                    exit={{ rotate: isOpen ? 90 : -90, opacity: 0, scale: 0.7 }}
+                                    transition={{ duration: 0.18, ease: "easeOut" }}
+                                    className="flex items-center justify-center w-5 h-5 flex-shrink-0"
+                                >
+                                    {isOpen ? (
+                                        <X className="w-5 h-5" style={{ color: 'var(--th-text)' }} />
+                                    ) : (
+                                        <Menu className="w-5 h-5" style={{ color: 'var(--th-text)' }} />
+                                    )}
+                                </motion.div>
+                            </AnimatePresence>
                         </button>
                     </div>
                 </div>
