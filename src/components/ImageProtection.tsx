@@ -1,14 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function ImageProtection() {
-    const [shieldActive, setShieldActive] = useState(false);
     const [notice, setNotice] = useState<string | null>(null);
+    const noticeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const lockUntilRef = useRef<number>(0);
 
     useEffect(() => {
-        let noticeTimeout: NodeJS.Timeout | null = null;
-
         const clearClipboard = async () => {
             try {
                 if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
@@ -19,65 +18,95 @@ export default function ImageProtection() {
             }
         };
 
-        const triggerShield = (reason?: string) => {
+        const showNotice = (text: string) => {
+            setNotice(text);
+            if (noticeTimeoutRef.current) clearTimeout(noticeTimeoutRef.current);
+            noticeTimeoutRef.current = setTimeout(() => {
+                setNotice(null);
+            }, 2500);
+        };
+
+        const triggerShield = (reason?: string, lockDurationMs = 0) => {
             document.body.setAttribute('data-focus-lost', 'true');
-            setShieldActive(true);
+            if (lockDurationMs > 0) {
+                lockUntilRef.current = Math.max(lockUntilRef.current, Date.now() + lockDurationMs);
+            }
             if (reason) {
-                setNotice(reason);
-                if (noticeTimeout) clearTimeout(noticeTimeout);
-                noticeTimeout = setTimeout(() => {
-                    setNotice(null);
-                }, 2500);
+                showNotice(reason);
             }
         };
 
-        const releaseShield = () => {
+        const releaseShield = (force = false) => {
+            if (!force && Date.now() < lockUntilRef.current) {
+                const remaining = lockUntilRef.current - Date.now();
+                setTimeout(() => {
+                    if (document.hasFocus() && !document.hidden) {
+                        document.body.removeAttribute('data-focus-lost');
+                    }
+                }, remaining + 50);
+                return;
+            }
             document.body.removeAttribute('data-focus-lost');
-            setShieldActive(false);
         };
 
         const handleBlur = () => {
-            // Focus lost to external window, Snipping Tool, or OS overlay
-            triggerShield();
+            // Focus lost to external window, Snipping Tool overlay, or task switcher
+            triggerShield('Screenshot restricted', 2000);
+            clearClipboard();
         };
 
         const handleFocus = () => {
-            // Regained window focus
+            // When regaining focus after a snip attempt, wipe the clipboard buffer
+            if (Date.now() - lockUntilRef.current < 4000) {
+                clearClipboard();
+            }
             releaseShield();
         };
 
         const handleVisibilityChange = () => {
             if (document.hidden) {
-                triggerShield();
+                triggerShield('Screenshot restricted', 2000);
+                clearClipboard();
             } else {
                 releaseShield();
             }
         };
 
         const handleKeyDown = (e: KeyboardEvent) => {
-            // Detect PrintScreen or OS screenshot shortcuts
+            // 1. PrintScreen key (any modifier)
             const isPrintScreen = e.key === 'PrintScreen' || e.code === 'PrintScreen' || e.key === 'Snapshot';
-            const isSnippingShortcut = (e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === 's' || e.key === 'S' || e.key === '4' || e.key === '3');
 
-            if (isPrintScreen || isSnippingShortcut) {
-                triggerShield('Screenshot restricted');
+            // 2. Windows Snipping Tool (Win + Shift + S) or Mac (Cmd + Shift + 3/4/5)
+            // Note: Windows OS captures the 'S' key globally, so we intercept the (Meta + Shift) combo directly
+            const isMetaShift = (e.metaKey && e.shiftKey) || 
+                                (e.key === 'Meta' && e.shiftKey) || 
+                                (e.key === 'Shift' && e.metaKey);
+
+            // 3. Ctrl + Shift + S (browser screenshot / devtools)
+            const isCtrlShiftS = e.ctrlKey && e.shiftKey && (e.key === 's' || e.key === 'S' || e.code === 'KeyS');
+
+            // 4. Windows Game Bar / Screen Recorder (Win + G or Win + Alt + PrtScn)
+            const isGameBar = e.metaKey && (e.key === 'g' || e.key === 'G' || e.altKey);
+
+            if (isPrintScreen || isMetaShift || isCtrlShiftS || isGameBar) {
+                triggerShield('Screenshot restricted', 3500);
                 clearClipboard();
             }
         };
 
         const handleKeyUp = (e: KeyboardEvent) => {
-            if (e.key === 'PrintScreen' || e.code === 'PrintScreen' || e.key === 'Snapshot') {
-                triggerShield('Screenshot restricted');
+            const isPrintScreen = e.key === 'PrintScreen' || e.code === 'PrintScreen' || e.key === 'Snapshot';
+            const isMetaShift = e.key === 'Meta' || e.key === 'Shift' || e.metaKey;
+
+            if (isPrintScreen || isMetaShift) {
                 clearClipboard();
-                // Keep shield for 1.2s to overwrite any OS clipboard buffer
-                setTimeout(() => {
-                    if (document.hasFocus()) {
-                        releaseShield();
-                    }
-                }, 1200);
+                // Schedule staggered clipboard wipes to clear OS capture buffer
+                setTimeout(clearClipboard, 400);
+                setTimeout(clearClipboard, 1200);
             }
         };
 
+        // Attach listeners with capture phase
         window.addEventListener('blur', handleBlur);
         window.addEventListener('focus', handleFocus);
         document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -90,7 +119,7 @@ export default function ImageProtection() {
             document.removeEventListener('visibilitychange', handleVisibilityChange);
             window.removeEventListener('keydown', handleKeyDown, true);
             window.removeEventListener('keyup', handleKeyUp, true);
-            if (noticeTimeout) clearTimeout(noticeTimeout);
+            if (noticeTimeoutRef.current) clearTimeout(noticeTimeoutRef.current);
             document.body.removeAttribute('data-focus-lost');
         };
     }, []);
