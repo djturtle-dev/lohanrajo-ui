@@ -8,16 +8,6 @@ export default function ImageProtection() {
     const lockUntilRef = useRef<number>(0);
 
     useEffect(() => {
-        const clearClipboard = async () => {
-            try {
-                if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
-                    await navigator.clipboard.writeText('');
-                }
-            } catch {
-                // Ignore permissions policy error if clipboard access is blocked
-            }
-        };
-
         const showNotice = (text: string) => {
             setNotice(text);
             if (noticeTimeoutRef.current) clearTimeout(noticeTimeoutRef.current);
@@ -52,21 +42,15 @@ export default function ImageProtection() {
         const handleBlur = () => {
             // Focus lost to external window, Snipping Tool overlay, or task switcher
             triggerShield('Screenshot restricted', 2000);
-            clearClipboard();
         };
 
         const handleFocus = () => {
-            // When regaining focus after a snip attempt, wipe the clipboard buffer
-            if (Date.now() - lockUntilRef.current < 4000) {
-                clearClipboard();
-            }
             releaseShield();
         };
 
         const handleVisibilityChange = () => {
             if (document.hidden) {
                 triggerShield('Screenshot restricted', 2000);
-                clearClipboard();
             } else {
                 releaseShield();
             }
@@ -90,19 +74,6 @@ export default function ImageProtection() {
 
             if (isPrintScreen || isMetaShift || isCtrlShiftS || isGameBar) {
                 triggerShield('Screenshot restricted', 3500);
-                clearClipboard();
-            }
-        };
-
-        const handleKeyUp = (e: KeyboardEvent) => {
-            const isPrintScreen = e.key === 'PrintScreen' || e.code === 'PrintScreen' || e.key === 'Snapshot';
-            const isMetaShift = e.key === 'Meta' || e.key === 'Shift' || e.metaKey;
-
-            if (isPrintScreen || isMetaShift) {
-                clearClipboard();
-                // Schedule staggered clipboard wipes to clear OS capture buffer
-                setTimeout(clearClipboard, 400);
-                setTimeout(clearClipboard, 1200);
             }
         };
 
@@ -111,14 +82,12 @@ export default function ImageProtection() {
         window.addEventListener('focus', handleFocus);
         document.addEventListener('visibilitychange', handleVisibilityChange);
         window.addEventListener('keydown', handleKeyDown, true);
-        window.addEventListener('keyup', handleKeyUp, true);
 
         return () => {
             window.removeEventListener('blur', handleBlur);
             window.removeEventListener('focus', handleFocus);
             document.removeEventListener('visibilitychange', handleVisibilityChange);
             window.removeEventListener('keydown', handleKeyDown, true);
-            window.removeEventListener('keyup', handleKeyUp, true);
             if (noticeTimeoutRef.current) clearTimeout(noticeTimeoutRef.current);
             document.body.removeAttribute('data-focus-lost');
         };
