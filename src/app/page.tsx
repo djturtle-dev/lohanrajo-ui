@@ -105,7 +105,7 @@ export default async function Home() {
             <section className="px-4 md:px-8 w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto">
                 <ScrollReveal direction="left">
                     <div className="flex justify-between items-end mb-12 border-b border-brand-border pb-6">
-                        <h2 className="font-playfair text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Our Products</h2>
+                        <h2 className="font-playfair text-4xl md:text-5xl uppercase text-brand-text">Our Products</h2>
                         <Link href="/products" className="hidden md:flex items-center text-sm font-sans tracking-widest uppercase text-brand-text hover:text-brand-accent transition-colors">
                             View All <ArrowRight className="ml-2 w-4 h-4" />
                         </Link>

@@ -195,7 +195,7 @@ export default function Testimonials({ testimonials }: { testimonials: Testimoni
     return (
         <section className="bg-brand-bg pb-16 overflow-hidden" ref={containerRef}>
             <ScrollReveal direction="up" className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto flex justify-between items-end mb-10 border-b border-brand-border pb-6 px-4 md:px-8">
-                <h2 className="font-playfair text-4xl md:text-5xl uppercase tracking-widest text-brand-text">Testimonials</h2>
+                <h2 className="font-playfair text-4xl md:text-5xl uppercase text-brand-text">Testimonials</h2>
                 <span className="hidden md:block text-xs font-mono text-brand-muted tracking-widest uppercase">Drag to explore →</span>
             </ScrollReveal>
 

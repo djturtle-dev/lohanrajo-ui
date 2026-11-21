@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import ThemeToggle from '@/components/ThemeToggle';
-import { motion, useScroll, useTransform, useMotionValueEvent, animate, useMotionValue, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface NavLinkProps {
@@ -22,7 +22,7 @@ function NavLink({ href, children, onClick, className, isActive }: NavLinkProps)
             href={href}
             onClick={onClick}
             className={cn(
-                "group relative py-1 hover:text-brand-accent transition-colors text font-bold uppercase tracking-widest font-playfair flex items-center gap-1 flex-shrink-0",
+                "group relative py-1 hover:text-brand-accent transition-colors text font-bold uppercase font-playfair flex items-center gap-1 flex-shrink-0",
                 isActive ? "text-brand-accent" : "text-brand-text/80",
                 className
             )}
@@ -41,18 +41,16 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
     const { scrollY } = useScroll();
-    
-    // Create a progress value that goes from 0 (expanded) to 1 (collapsed)
-    const progress = useMotionValue(0);
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [isManuallyExpanded, setIsManuallyExpanded] = useState(false);
     const lastScrollY = useRef(0);
 
     useMotionValueEvent(scrollY, "change", (latest) => {
-        setIsScrolled(latest > 50);
-        
-        // Auto-collapse if they scroll down further
+        const scrolled = latest > 30;
+        setIsScrolled(scrolled);
+
+        // Auto-collapse if they scroll down further while manually expanded
         if (latest > lastScrollY.current + 10 && isManuallyExpanded) {
             setIsManuallyExpanded(false);
         }
@@ -60,23 +58,6 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
     });
 
     const isCollapsed = isScrolled && !isOpen && !isManuallyExpanded;
-
-    useEffect(() => {
-        if (isCollapsed) {
-            // Collapse smoothly when scrolled down
-            animate(progress, 1, { duration: 0.1, ease: "easeOut" });
-        } else {
-            // Expand smoothly when reaching the top or opening menu
-            animate(progress, 0, { duration: 0.1, ease: "easeOut" });
-        }
-    }, [isCollapsed, progress]);
-
-    // Map the progress to exact CSS values
-    const navMaxWidth = useTransform(progress, [0, 1], ["100vw", "38rem"]); // 100vw down to ~608px
-    const linksOpacity = useTransform(progress, [0, 0.5], [1, 0]);
-    const linksBlur = useTransform(progress, [0, 0.5], ["blur(0px)", "blur(10px)"]);
-    const gridColumns = useTransform(progress, [0.2, 1], ["1fr", "0fr"]);
-    const linksPadding = useTransform(progress, [0.2, 1], ["24px", "0px"]);
 
     // Close menu on route change
     useEffect(() => {
@@ -97,13 +78,28 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
 
     return (
         <>
-            <motion.nav 
-                style={isScrolled ? ({ "--desk-max-w": navMaxWidth } as any) : undefined}
+            <motion.nav
+                initial={false}
+                animate={{
+                    top: isScrolled ? 16 : 0,
+                    width: isScrolled ? "min(92%, 600px)" : "100%",
+                    borderRadius: isScrolled ? 9999 : 0,
+                    height: isScrolled ? 64 : 76,
+                    boxShadow: isScrolled
+                        ? "0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.15)"
+                        : "0 1px 3px 0 rgba(0, 0, 0, 0.05)",
+                }}
+                transition={{
+                    type: "spring",
+                    stiffness: 240,
+                    damping: 28,
+                    mass: 0.8
+                }}
                 className={cn(
-                    "fixed z-50 flex items-center transition-all duration-300",
+                    "fixed left-1/2 -translate-x-1/2 z-50 flex items-center px-4 md:px-8 overflow-hidden",
                     isScrolled
-                        ? "top-4 left-1/2 -translate-x-1/2 h-16 md:h-18 px-4 md:px-6 shadow-xl w-[75%] md:w-[95%] max-w-full md:max-w-[var(--desk-max-w)] nav-glass !rounded-full"
-                        : "top-0 left-0 w-full h-18 md:h-20 px-4 sm:px-8 md:px-12 backdrop-blur-xl bg-brand-bg/90 border-b border-brand-border/40 !rounded-none shadow-sm"
+                        ? "nav-glass"
+                        : "backdrop-blur-xl bg-brand-bg/90 border-b border-brand-border/40"
                 )}
             >
                 <div className={cn(
@@ -117,66 +113,80 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
 
                     {/* Desktop nav */}
                     <div className="hidden md:flex items-center overflow-visible">
-                        <motion.div 
-                            style={{ 
-                                display: "grid", 
-                                gridTemplateColumns: gridColumns,
-                                opacity: linksOpacity,
-                                filter: linksBlur,
-                                paddingRight: linksPadding
-                            }}
-                        >
-                            <div className="overflow-hidden flex items-center gap-6 whitespace-nowrap">
-                                {navLinks.map((link) => (
-                                    <NavLink
-                                        key={link.name}
-                                        href={link.href}
-                                        isActive={isLinkActive(link.href)}
-                                    >
-                                        {link.name}
-                                    </NavLink>
-                                ))}
-                            </div>
-                        </motion.div>
+                        <AnimatePresence initial={false}>
+                            {!isCollapsed && (
+                                <motion.div
+                                    initial={{ opacity: 0, width: 0, filter: "blur(4px)" }}
+                                    animate={{ opacity: 1, width: "auto", filter: "blur(0px)" }}
+                                    exit={{ opacity: 0, width: 0, filter: "blur(4px)" }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 28
+                                    }}
+                                    className="overflow-hidden flex items-center gap-6 pr-6 whitespace-nowrap"
+                                >
+                                    {navLinks.map((link) => (
+                                        <NavLink
+                                            key={link.name}
+                                            href={link.href}
+                                            isActive={isLinkActive(link.href)}
+                                        >
+                                            {link.name}
+                                        </NavLink>
+                                    ))}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
                         <div className="flex items-center gap-2 flex-shrink-0">
                             <Link
                                 href="/products"
                                 className={cn(
-                                    "px-6 py-2.5 text-sm font-bold uppercase tracking-widest font-playfair transition-colors duration-300 ease-in-out flex-shrink-0 whitespace-nowrap btn-glass-primary cursor-pointer"
+                                    "px-6 py-2.5 text-sm font-bold uppercase font-playfair transition-all duration-300 flex-shrink-0 whitespace-nowrap btn-glass-primary cursor-pointer"
                                 )}
                             >
                                 Products
                             </Link>
 
                             {/* Theme toggle — hidden when navbar is minimized / collapsed */}
-                            <AnimatePresence>
+                            <AnimatePresence initial={false}>
                                 {!isCollapsed && (
                                     <motion.div
                                         initial={{ opacity: 0, width: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, width: "auto", scale: 1 }}
                                         exit={{ opacity: 0, width: 0, scale: 0.8 }}
-                                        transition={{ duration: 0.2 }}
+                                        transition={{
+                                            type: "spring",
+                                            stiffness: 260,
+                                            damping: 28
+                                        }}
                                         className="overflow-hidden flex-shrink-0 flex items-center"
                                     >
                                         <ThemeToggle />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
-                            
-                            <AnimatePresence>
+
+                            {/* Mini toggle button when scrolled */}
+                            <AnimatePresence initial={false}>
                                 {isScrolled && (
                                     <motion.button
-                                        initial={{ opacity: 0, width: 0, marginLeft: 0 }}
-                                        animate={{ opacity: 1, width: 40, marginLeft: 0 }}
-                                        exit={{ opacity: 0, width: 0, marginLeft: 0 }}
-                                        transition={{ duration: 0.2 }}
+                                        initial={{ opacity: 0, width: 0, scale: 0.8 }}
+                                        animate={{ opacity: 1, width: 40, scale: 1 }}
+                                        exit={{ opacity: 0, width: 0, scale: 0.8 }}
+                                        transition={{
+                                            type: "spring",
+                                            stiffness: 280,
+                                            damping: 26
+                                        }}
                                         onClick={() => setIsManuallyExpanded(!isManuallyExpanded)}
-                                        className="h-10 rounded-full btn-glass-secondary flex-shrink-0 hover:scale-105 flex items-center justify-center cursor-pointer"
+                                        className="h-10 rounded-full btn-glass-secondary flex-shrink-0 hover:scale-105 flex items-center justify-center cursor-pointer ml-1 overflow-hidden"
                                         aria-label="Toggle Navigation"
                                     >
                                         <motion.div
                                             animate={{ rotate: isManuallyExpanded ? 180 : 0 }}
-                                            transition={{ duration: 0.3 }}
+                                            transition={{ duration: 0.25 }}
                                             className="flex items-center justify-center min-w-[20px]"
                                         >
                                             {isManuallyExpanded ? <X className="w-5 h-5" style={{ color: 'var(--th-text)' }} /> : <Menu className="w-5 h-5" style={{ color: 'var(--th-text)' }} />}
@@ -189,13 +199,17 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
 
                     {/* Mobile controls: theme toggle (hidden on smallest screen / when minimized) + burger */}
                     <div className="md:hidden flex items-center gap-2 ml-2">
-                        <AnimatePresence>
+                        <AnimatePresence initial={false}>
                             {!isScrolled && (
                                 <motion.div
                                     initial={{ opacity: 0, width: 0, scale: 0.8 }}
                                     animate={{ opacity: 1, width: "auto", scale: 1 }}
                                     exit={{ opacity: 0, width: 0, scale: 0.8 }}
-                                    transition={{ duration: 0.2 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 28
+                                    }}
                                     className="hidden sm:flex overflow-hidden flex-shrink-0 items-center"
                                 >
                                     <ThemeToggle />
@@ -227,8 +241,8 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                             key={link.name}
                             href={link.href}
                             className={cn(
-                                "text-4xl font-playfair uppercase tracking-widest transition-colors",
-                                isLinkActive(link.href) ? "text-brand-accent font-black tracking-tighter" : "text-brand-text hover:text-brand-accent"
+                                "text-4xl font-playfair uppercase transition-colors",
+                                isLinkActive(link.href) ? "text-brand-accent font-bold" : "text-brand-text hover:text-brand-accent"
                             )}
                             onClick={() => setIsOpen(false)}
                         >
@@ -238,7 +252,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                     <Link
                         href="/products"
                         className={cn(
-                            "text-4xl font-playfair uppercase tracking-widest transition-colors",
+                            "text-4xl font-playfair uppercase transition-colors",
                             pathname.startsWith('/products') ? "text-brand-accent font-bold shadow-[0_0_15px_rgba(184,36,29,0.4)] px-6 py-2 border border-brand-accent rounded-full" : "text-brand-text hover:text-brand-accent"
                         )}
                         onClick={() => setIsOpen(false)}
@@ -248,12 +262,12 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
 
                     <div className="pt-8 border-t border-brand-border w-full flex flex-col items-center gap-6">
                         <div className="flex items-center gap-3">
-                            <span className="text-sm font-playfair uppercase tracking-widest text-brand-muted">Theme</span>
+                            <span className="text-sm font-playfair uppercase text-brand-muted">Theme</span>
                             <ThemeToggle />
                         </div>
                         <Link
                             href="/contact"
-                            className="inline-flex items-center text-brand-accent font-playfair font-bold tracking-widest uppercase hover:gap-4 transition-all"
+                            className="inline-flex items-center text-brand-accent font-playfair font-bold uppercase hover:gap-4 transition-all"
                             onClick={() => setIsOpen(false)}
                         >
                             Get an Estimate <ArrowRight className="ml-2 w-6 h-6" />
