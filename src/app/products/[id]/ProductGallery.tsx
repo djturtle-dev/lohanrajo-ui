@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { getAssetUrl } from '@/lib/utils';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProductGalleryProps {
@@ -93,7 +93,13 @@ export default function ProductGallery({ productName, images }: ProductGalleryPr
                     </div>
                 )}
                 {images.length > 0 && (
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10" />
+                    <>
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors z-10" />
+                        <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 text-white text-xs font-sans backdrop-blur-sm pointer-events-none">
+                            <Maximize2 className="w-3.5 h-3.5 text-brand-accent" />
+                            <span>Fullscreen</span>
+                        </div>
+                    </>
                 )}
             </div>
 
@@ -145,31 +151,23 @@ export default function ProductGallery({ productName, images }: ProductGalleryPr
                             <div 
                                 className="relative w-full h-full flex items-center justify-center p-4 md:p-12 select-none"
                                 onClick={(e) => {
-                                    // Close only if clicking the empty space of this container, not the image itself
                                     if (e.target === e.currentTarget) closeModal();
                                 }}
                                 onContextMenu={(e) => e.preventDefault()}
                                 onDragStart={(e) => e.preventDefault()}
                             >
-                                <Image
-                                    src={getAssetUrl(images[currentIndex])}
-                                    alt={`${productName} - Image ${currentIndex + 1}`}
-                                    fill
-                                    className="object-contain pointer-events-none select-none no-download"
-                                    quality={100}
-                                    unoptimized
-                                    draggable={false}
-                                />
-                                {/* Transparent protection shield overlay */}
-                                <div 
-                                    className="absolute inset-0 z-20 pointer-events-auto"
-                                    onContextMenu={(e) => e.preventDefault()}
-                                    onDragStart={(e) => e.preventDefault()}
-                                    onClick={(e) => {
-                                        // Allow clicking empty background space around image to close
-                                        if (e.target === e.currentTarget) closeModal();
-                                    }}
-                                />
+                                <div className="relative w-full h-full max-w-6xl max-h-[85vh] flex items-center justify-center">
+                                    <Image
+                                        src={getAssetUrl(images[currentIndex])}
+                                        alt={`${productName} - Image ${currentIndex + 1}`}
+                                        fill
+                                        className="object-contain pointer-events-none select-none no-download"
+                                        quality={100}
+                                        unoptimized
+                                        draggable={false}
+                                        priority
+                                    />
+                                </div>
                             </div>
 
                             {images.length > 1 && (
