@@ -17,7 +17,6 @@ interface Pillar {
 }
 
 interface PillarMeta {
-    code: string;
     status: string;
     num: string;
     tags: string[];
@@ -25,19 +24,16 @@ interface PillarMeta {
 
 const DEFAULT_METAS: Record<string, PillarMeta> = {
     'infrastructure': {
-        code: 'SYS.01 // CAPACITY',
         status: 'FACILITY: ACTIVE',
         num: '01',
         tags: ['Automated CNC', 'BMS Enclosures', 'High-Tonnage Scale']
     },
     'iso certified': {
-        code: 'STD.02 // COMPLIANCE',
         status: 'ISO 9001:2015',
         num: '02',
         tags: ['Zero-Tolerance QC', 'IP Standards', 'Mil-Spec Tested']
     },
     'founded 1992': {
-        code: 'EST.03 // HERITAGE',
         status: '32+ YRS PROVEN',
         num: '03',
         tags: ['Pioneered 1992', 'Metal Arts Masters', 'Pan-India Reach']
@@ -97,7 +93,6 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
             return DEFAULT_METAS[normalized];
         }
         return {
-            code: `SPEC.0${index + 1} // CAPABILITY`,
             status: 'VERIFIED // ACTIVE',
             num: `0${index + 1}`,
             tags: ['Precision Engineered', 'Industrial Grade', 'Certified Scale']
@@ -119,33 +114,6 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
                             />
                         </div>
 
-                        {/* Telemetry Status Bar */}
-                        <div className="flex items-center justify-between px-5 sm:px-7 py-3 border-b border-brand-border/30 dark:border-white/10 bg-brand-panel/60 dark:bg-white/[0.02]">
-                            <div className="flex items-center gap-2.5">
-                                <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75" />
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-accent" />
-                                </span>
-                                <span className="font-mono text-[11px] font-semibold tracking-widest text-brand-text uppercase">
-                                    LIAT // CAPABILITY MATRIX
-                                </span>
-                            </div>
-
-                            <div className="hidden lg:flex items-center gap-5 text-[10px] font-mono tracking-widest text-brand-muted/70 uppercase">
-                                <span>TOLERANCE: ±0.05 MM</span>
-                                <span className="inline-block w-1 h-1 rounded-full bg-brand-border/60" />
-                                <span>CAD // CNC AUTOMATION</span>
-                                <span className="inline-block w-1 h-1 rounded-full bg-brand-border/60" />
-                                <span>STANDARDS: IP65 / IP67</span>
-                            </div>
-
-                            <div className="flex items-center gap-2 text-[10px] font-mono tracking-wider text-brand-muted">
-                                <span className="px-2 py-0.5 rounded bg-brand-border/20 dark:bg-white/5 border border-brand-border/30 dark:border-white/10">
-                                    NODES: 03 ONLINE
-                                </span>
-                            </div>
-                        </div>
-
                         {/* 3 Interlocking Telemetry Bays */}
                         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-brand-border/30 dark:divide-white/10">
                             {pillars.map((pillar, i) => {
@@ -163,22 +131,18 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
                                             {meta.num}
                                         </span>
 
-                                        {/* Top Bay Indicator */}
-                                        <div className="flex items-center justify-between mb-6 z-10">
-                                            <span className="font-mono text-[11px] tracking-wider text-brand-accent font-semibold flex items-center gap-1.5">
-                                                <span className="inline-block w-1.5 h-1.5 bg-brand-accent rounded-sm" />
-                                                {meta.code}
-                                            </span>
+                                        {/* Top Row: Icon Capsule + Status Badge */}
+                                        <div className="flex items-start justify-between mb-5 z-10">
+                                            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-brand-panel/50 dark:bg-brand-panel border border-brand-border/60 dark:border-white/10 shadow-sm group-hover:border-brand-accent group-hover:shadow-[0_0_24px_rgba(184,36,29,0.25)] group-hover:-translate-y-1 transition-all duration-500">
+                                                {getIcon(pillar.icon)}
+                                            </div>
                                             <span className="font-mono text-[10px] tracking-widest text-brand-muted/70 uppercase px-2 py-0.5 rounded bg-brand-border/15 dark:bg-white/5 border border-brand-border/20 dark:border-white/10">
                                                 {meta.status}
                                             </span>
                                         </div>
 
-                                        {/* Main Content: Icon Capsule, Title, Description */}
+                                        {/* Main Content: Title, Description */}
                                         <div className="z-10 mb-6">
-                                            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-brand-panel/50 dark:bg-brand-panel border border-brand-border/60 dark:border-white/10 shadow-sm group-hover:border-brand-accent group-hover:shadow-[0_0_24px_rgba(184,36,29,0.25)] group-hover:-translate-y-1 transition-all duration-500 mb-5">
-                                                {getIcon(pillar.icon)}
-                                            </div>
                                             <h3 className="font-playfair italic text-2xl sm:text-3xl text-brand-text font-medium tracking-tight mb-3 group-hover:text-brand-accent transition-colors duration-300">
                                                 {pillar.title}
                                             </h3>
