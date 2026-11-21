@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 
 const videoUrls = ['/1.mp4', '/2.mp4'];
-const IDLE_DELAY_MS = 3000; // Pause after 3 seconds of cursor/interaction inactivity
+const IDLE_DELAY_MS = 15000; // Pause after 15 seconds of cursor/interaction inactivity
 
 export default function HeroBlobVideo() {
     const videoRef = useRef<HTMLVideoElement>(null);
