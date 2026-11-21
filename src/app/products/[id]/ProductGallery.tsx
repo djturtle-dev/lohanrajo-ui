@@ -83,7 +83,7 @@ export default function ProductGallery({ productName, images }: ProductGalleryPr
                         alt={productName}
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover z-0 transition-transform duration-700 group-hover:scale-105 pointer-events-none select-none"
+                        className="object-cover z-0 transition-transform duration-700 group-hover:scale-105 pointer-events-none select-none no-download protect-image"
                         priority
                         draggable={false}
                     />
@@ -118,7 +118,7 @@ export default function ProductGallery({ productName, images }: ProductGalleryPr
                                 alt={`${productName} ${i + 2}`}
                                 fill
                                 sizes="(max-width: 768px) 25vw, 12vw"
-                                className="object-cover z-0 grayscale group-hover:grayscale-0 transition-all duration-300 pointer-events-none select-none"
+                                className="object-cover z-0 grayscale group-hover:grayscale-0 transition-all duration-300 pointer-events-none select-none no-download protect-image"
                                 draggable={false}
                             />
                             <div className="absolute inset-0 bg-brand-dark/10 mix-blend-multiply z-10" />
@@ -161,7 +161,7 @@ export default function ProductGallery({ productName, images }: ProductGalleryPr
                                         src={getAssetUrl(images[currentIndex])}
                                         alt={`${productName} - Image ${currentIndex + 1}`}
                                         fill
-                                        className="object-contain pointer-events-none select-none no-download"
+                                        className="object-contain pointer-events-none select-none no-download protect-image"
                                         quality={100}
                                         unoptimized
                                         draggable={false}

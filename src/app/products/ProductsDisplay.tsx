@@ -106,14 +106,15 @@ export default function ProductsDisplay({
                             key={product.id}
                             className="card-glass group flex flex-col"
                         >
-                            <div className="aspect-[4/3] min-h-[160px] sm:min-h-[220px] bg-brand-panel/60 dark:bg-brand-dark flex items-center justify-center relative overflow-hidden">
+                            <div className="aspect-[4/3] min-h-[160px] sm:min-h-[220px] bg-brand-panel/60 dark:bg-brand-dark flex items-center justify-center relative overflow-hidden protect-image">
                                 {product.images?.[0] ? (
                                     <Image
                                         src={getAssetUrl(product.images[0])}
                                         alt={product.name}
                                         fill
                                         sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                                        className="object-cover z-0 transition-all duration-500 group-hover:scale-105"
+                                        className="object-cover z-0 transition-all duration-500 group-hover:scale-105 no-download protect-image select-none pointer-events-none"
+                                        draggable={false}
                                     />
                                 ) : (
                                     <span className="text-brand-muted font-sans text-xs z-0 border border-brand-border px-4 py-2">
@@ -142,14 +143,15 @@ export default function ProductsDisplay({
                             key={product.id}
                             className="card-glass group flex flex-row"
                         >
-                            <div className="w-24 md:w-44 shrink-0 bg-brand-dark flex items-center justify-center relative overflow-hidden">
+                            <div className="w-24 md:w-44 shrink-0 bg-brand-dark flex items-center justify-center relative overflow-hidden protect-image">
                                 {product.images?.[0] ? (
                                     <Image
                                         src={getAssetUrl(product.images[0])}
                                         alt={product.name}
                                         fill
                                         sizes="(max-width: 768px) 100vw, 200px"
-                                        className="object-cover z-0 transition-all duration-500 group-hover:scale-105"
+                                        className="object-cover z-0 transition-all duration-500 group-hover:scale-105 no-download protect-image select-none pointer-events-none"
+                                        draggable={false}
                                     />
                                 ) : (
                                     <span className="text-brand-muted font-sans text-xs z-0 border border-brand-border px-2 py-1">No image</span>
