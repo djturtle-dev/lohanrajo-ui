@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-import HeroVideoBackground from '@/components/HeroVideoBackground';
 import HeroTextAnimation from '@/components/HeroTextAnimation';
 import { prisma } from '@/lib/prisma';
 import ScrollReveal from '@/components/animations/ScrollReveal';
@@ -49,37 +48,67 @@ export default async function Home() {
 
     return (
         <div className="flex flex-col gap-24">
-            {/* Custom Masked Blob Hero Section */}
-            <section className="relative w-full pt-36 md:pt-40 pb-0 overflow-hidden flex flex-col px-4 sm:px-0 w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto">
-                <div className="relative z-20 w-full w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8 flex flex-col justify-center">
+            {/* Full-Bleed Cinematic Hero + Metrics Shelf */}
+            <div>
+                <section className="relative w-full h-[100svh] min-h-[600px] max-h-[1100px] overflow-hidden">
+                    {/* Full-bleed video background */}
+                    <HeroBlobVideo />
 
-                    {/* Top Row: Hero Text, Button & Description */}
-                    <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-12 w-full">
-                        {/* Left Side: Hero Text and Button */}
-                        <div className="flex-1 w-full flex flex-col items-start lg:-mt-2">
-                            <div className="w-full">
-                                <HeroTextAnimation lines={homeContent.heroLines} />
-                            </div>
-                            <div className="mt-2 lg:mt-2">
+                    {/* Cinematic gradient overlays */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-bg via-brand-bg/40 to-transparent z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-brand-bg/70 via-brand-bg/20 to-transparent z-10" />
+                    {/* Vignette */}
+                    <div className="absolute inset-0 z-10" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, var(--th-bg) 100%)' }} />
+
+                    {/* Bottom-left content */}
+                    <div className="absolute inset-0 z-20 flex flex-col justify-end w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8 pb-20 md:pb-28">
+                        <div className="max-w-2xl">
+                            {/* Animated hero text */}
+                            <HeroTextAnimation lines={homeContent.heroLines} />
+
+                            {/* Red accent line */}
+                            <div className="w-16 h-[2px] bg-brand-accent mt-3 mb-4" />
+
+                            {/* Brief tagline */}
+                            <p className="text-brand-muted text-sm md:text-base leading-relaxed max-w-md opacity-80">
+                                Uncompromised quality meets state-of-the-art manufacturing. Redefining standards in physical infrastructure.
+                            </p>
+
+                            {/* CTA */}
+                            <div className="mt-6">
                                 <Link href="/products" className="group btn-glass-secondary px-6 py-3 md:px-8 font-oswald tracking-widest uppercase inline-flex items-center text-xs md:text-sm">
                                     Explore <span className="hidden md:inline ml-1">Products</span> <ArrowRight className="ml-2 md:ml-3 w-4 h-4 group-hover:translate-x-2 transition-transform duration-500" />
                                 </Link>
                             </div>
                         </div>
-                        
-                        {/* Right Side: Paragraph */}
-                        <div className="w-full lg:max-w-md lg:pb-4 lg:pt-10">
-                            <p className="text-brand-muted text-sm md:text-base leading-relaxed text-justify">
-                                LOHANRAJO merges uncompromised quality with state-of-the-art manufacturing. Our mission is to deliver enclosures and metal solutions that are exceptionally resilient and seamlessly functional, redefining standards in the physical infrastructure space.
-                            </p>
-                        </div>
                     </div>
 
-                    {/* Third Row: The Masked Video Blob */}
-                    <HeroBlobVideo />
+                    {/* Scroll indicator */}
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+                        <div className="w-5 h-5 border-r-2 border-b-2 border-brand-accent/60 rotate-45" />
+                    </div>
+                </section>
 
-                </div>
-            </section>
+                {/* Metrics shelf */}
+                <section className="relative w-full border-b border-brand-border/30 bg-brand-bg">
+                    <div className="w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8 py-10 flex flex-col md:flex-row md:items-center gap-8 md:gap-16">
+                        <div className="flex gap-12 md:gap-16 shrink-0">
+                            <div className="flex flex-col">
+                                <span className="text-2xl md:text-4xl font-bold font-sans text-brand-text">50+</span>
+                                <span className="text-[10px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-1">Industries</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-2xl md:text-4xl font-bold font-sans text-brand-text">100%</span>
+                                <span className="text-[10px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-1">Satisfaction</span>
+                            </div>
+                        </div>
+                        <div className="hidden md:block h-12 w-px bg-brand-border/50" />
+                        <p className="text-brand-muted text-sm leading-relaxed max-w-lg">
+                            LOHANRAJO merges uncompromised quality with state-of-the-art manufacturing. Our mission is to deliver enclosures and metal solutions that are exceptionally resilient and seamlessly functional.
+                        </p>
+                    </div>
+                </section>
+            </div>
 
             {/* Spatial Node Map Section */}
             <SpatialNodeMap pillars={pillars} />

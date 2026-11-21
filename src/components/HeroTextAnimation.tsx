@@ -23,7 +23,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
         return () => clearInterval(interval);
     }, [displayLines.length]);
 
-    if (!isMounted) return <div className="h-30 sm:h-37.5 md:h-45 lg:h-55" />;
+    if (!isMounted) return <div className="h-10 sm:h-14 md:h-16 lg:h-20 xl:h-24" />;
 
     // Animation variants for staggering
     const containerVariants = {
@@ -114,7 +114,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
     };
 
     return (
-        <div className="relative h-16 sm:h-20 md:h-24 w-fit flex items-center justify-start mb-1 perspective-1000 overflow-visible">
+        <div className="relative h-10 sm:h-14 md:h-16 lg:h-20 xl:h-24 w-fit flex items-center justify-start mb-1 perspective-1000 overflow-visible">
             <AnimatePresence>
                 <motion.div
                     key={index}
@@ -124,7 +124,7 @@ export default function HeroTextAnimation({ lines = [] }: { lines?: string[] }) 
                     exit="exit"
                     className="absolute w-fit flex flex-nowrap whitespace-nowrap justify-start text-left"
                 >
-                    <h1 className="font-sans text-2xl md:text-3xl lg:text-4xl font-normal tracking-tighter text-brand-text leading-none flex flex-nowrap whitespace-nowrap justify-start">
+                    <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-brand-text leading-none flex flex-nowrap whitespace-nowrap justify-start">
                         {parseAndAnimateLine(displayLines[index])}
                     </h1>
                 </motion.div>
