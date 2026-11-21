@@ -121,7 +121,7 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
                                 return (
                                     <div
                                         key={i}
-                                        className="group relative p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 hover:bg-black/[0.02] dark:hover:bg-white/[0.02]"
+                                        className="group relative p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 bg-white dark:bg-transparent hover:bg-neutral-50/80 dark:hover:bg-white/[0.02]"
                                     >
                                         {/* Precision corner crosshair tick */}
                                         <div className="absolute top-2.5 right-2.5 w-2 h-2 border-t border-r border-brand-border/40 group-hover:border-brand-accent transition-colors duration-300 pointer-events-none" />
@@ -133,10 +133,10 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
 
                                         {/* Top Row: Icon Capsule + Status Badge */}
                                         <div className="flex items-start justify-between mb-5 z-10">
-                                            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-brand-panel/50 dark:bg-brand-panel border border-brand-border/60 dark:border-white/10 shadow-sm group-hover:border-brand-accent group-hover:shadow-[0_0_24px_rgba(184,36,29,0.25)] group-hover:-translate-y-1 transition-all duration-500">
+                                            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center bg-white dark:bg-brand-panel border border-brand-border/60 dark:border-white/10 shadow-sm group-hover:border-brand-accent group-hover:shadow-[0_0_24px_rgba(184,36,29,0.25)] group-hover:-translate-y-1 transition-all duration-500">
                                                 {getIcon(pillar.icon)}
                                             </div>
-                                            <span className="font-mono text-[10px] tracking-widest text-brand-muted/70 uppercase px-2 py-0.5 rounded bg-brand-border/15 dark:bg-white/5 border border-brand-border/20 dark:border-white/10">
+                                            <span className="font-mono text-[10px] tracking-widest text-brand-muted/70 uppercase px-2 py-0.5 rounded bg-white dark:bg-white/5 border border-brand-border/30 dark:border-white/10 shadow-xs">
                                                 {meta.status}
                                             </span>
                                         </div>
@@ -157,7 +157,7 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
                                                 {meta.tags.map((tag, tagIdx) => (
                                                     <span
                                                         key={tagIdx}
-                                                        className="px-2 py-0.5 rounded text-[10px] font-mono tracking-wider text-brand-muted/80 bg-black/[0.03] dark:bg-white/[0.04] border border-brand-border/30 dark:border-white/10 group-hover:border-brand-accent/30 transition-colors duration-300"
+                                                        className="px-2 py-0.5 rounded text-[10px] font-mono tracking-wider text-brand-muted/80 bg-white dark:bg-white/[0.04] border border-brand-border/30 dark:border-white/10 group-hover:border-brand-accent/30 transition-colors duration-300 shadow-xs"
                                                     >
                                                         {tag}
                                                     </span>
