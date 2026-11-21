@@ -165,7 +165,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                             stiffness: 260,
                                             damping: 28
                                         }}
-                                        className="overflow-hidden flex-shrink-0 flex items-center"
+                                        className="overflow-visible flex-shrink-0 flex items-center"
                                     >
                                         <ThemeToggle />
                                     </motion.div>
@@ -219,7 +219,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                         stiffness: 260,
                                         damping: 28
                                     }}
-                                    className="hidden sm:flex overflow-hidden flex-shrink-0 items-center"
+                                    className="hidden sm:flex overflow-visible flex-shrink-0 items-center"
                                 >
                                     <ThemeToggle />
                                 </motion.div>
