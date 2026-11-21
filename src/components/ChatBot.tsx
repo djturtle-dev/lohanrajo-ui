@@ -100,11 +100,19 @@ export default function ChatBot() {
 
   useEffect(() => {
     setGreeting(greetings[Math.floor(Math.random() * greetings.length)]);
-    const timer = setTimeout(() => {
+    const showTimer = setTimeout(() => {
       setShowWelcome(true);
     }, 1500);
-    return () => clearTimeout(timer);
+    return () => clearTimeout(showTimer);
   }, []);
+
+  useEffect(() => {
+    if (!showWelcome) return;
+    const hideTimer = setTimeout(() => {
+      setShowWelcome(false);
+    }, 20000);
+    return () => clearTimeout(hideTimer);
+  }, [showWelcome]);
 
 
   // Fetch the daily cached knowledge base on load
@@ -225,7 +233,7 @@ export default function ChatBot() {
               exit={{ opacity: 0, x: 10, scale: 0.95 }}
               className="bg-brand-panel border border-brand-border shadow-lg rounded-2xl p-3 relative flex items-center"
             >
-              <span className="text-sm font-oswald text-brand-text whitespace-nowrap flex items-center gap-1.5"><Hand className="w-4 h-4 text-brand-accent" /> Need help? Chat with us!</span>
+              <span className="text-sm font-sans font-medium text-brand-text whitespace-nowrap flex items-center gap-1.5"><Hand className="w-4 h-4 text-brand-accent" /> Need help? Chat with us!</span>
               <div className="absolute top-1/2 -right-2 -translate-y-1/2 border-y-8 border-y-transparent border-l-8 border-l-brand-panel"></div>
               <div className="absolute top-1/2 -right-[9px] -translate-y-1/2 border-y-8 border-y-transparent border-l-8 border-l-brand-border -z-10"></div>
             </motion.div>
