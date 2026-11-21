@@ -204,9 +204,6 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                             onContextMenu={(e) => e.preventDefault()}
                             onDragStart={(e) => e.preventDefault()}
                         >
-                            {/* Ambient Glow */}
-                            <div className="absolute inset-0 bg-brand-accent/5 rounded-2xl blur-xl group-hover:bg-brand-accent/15 transition-all duration-700 pointer-events-none" />
-
                             {/* Main Image */}
                             {activeImageSrc ? (
                                 <div className="relative w-full h-full p-4 flex items-center justify-center pointer-events-none">
