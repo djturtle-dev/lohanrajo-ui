@@ -59,7 +59,7 @@ export default function NotFound() {
                             PAGE NOT <span className="text-brand-accent">FOUND</span>
                         </h2>
                         
-                        <p className="font-inter text-brand-muted text-lg md:text-xl mb-8 max-w-md mx-auto">
+                        <p className="font-sans text-brand-muted text-lg md:text-xl mb-8 max-w-md mx-auto">
                             The space you're looking for doesn't exist. It might have been moved, deleted, or never existed in the first place.
                         </p>
 

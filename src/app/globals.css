@@ -15,10 +15,11 @@
     --color-brand-text:     var(--th-text);
     --color-brand-muted:    var(--th-muted);
 
-    --font-oswald: var(--font-oswald), sans-serif;
-    --font-sans:   var(--font-poppins), sans-serif;
-    --font-serif:  var(--font-forum), serif;
-    --font-mono:   var(--font-inter), sans-serif;
+    /* Typography tokens: standardized to Poppins (sans/UI/body) and Playfair Display (serif/editorial/hero) */
+    --font-sans:     var(--font-poppins), sans-serif;
+    --font-oswald:   var(--font-poppins), sans-serif;
+    --font-mono:     var(--font-poppins), sans-serif;
+    --font-serif:    var(--font-playfair), serif;
     --font-playfair: var(--font-playfair), serif;
 }
 
