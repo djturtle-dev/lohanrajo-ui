@@ -201,7 +201,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                                     {isManuallyExpanded ? (
                                                         <X className="w-5 h-5" style={{ color: 'var(--th-text)' }} />
                                                     ) : (
-                                                        <Menu className="w-5 h-5" style={{ color: 'var(--th-text)' }} />}
+                                                        <Menu className="w-5 h-5" style={{ color: 'var(--th-text)' }} />
                                                     )}
                                                 </motion.div>
                                             </AnimatePresence>
