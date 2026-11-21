@@ -57,14 +57,18 @@ export default async function AboutPage() {
     return (
         <div className="flex flex-col gap-12 pt-24 md:pt-28">
             {/* Header */}
-            <ScrollReveal direction="up" className="max-w-4xl mx-auto text-center px-4 mb-12">
-                <h1 className="font-playfair italic text-4xl md:text-5xl lg:text-6xl text-brand-text mb-6 text-balance">
-                    {data.title.split(' ').map((word: string, i: number) =>
-                        word.toLowerCase() === 'excellence' ? (
-                            <span key={i} className="text-brand-accent">{word} </span>
-                        ) : word + ' '
-                    )}
-                </h1>
+            <ScrollReveal direction="up" className="max-w-4xl mx-auto text-center px-4 mb-12 flex flex-col items-center">
+                <div className="mb-6 flex justify-center">
+                    <Image
+                        src="/Footer-logo.png"
+                        alt={data.title || "LOHANRAJO INDUSTRIES AND TECHNOLOGIES"}
+                        width={600}
+                        height={180}
+                        className="w-[280px] sm:w-[380px] md:w-[480px] lg:w-[540px] h-auto object-contain"
+                        priority
+                    />
+                </div>
+                <h1 className="sr-only">{data.title || "LOHANRAJO INDUSTRIES AND TECHNOLOGIES"}</h1>
                 <p className="text-xl text-brand-muted font-light leading-relaxed">
                     {data.subtitle}
                 </p>
