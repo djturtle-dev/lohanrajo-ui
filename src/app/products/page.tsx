@@ -186,7 +186,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                 <main className="lg:col-span-3">
                     {/* Active Filters Bar */}
                     {(query || category || subCategory) && (
-                        <div className="flex flex-wrap items-center gap-2 mb-6 p-3 bg-brand-panel border border-brand-border clip-chamfer">
+                        <div className="flex flex-wrap items-center gap-2 mb-6 p-3 bg-white dark:bg-brand-panel border border-brand-border clip-chamfer shadow-sm">
                             <span className="text-xs text-brand-muted font-sans mr-1">Filtered by:</span>
                             {query && (
                                 <Link
@@ -194,7 +194,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                                         ...(category ? { category } : {}),
                                         ...(subCategory ? { subCategory } : {})
                                     }).toString()}`}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors font-sans"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-bg dark:bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors font-sans"
                                     title="Remove search query"
                                 >
                                     <span>Search: "{query}"</span>
@@ -206,7 +206,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                                     href={`/products?${new URLSearchParams({
                                         ...(query ? { query } : {})
                                     }).toString()}`}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors font-sans"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-bg dark:bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors font-sans"
                                     title="Remove category filter"
                                 >
                                     <span>Category: {activeCategory.name}</span>
@@ -219,7 +219,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                                         category,
                                         ...(query ? { query } : {})
                                     }).toString()}`}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors font-sans"
+                                    className="inline-flex items-center gap-1.5 px-3 py-1 text-xs bg-brand-bg dark:bg-brand-dark border border-brand-border rounded text-brand-text hover:border-brand-accent transition-colors font-sans"
                                     title="Remove subcategory filter"
                                 >
                                     <span>Subcategory: {activeSubCategory.name}</span>
@@ -228,7 +228,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                             )}
                             <Link
                                 href="/products"
-                                className="text-xs text-brand-accent hover:text-white transition-colors font-sans font-semibold ml-auto"
+                                className="text-xs text-brand-accent hover:text-brand-text dark:hover:text-white transition-colors font-sans font-semibold ml-auto"
                             >
                                 Clear all
                             </Link>
