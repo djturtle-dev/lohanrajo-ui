@@ -199,7 +199,8 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                 <div className="lg:col-span-2 lg:sticky lg:top-28">
                     <ScrollReveal direction="left" delay={0.15}>
                         <div 
-                            className="relative aspect-square sm:aspect-[4/5] lg:aspect-[4/5] bg-brand-panel border border-brand-border rounded-2xl flex flex-col items-center justify-center overflow-hidden group select-none shadow-lg"
+                            className="relative aspect-square sm:aspect-[4/5] lg:aspect-[4/5] bg-brand-panel border border-brand-border rounded-2xl flex flex-col items-center justify-center overflow-hidden group select-none shadow-lg cursor-pointer"
+                            onClick={() => openModal(currentIndex)}
                             onTouchStart={onTouchStart}
                             onTouchMove={onTouchMove}
                             onTouchEnd={onTouchEnd}
@@ -211,17 +212,14 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
 
                             {/* Main Image */}
                             {activeImageSrc ? (
-                                <div 
-                                    className="relative w-full h-full p-4 flex items-center justify-center cursor-pointer"
-                                    onClick={() => openModal(currentIndex)}
-                                >
+                                <div className="relative w-full h-full p-4 flex items-center justify-center pointer-events-none">
                                     <Image
                                         key={currentIndex}
                                         src={activeImageSrc}
                                         alt={`${product.name} - Image ${currentIndex + 1}`}
                                         fill
                                         sizes="(max-width: 1024px) 100vw, 35vw"
-                                        className="object-contain p-4 z-0 transition-all duration-500 group-hover:scale-[1.03] pointer-events-none select-none"
+                                        className="object-contain p-4 z-0 transition-all duration-500 group-hover:scale-[1.03] select-none"
                                         priority={currentIndex === 0}
                                         draggable={false}
                                     />
@@ -516,7 +514,7 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
 
                             {/* Main Zoomable Viewport */}
                             <div 
-                                className={`relative flex-1 w-full h-full flex items-center justify-center overflow-hidden ${
+                                className={`relative flex-1 min-h-0 w-full flex items-center justify-center overflow-hidden p-2 sm:p-6 ${
                                     zoom > 1 ? (isDraggingPan ? 'cursor-grabbing' : 'cursor-grab') : 'cursor-zoom-in'
                                 }`}
                                 onWheel={handleWheelZoom}
@@ -532,23 +530,25 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                                 }}
                             >
                                 <div 
-                                    className="relative w-full h-full max-w-6xl max-h-[80vh] flex items-center justify-center transition-transform duration-100 ease-out"
+                                    className="relative w-full h-[76vh] max-w-6xl max-h-[80vh] flex items-center justify-center transition-transform duration-100 ease-out"
                                     style={{
                                         transform: `scale(${zoom}) translate(${pan.x / zoom}px, ${pan.y / zoom}px)`,
                                         transformOrigin: 'center center'
                                     }}
                                 >
-                                    <Image
-                                        key={currentIndex}
-                                        src={getAssetUrl(rawImages[currentIndex])}
-                                        alt={`${product.name} - Fullscreen View`}
-                                        fill
-                                        className="object-contain pointer-events-none select-none no-download"
-                                        quality={100}
-                                        unoptimized
-                                        draggable={false}
-                                        priority
-                                    />
+                                    {rawImages[currentIndex] && (
+                                        <Image
+                                            key={`${currentIndex}-${rawImages[currentIndex]}`}
+                                            src={getAssetUrl(rawImages[currentIndex])}
+                                            alt={`${product.name} - Fullscreen View`}
+                                            fill
+                                            sizes="100vw"
+                                            className="object-contain pointer-events-none select-none no-download"
+                                            quality={95}
+                                            draggable={false}
+                                            priority
+                                        />
+                                    )}
                                 </div>
                             </div>
 
