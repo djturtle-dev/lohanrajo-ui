@@ -1,9 +1,143 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { submitFeedback } from '@/app/actions';
-import { MapPin, Phone, Mail, AlertTriangle, CheckCircle2, XCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, AlertTriangle, CheckCircle2, XCircle, ChevronDown } from 'lucide-react';
 import ScrollReveal from '@/components/animations/ScrollReveal';
+
+/* --- 2D Vector Flag Components --- */
+function IndiaFlag({ className = "w-5 h-3.5" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 30 20" className={`${className} rounded-[2px] shrink-0 overflow-hidden shadow-xs border border-white/10`} aria-label="India flag">
+            <rect width="30" height="20" fill="#FFFFFF" />
+            <rect width="30" height="6.67" fill="#FF9933" />
+            <rect y="13.33" width="30" height="6.67" fill="#138808" />
+            <circle cx="15" cy="10" r="2.6" fill="none" stroke="#000080" strokeWidth="0.55" />
+            <circle cx="15" cy="10" r="0.65" fill="#000080" />
+            {[...Array(12)].map((_, i) => (
+                <line
+                    key={i}
+                    x1={15 + 0.65 * Math.cos((i * Math.PI) / 6)}
+                    y1={10 + 0.65 * Math.sin((i * Math.PI) / 6)}
+                    x2={15 + 2.5 * Math.cos((i * Math.PI) / 6)}
+                    y2={10 + 2.5 * Math.sin((i * Math.PI) / 6)}
+                    stroke="#000080"
+                    strokeWidth="0.32"
+                />
+            ))}
+        </svg>
+    );
+}
+
+function USFlag({ className = "w-5 h-3.5" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 30 20" className={`${className} rounded-[2px] shrink-0 overflow-hidden shadow-xs border border-white/10`} aria-label="United States flag">
+            <rect width="30" height="20" fill="#B22234" />
+            <path d="M0 2.31h30M0 5.38h30M0 8.46h30M0 11.54h30M0 14.62h30M0 17.69h30" stroke="#FFFFFF" strokeWidth="1.54" />
+            <rect width="12" height="10.77" fill="#3C3B6E" />
+            <circle cx="2.5" cy="2.2" r="0.5" fill="#FFFFFF" />
+            <circle cx="6" cy="2.2" r="0.5" fill="#FFFFFF" />
+            <circle cx="9.5" cy="2.2" r="0.5" fill="#FFFFFF" />
+            <circle cx="4.25" cy="4.3" r="0.5" fill="#FFFFFF" />
+            <circle cx="7.75" cy="4.3" r="0.5" fill="#FFFFFF" />
+            <circle cx="2.5" cy="6.4" r="0.5" fill="#FFFFFF" />
+            <circle cx="6" cy="6.4" r="0.5" fill="#FFFFFF" />
+            <circle cx="9.5" cy="6.4" r="0.5" fill="#FFFFFF" />
+            <circle cx="4.25" cy="8.5" r="0.5" fill="#FFFFFF" />
+            <circle cx="7.75" cy="8.5" r="0.5" fill="#FFFFFF" />
+        </svg>
+    );
+}
+
+function UKFlag({ className = "w-5 h-3.5" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 30 20" className={`${className} rounded-[2px] shrink-0 overflow-hidden shadow-xs border border-white/10`} aria-label="United Kingdom flag">
+            <rect width="30" height="20" fill="#012169" />
+            <path d="M0 0L30 20M30 0L0 20" stroke="#FFFFFF" strokeWidth="3.2" />
+            <path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" strokeWidth="1.6" />
+            <path d="M15 0v20M0 10h30" stroke="#FFFFFF" strokeWidth="5.6" />
+            <path d="M15 0v20M0 10h30" stroke="#C8102E" strokeWidth="3.2" />
+        </svg>
+    );
+}
+
+function UAEFlag({ className = "w-5 h-3.5" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 30 20" className={`${className} rounded-[2px] shrink-0 overflow-hidden shadow-xs border border-white/10`} aria-label="United Arab Emirates flag">
+            <rect width="30" height="6.67" fill="#00732F" />
+            <rect y="6.67" width="30" height="6.67" fill="#FFFFFF" />
+            <rect y="13.34" width="30" height="6.67" fill="#000000" />
+            <rect width="8" height="20" fill="#FF0000" />
+        </svg>
+    );
+}
+
+function SGFlag({ className = "w-5 h-3.5" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 30 20" className={`${className} rounded-[2px] shrink-0 overflow-hidden shadow-xs border border-white/10`} aria-label="Singapore flag">
+            <rect width="30" height="10" fill="#ED2939" />
+            <rect y="10" width="30" height="10" fill="#FFFFFF" />
+            <circle cx="5" cy="5" r="3.2" fill="#FFFFFF" />
+            <circle cx="6.1" cy="5" r="2.8" fill="#ED2939" />
+            <circle cx="8" cy="3.5" r="0.45" fill="#FFFFFF" />
+            <circle cx="9.2" cy="4.5" r="0.45" fill="#FFFFFF" />
+            <circle cx="8.8" cy="5.9" r="0.45" fill="#FFFFFF" />
+            <circle cx="7.2" cy="5.9" r="0.45" fill="#FFFFFF" />
+            <circle cx="6.8" cy="4.5" r="0.45" fill="#FFFFFF" />
+        </svg>
+    );
+}
+
+function GermanyFlag({ className = "w-5 h-3.5" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 30 20" className={`${className} rounded-[2px] shrink-0 overflow-hidden shadow-xs border border-white/10`} aria-label="Germany flag">
+            <rect width="30" height="6.67" fill="#000000" />
+            <rect y="6.67" width="30" height="6.67" fill="#DD0000" />
+            <rect y="13.34" width="30" height="6.67" fill="#FFCE00" />
+        </svg>
+    );
+}
+
+function AUFlag({ className = "w-5 h-3.5" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 30 20" className={`${className} rounded-[2px] shrink-0 overflow-hidden shadow-xs border border-white/10`} aria-label="Australia flag">
+            <rect width="30" height="20" fill="#00008B" />
+            <g transform="scale(0.5)">
+                <path d="M0 0L30 20M30 0L0 20" stroke="#FFFFFF" strokeWidth="3.2" />
+                <path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" strokeWidth="1.6" />
+                <path d="M15 0v20M0 10h30" stroke="#FFFFFF" strokeWidth="5.6" />
+                <path d="M15 0v20M0 10h30" stroke="#C8102E" strokeWidth="3.2" />
+            </g>
+            <circle cx="7.5" cy="15" r="1.3" fill="#FFFFFF" />
+            <circle cx="22" cy="4" r="0.5" fill="#FFFFFF" />
+            <circle cx="25.5" cy="7" r="0.5" fill="#FFFFFF" />
+            <circle cx="23.5" cy="11" r="0.5" fill="#FFFFFF" />
+            <circle cx="19" cy="10" r="0.5" fill="#FFFFFF" />
+            <circle cx="22" cy="15.5" r="0.7" fill="#FFFFFF" />
+        </svg>
+    );
+}
+
+function SAFlag({ className = "w-5 h-3.5" }: { className?: string }) {
+    return (
+        <svg viewBox="0 0 30 20" className={`${className} rounded-[2px] shrink-0 overflow-hidden shadow-xs border border-white/10`} aria-label="Saudi Arabia flag">
+            <rect width="30" height="20" fill="#006C35" />
+            <path d="M8 9.5h14M8 12.5h14M10 14h10" stroke="#FFFFFF" strokeWidth="0.7" strokeLinecap="round" />
+            <path d="M7 16l16 0M21 15l2 1-2 1" stroke="#FFFFFF" strokeWidth="0.8" strokeLinecap="round" />
+        </svg>
+    );
+}
+
+const COUNTRIES = [
+    { code: 'IN', dialCode: '+91', name: 'India', Flag: IndiaFlag },
+    { code: 'US', dialCode: '+1', name: 'United States', Flag: USFlag },
+    { code: 'GB', dialCode: '+44', name: 'United Kingdom', Flag: UKFlag },
+    { code: 'AE', dialCode: '+971', name: 'United Arab Emirates', Flag: UAEFlag },
+    { code: 'SG', dialCode: '+65', name: 'Singapore', Flag: SGFlag },
+    { code: 'DE', dialCode: '+49', name: 'Germany', Flag: GermanyFlag },
+    { code: 'AU', dialCode: '+61', name: 'Australia', Flag: AUFlag },
+    { code: 'SA', dialCode: '+966', name: 'Saudi Arabia', Flag: SAFlag },
+];
 
 // Simple math captcha - no external dependencies needed
 function generateCaptcha() {
@@ -19,6 +153,8 @@ export default function ContactPage() {
     const [captcha, setCaptcha] = useState<{ question: string; answer: string } | null>(null);
     const [captchaInput, setCaptchaInput] = useState('');
     const [countryCode, setCountryCode] = useState('+91');
+    const [isCountryOpen, setIsCountryOpen] = useState(false);
+    const countryDropdownRef = useRef<HTMLDivElement>(null);
     const [phoneNumber, setPhoneNumber] = useState('');
     
     const isCaptchaValid = captcha !== null && captchaInput.trim() === captcha.answer;
@@ -38,6 +174,23 @@ export default function ContactPage() {
     useEffect(() => {
         setCaptcha(generateCaptcha());
     }, []);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (countryDropdownRef.current && !countryDropdownRef.current.contains(event.target as Node)) {
+                setIsCountryOpen(false);
+            }
+        }
+        if (isCountryOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isCountryOpen]);
+
+    const activeCountry = COUNTRIES.find((c) => c.dialCode === countryCode) || COUNTRIES[0];
+    const ActiveFlag = activeCountry.Flag;
 
     function refreshCaptcha() {
         setCaptcha(generateCaptcha());
@@ -118,26 +271,55 @@ export default function ContactPage() {
                                     Phone Number<span className="text-brand-accent ml-1">*</span>
                                 </label>
                                 <div className="flex items-center gap-2">
-                                    {/* Country Code (Separate, selected as India +91) */}
-                                    <div className="relative shrink-0">
-                                        <select
-                                            name="countryCode"
-                                            value={countryCode}
-                                            onChange={(e) => setCountryCode(e.target.value)}
-                                            className="bg-th-input border border-brand-border px-3.5 py-3 pr-8 text-brand-text focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm appearance-none cursor-pointer font-sans"
-                                            aria-label="Country Code"
+                                    {/* Country Code (Separate, selected as India +91 with 2D flag) */}
+                                    <div className="relative shrink-0" ref={countryDropdownRef}>
+                                        <input type="hidden" name="countryCode" value={countryCode} />
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsCountryOpen(!isCountryOpen)}
+                                            className="h-[46px] flex items-center gap-2 bg-th-input border border-brand-border px-3.5 text-brand-text hover:border-brand-accent focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm cursor-pointer select-none"
+                                            aria-label="Select Country Code"
+                                            aria-expanded={isCountryOpen}
                                         >
-                                            <option value="+91" className="bg-brand-panel text-brand-text">🇮🇳 +91</option>
-                                            <option value="+1" className="bg-brand-panel text-brand-text">🇺🇸 +1</option>
-                                            <option value="+44" className="bg-brand-panel text-brand-text">🇬🇧 +44</option>
-                                            <option value="+971" className="bg-brand-panel text-brand-text">🇦🇪 +971</option>
-                                            <option value="+65" className="bg-brand-panel text-brand-text">🇸🇬 +65</option>
-                                        </select>
-                                        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-brand-accent">
-                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                                            </svg>
-                                        </div>
+                                            <ActiveFlag className="w-5 h-3.5" />
+                                            <span className="font-sans font-medium text-xs tracking-tight">{activeCountry.dialCode}</span>
+                                            <ChevronDown className={`w-3.5 h-3.5 text-brand-accent transition-transform duration-200 ${isCountryOpen ? 'rotate-180' : ''}`} />
+                                        </button>
+
+                                        {isCountryOpen && (
+                                            <div className="absolute left-0 top-full mt-2 z-50 w-64 bg-brand-panel border border-brand-border rounded-2xl shadow-2xl py-2 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-150 backdrop-blur-xl">
+                                                <div className="px-3.5 py-1.5 border-b border-brand-border/40 text-[10px] uppercase tracking-wider text-brand-muted/70 font-sans font-semibold">
+                                                    Select Country Code
+                                                </div>
+                                                <div className="max-h-56 overflow-y-auto py-1">
+                                                    {COUNTRIES.map((c) => {
+                                                        const FlagComponent = c.Flag;
+                                                        const isSelected = c.dialCode === countryCode;
+                                                        return (
+                                                            <button
+                                                                key={c.code}
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    setCountryCode(c.dialCode);
+                                                                    setIsCountryOpen(false);
+                                                                }}
+                                                                className={`w-full flex items-center justify-between gap-3 px-3.5 py-2.5 text-left text-xs transition-colors cursor-pointer ${
+                                                                    isSelected
+                                                                        ? 'bg-brand-accent/15 text-brand-accent font-semibold'
+                                                                        : 'text-brand-text hover:bg-white/5'
+                                                                }`}
+                                                            >
+                                                                <div className="flex items-center gap-2.5 truncate">
+                                                                    <FlagComponent className="w-5 h-3.5" />
+                                                                    <span className="truncate">{c.name}</span>
+                                                                </div>
+                                                                <span className="font-mono text-[11px] text-brand-muted/70 shrink-0">{c.dialCode}</span>
+                                                            </button>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* 10-Digit Mobile Number Input */}
@@ -155,7 +337,7 @@ export default function ContactPage() {
                                             pattern="[0-9]{10}"
                                             title="Please enter a valid 10-digit phone number"
                                             placeholder="10-digit number"
-                                            className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm font-sans tracking-wide"
+                                            className="w-full h-[46px] bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm font-sans tracking-wide"
                                         />
                                         {phoneNumber.length > 0 && (
                                             <span className={`absolute right-4 top-1/2 -translate-y-1/2 text-[11px] font-mono ${
