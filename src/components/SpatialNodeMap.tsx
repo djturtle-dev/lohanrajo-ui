@@ -68,7 +68,7 @@ export default function SpatialNodeMap({ pillars }: { pillars: Pillar[] }) {
     };
 
     return (
-        <section className="relative w-full py-4 md:py-6 overflow-hidden bg-white dark:bg-transparent border-y border-brand-border/30 dark:border-transparent transition-colors duration-300">
+        <section className="relative w-full py-0 overflow-hidden bg-transparent">
             <div className="relative w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8">
                 <ScrollReveal direction="up" duration={0.8}>
                     {/* Monolithic Telemetry Console Deck */}
