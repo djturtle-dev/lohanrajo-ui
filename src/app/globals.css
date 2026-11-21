@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @theme {
     /* Static tokens (accent / white stay constant across themes) */
     --color-brand-accent:   #b8241d;
