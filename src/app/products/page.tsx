@@ -34,48 +34,45 @@ const getCachedCategories = unstable_cache(
     { revalidate: 30, tags: ['categories'] }
 );
 
-const getCachedProducts = unstable_cache(
-    async (q: string, c: string, sub: string, p: number) => {
-        const trimmedQuery = q.trim();
-        const searchConditions: Prisma.ProductWhereInput[] = trimmedQuery ? [
-            { name: { contains: trimmedQuery, mode: 'insensitive' } },
-            { description: { contains: trimmedQuery, mode: 'insensitive' } },
-            { category: { name: { contains: trimmedQuery, mode: 'insensitive' } } },
-            { subCategory: { name: { contains: trimmedQuery, mode: 'insensitive' } } },
-        ] : [];
+// Direct database queries per request to guarantee fresh count, filters, and pagination without cache key collisions
+async function getProductsData(q: string, c: string, sub: string, p: number) {
+    const trimmedQuery = q.trim();
+    const searchConditions: Prisma.ProductWhereInput[] = trimmedQuery ? [
+        { name: { contains: trimmedQuery, mode: 'insensitive' } },
+        { description: { contains: trimmedQuery, mode: 'insensitive' } },
+        { category: { name: { contains: trimmedQuery, mode: 'insensitive' } } },
+        { subCategory: { name: { contains: trimmedQuery, mode: 'insensitive' } } },
+    ] : [];
 
-        const currentWhere: Prisma.ProductWhereInput = {
-            isDeleted: false,
-            ...(c ? { categoryId: c } : {}),
-            ...(sub ? { subCategoryId: sub } : {}),
-            ...(searchConditions.length > 0 ? { OR: searchConditions } : {})
-        };
+    const currentWhere: Prisma.ProductWhereInput = {
+        isDeleted: false,
+        ...(c ? { categoryId: c } : {}),
+        ...(sub ? { subCategoryId: sub } : {}),
+        ...(searchConditions.length > 0 ? { OR: searchConditions } : {})
+    };
 
-        const totalCount = await prisma.product.count({ where: currentWhere });
+    const totalCount = await prisma.product.count({ where: currentWhere });
 
-        // Guard against out-of-bounds page (e.g. switching filters while on page 2)
-        const validPage = (p - 1) * pageSize >= totalCount && totalCount > 0 ? 1 : p;
+    // Guard against out-of-bounds page (e.g. switching filters while on page 2)
+    const validPage = (p - 1) * pageSize >= totalCount && totalCount > 0 ? 1 : p;
 
-        const products = await prisma.product.findMany({
-            where: currentWhere,
-            include: {
-                category: true,
-                subCategory: true
-            },
-            orderBy: [
-                { category: { name: 'asc' } },
-                { createdAt: 'desc' },
-                { id: 'asc' }
-            ],
-            skip: (validPage - 1) * pageSize,
-            take: pageSize
-        });
+    const products = await prisma.product.findMany({
+        where: currentWhere,
+        include: {
+            category: true,
+            subCategory: true
+        },
+        orderBy: [
+            { category: { name: 'asc' } },
+            { createdAt: 'desc' },
+            { id: 'asc' }
+        ],
+        skip: (validPage - 1) * pageSize,
+        take: pageSize
+    });
 
-        return { totalCount, products, validPage };
-    },
-    ['products-catalog-query-v3'],
-    { revalidate: 30, tags: ['products'] }
-);
+    return { totalCount, products, validPage };
+}
 
 interface PageProps {
     searchParams: Promise<{ query?: string; category?: string; subCategory?: string; page?: string }>;
@@ -90,7 +87,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 
     const [categories, { totalCount, products, validPage }] = await Promise.all([
         getCachedCategories(),
-        getCachedProducts(query, category, subCategory, page)
+        getProductsData(query, category, subCategory, page)
     ]);
 
     const activeCategory = categories.find((cat: typeof categories[number]) => cat.id === category);

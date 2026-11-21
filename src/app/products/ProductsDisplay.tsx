@@ -48,17 +48,17 @@ export default function ProductsDisplay({
     return (
         <div className="space-y-6">
             {/* Top Bar: Search Bar on same line as Grid/List Toggle & Pagination */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-brand-border/40">
+            <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 pb-4 border-b border-brand-border/40">
                 {/* Search Bar (Contact Form Ref & Glass Themed) */}
                 {searchBar && (
-                    <div className="w-full lg:max-w-md xl:max-w-lg">
+                    <div className="w-full xl:max-w-md">
                         {searchBar}
                     </div>
                 )}
 
-                {/* Right Group: Pagination Quick Info + Primary/Secondary Themed Toggle */}
-                <div className="flex items-center justify-between lg:justify-end gap-3 sm:gap-4 flex-wrap ml-auto">
-                    {/* Top Pagination Status & Quick Page Switcher */}
+                {/* Right Group: Pagination Controls + View Toggle */}
+                <div className="flex items-center justify-between xl:justify-end gap-3 sm:gap-4 flex-wrap">
+                    {/* Top Pagination Status & Page Buttons */}
                     <div className="flex items-center gap-2">
                         <span className="text-xs font-sans text-brand-muted tracking-wide whitespace-nowrap">
                             {countText}
@@ -79,9 +79,30 @@ export default function ProductsDisplay({
                                         <ChevronLeft className="w-3.5 h-3.5" />
                                     </span>
                                 )}
-                                <span className="text-[11px] font-mono text-brand-muted px-2 py-0.5 rounded-full bg-brand-panel border border-brand-border/40">
-                                    {currentPage} / {totalPages}
-                                </span>
+
+                                <div className="flex items-center gap-1">
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
+                                        const isCurrent = p === currentPage;
+                                        return isCurrent ? (
+                                            <span
+                                                key={p}
+                                                className="w-7 h-7 flex items-center justify-center rounded-full btn-glass-primary text-white font-semibold text-xs shadow-xs"
+                                                aria-current="page"
+                                            >
+                                                {p}
+                                            </span>
+                                        ) : (
+                                            <Link
+                                                key={p}
+                                                href={buildUrl(p)}
+                                                className="w-7 h-7 flex items-center justify-center rounded-full btn-glass-secondary text-brand-muted hover:text-brand-text text-xs font-medium transition-transform hover:scale-105"
+                                            >
+                                                {p}
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+
                                 {currentPage < totalPages ? (
                                     <Link
                                         href={buildUrl(currentPage + 1)}
@@ -101,7 +122,7 @@ export default function ProductsDisplay({
                     </div>
 
                     {/* Site Button Themed Toggle: btn-glass-primary for active, btn-glass-secondary for inactive */}
-                    <div className="inline-flex items-center gap-1.5 p-1 rounded-full bg-brand-panel/50 border border-brand-border/40">
+                    <div className="inline-flex items-center gap-1.5 p-1 rounded-full bg-brand-panel/50 border border-brand-border/40 shrink-0">
                         <button
                             onClick={() => setViewMode('grid')}
                             className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-all cursor-pointer ${
@@ -151,7 +172,7 @@ export default function ProductsDisplay({
                             key={product.id}
                             className="card-glass group flex flex-col"
                         >
-                            <div className="aspect-[4/3] bg-brand-dark flex items-center justify-center relative overflow-hidden">
+                            <div className="aspect-[4/3] min-h-[160px] sm:min-h-[220px] bg-brand-panel/60 dark:bg-brand-dark flex items-center justify-center relative overflow-hidden">
                                 {product.images?.[0] ? (
                                     <Image
                                         src={getAssetUrl(product.images[0])}
@@ -235,26 +256,26 @@ export default function ProductsDisplay({
                             {currentPage > 1 ? (
                                 <Link
                                     href={buildUrl(currentPage - 1)}
-                                    className="px-3.5 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel rounded-lg flex items-center gap-1 text-xs font-medium"
+                                    className="px-3.5 py-2 btn-glass-secondary text-brand-muted hover:text-brand-text rounded-lg flex items-center gap-1.5 text-xs font-medium transition-transform hover:scale-105"
                                 >
                                     <ChevronLeft className="w-4 h-4" />
                                     <span>Previous</span>
                                 </Link>
                             ) : (
-                                <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 rounded-lg flex items-center gap-1 text-xs font-medium">
+                                <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/30 cursor-not-allowed bg-brand-panel/40 rounded-lg flex items-center gap-1.5 text-xs font-medium">
                                     <ChevronLeft className="w-4 h-4" />
                                     <span>Previous</span>
                                 </span>
                             )}
 
                             {/* Page Numbers */}
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1.5">
                                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
                                     const isCurrent = p === currentPage;
                                     return isCurrent ? (
                                         <span
                                             key={p}
-                                            className="w-9 h-9 flex items-center justify-center rounded-lg bg-brand-accent text-white font-semibold text-xs shadow-sm"
+                                            className="w-9 h-9 flex items-center justify-center rounded-lg btn-glass-primary text-white font-semibold text-xs shadow-sm"
                                             aria-current="page"
                                         >
                                             {p}
@@ -263,7 +284,7 @@ export default function ProductsDisplay({
                                         <Link
                                             key={p}
                                             href={buildUrl(p)}
-                                            className="w-9 h-9 flex items-center justify-center rounded-lg border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary bg-brand-panel transition-colors text-xs font-medium"
+                                            className="w-9 h-9 flex items-center justify-center rounded-lg btn-glass-secondary text-brand-muted hover:text-brand-text text-xs font-medium transition-transform hover:scale-105"
                                         >
                                             {p}
                                         </Link>
@@ -274,13 +295,13 @@ export default function ProductsDisplay({
                             {currentPage < totalPages ? (
                                 <Link
                                     href={buildUrl(currentPage + 1)}
-                                    className="px-3.5 py-2 border border-brand-border text-brand-muted hover:text-brand-text hover:border-brand-primary transition-colors bg-brand-panel rounded-lg flex items-center gap-1 text-xs font-medium"
+                                    className="px-3.5 py-2 btn-glass-secondary text-brand-muted hover:text-brand-text rounded-lg flex items-center gap-1.5 text-xs font-medium transition-transform hover:scale-105"
                                 >
                                     <span>Next</span>
                                     <ChevronRight className="w-4 h-4" />
                                 </Link>
                             ) : (
-                                <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 rounded-lg flex items-center gap-1 text-xs font-medium">
+                                <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/30 cursor-not-allowed bg-brand-panel/40 rounded-lg flex items-center gap-1.5 text-xs font-medium">
                                     <span>Next</span>
                                     <ChevronRight className="w-4 h-4" />
                                 </span>
@@ -288,14 +309,14 @@ export default function ProductsDisplay({
                         </div>
                     ) : totalCount > 0 ? (
                         <div className="flex justify-center items-center gap-2 font-sans text-sm">
-                            <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 rounded-lg flex items-center gap-1 text-xs font-medium">
+                            <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/30 cursor-not-allowed bg-brand-panel/40 rounded-lg flex items-center gap-1 text-xs font-medium">
                                 <ChevronLeft className="w-4 h-4" />
                                 <span>Previous</span>
                             </span>
-                            <span className="w-9 h-9 flex items-center justify-center rounded-lg bg-brand-accent text-white font-semibold text-xs shadow-sm" aria-current="page">
+                            <span className="w-9 h-9 flex items-center justify-center rounded-lg btn-glass-primary text-white font-semibold text-xs shadow-sm" aria-current="page">
                                 1
                             </span>
-                            <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/40 cursor-not-allowed bg-brand-panel/50 rounded-lg flex items-center gap-1 text-xs font-medium">
+                            <span className="px-3.5 py-2 border border-brand-border/30 text-brand-muted/30 cursor-not-allowed bg-brand-panel/40 rounded-lg flex items-center gap-1 text-xs font-medium">
                                 <span>Next</span>
                                 <ChevronRight className="w-4 h-4" />
                             </span>
