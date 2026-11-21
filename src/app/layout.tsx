@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import ClarityScript from "@/components/ClarityScript";
 import ChatBot from "@/components/ChatBot";
 import AnimatedBackground from "@/components/AnimatedBackground";
+import ImageProtection from "@/components/ImageProtection";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const poppins = Poppins({ 
@@ -61,6 +62,7 @@ export default function RootLayout({
             </head>
             <body suppressHydrationWarning className={`font-sans bg-brand-bg text-brand-text selection:bg-brand-accent selection:text-brand-bg flex flex-col min-h-screen antialiased overflow-x-hidden max-w-full`}>
                 <ThemeProvider>
+                    <ImageProtection />
                     <AnimatedBackground />
                     <ClarityScript />
                     <Navbar />

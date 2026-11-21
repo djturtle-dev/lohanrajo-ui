@@ -81,7 +81,7 @@ export default function AboutPhotoGallery({
                             alt={`${altText} - Photo ${currentIndex + 1}`}
                             fill
                             sizes="(max-width: 1024px) 100vw, 40vw"
-                            className="object-contain p-2 transition-all duration-500 group-hover:scale-[1.03]"
+                            className="object-contain p-2 transition-all duration-500 group-hover:scale-[1.03] no-download protect-image select-none pointer-events-none"
                             priority={currentIndex === 0}
                         />
                     </div>

@@ -216,7 +216,7 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                                         alt={`${product.name} - Image ${currentIndex + 1}`}
                                         fill
                                         sizes="(max-width: 1024px) 100vw, 50vw"
-                                        className="object-contain p-4 z-0 transition-all duration-500 group-hover:scale-[1.03] select-none"
+                                        className="object-contain p-4 z-0 transition-all duration-500 group-hover:scale-[1.03] select-none no-download protect-image"
                                         priority={currentIndex === 0}
                                         draggable={false}
                                     />
@@ -363,7 +363,7 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                                                 alt={`${product.name} thumbnail ${i + 1}`}
                                                 fill
                                                 sizes="(max-width: 640px) 30vw, (max-width: 1024px) 20vw, 12vw"
-                                                className="object-contain p-1 pointer-events-none select-none transition-transform group-hover/thumb:scale-105"
+                                                className="object-contain p-1 pointer-events-none select-none transition-transform group-hover/thumb:scale-105 no-download protect-image"
                                                 draggable={false}
                                             />
                                             <span className="absolute bottom-1 right-1 text-[9px] font-mono px-1 rounded bg-black/60 text-white pointer-events-none">

@@ -185,6 +185,17 @@ img.no-download {
     -webkit-touch-callout: none;
 }
 
+/* Anti-screenshot & Snipping Tool focus-loss auto-blur shield */
+body[data-focus-lost="true"] .no-download,
+body[data-focus-lost="true"] img.no-download,
+body[data-focus-lost="true"] .protect-image,
+body[data-focus-lost="true"] img[data-protect="true"] {
+    filter: blur(36px) brightness(0.25) !important;
+    opacity: 0.08 !important;
+    transition: filter 0.05s ease-out, opacity 0.05s ease-out !important;
+    pointer-events: none !important;
+}
+
 @layer base {
     html {
         color-scheme: light;
