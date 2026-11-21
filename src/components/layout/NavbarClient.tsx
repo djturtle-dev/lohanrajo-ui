@@ -108,10 +108,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                         : "backdrop-blur-xl bg-brand-bg/90 border-b border-brand-border/40"
                 )}
             >
-                <div className={cn(
-                    "flex items-center justify-between w-full gap-4 md:gap-8",
-                    !isScrolled && "2xl:max-w-screen-2xl 3xl:max-w-full mx-auto"
-                )}>
+                <div className="flex items-center justify-between w-full gap-4 md:gap-8 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto">
                     <div className="flex items-center flex-shrink-0">
                         {/* Logo & Stats passed as children from Server component */}
                         {children}
@@ -128,7 +125,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                     transition={NAV_SPRING}
                                     className="overflow-hidden flex items-center"
                                 >
-                                    <div className="flex items-center gap-6 pr-6 whitespace-nowrap flex-shrink-0">
+                                    <div className="flex items-center gap-6 pr-5 whitespace-nowrap flex-shrink-0">
                                         {navLinks.map((link) => (
                                             <NavLink
                                                 key={link.name}
@@ -138,6 +135,9 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                                 {link.name}
                                             </NavLink>
                                         ))}
+                                        <div className="flex items-center flex-shrink-0">
+                                            <ThemeToggle />
+                                        </div>
                                     </div>
                                 </motion.div>
                             )}
@@ -146,27 +146,10 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                         <div className="flex items-center gap-2 flex-shrink-0">
                             <Link
                                 href="/products"
-                                className={cn(
-                                    "px-6 py-2.5 text-sm font-bold font-playfair italic transition-all duration-300 flex-shrink-0 whitespace-nowrap btn-glass-primary cursor-pointer"
-                                )}
+                                className="px-6 py-2.5 text-sm font-bold font-playfair italic flex-shrink-0 whitespace-nowrap btn-glass-primary cursor-pointer hover:scale-105 active:scale-95 transition-transform duration-200"
                             >
                                 Products
                             </Link>
-
-                            {/* Theme toggle — hidden when navbar is minimized / collapsed */}
-                            <AnimatePresence initial={false}>
-                                {!isCollapsed && (
-                                    <motion.div
-                                        initial={{ opacity: 0, width: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, width: "auto", scale: 1 }}
-                                        exit={{ opacity: 0, width: 0, scale: 0.8 }}
-                                        transition={NAV_SPRING}
-                                        className="overflow-visible flex-shrink-0 flex items-center"
-                                    >
-                                        <ThemeToggle />
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
 
                             {/* Mini toggle button when scrolled */}
                             <AnimatePresence initial={false}>
@@ -186,7 +169,7 @@ export default function NavbarClient({ children }: { children?: React.ReactNode 
                                                 }
                                                 setIsManuallyExpanded(!isManuallyExpanded);
                                             }}
-                                            className="w-10 h-10 rounded-full btn-glass-secondary flex-shrink-0 hover:scale-105 active:scale-95 transition-transform flex items-center justify-center cursor-pointer"
+                                            className="w-10 h-10 rounded-full btn-glass-secondary flex-shrink-0 hover:scale-105 active:scale-95 transition-transform duration-200 flex items-center justify-center cursor-pointer"
                                             aria-label="Toggle Navigation"
                                         >
                                             <AnimatePresence mode="wait" initial={false}>
