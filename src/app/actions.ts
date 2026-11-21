@@ -8,9 +8,22 @@ import { headers } from 'next/headers';
 
 export async function submitFeedback(formData: FormData) {
     try {
-        const firstName = formData.get('firstName') as string;
-        const lastName = formData.get('lastName') as string;
-        const phone = formData.get('phone') as string;
+        const rawName = (formData.get('name') as string)?.trim() || '';
+        let firstName = (formData.get('firstName') as string)?.trim() || '';
+        let lastName = (formData.get('lastName') as string)?.trim() || '';
+
+        // If single 'name' field is provided, split into firstName & lastName
+        if (rawName) {
+            const parts = rawName.split(/\s+/);
+            firstName = parts[0] || rawName;
+            lastName = parts.slice(1).join(' ') || '';
+        }
+
+        const countryCode = (formData.get('countryCode') as string)?.trim() || '+91';
+        const rawPhone = (formData.get('phone') as string)?.trim() || '';
+        const cleanPhoneDigits = rawPhone.replace(/\D/g, '').slice(0, 10);
+        const phone = cleanPhoneDigits ? `${countryCode} ${cleanPhoneDigits}` : rawPhone;
+
         const email = formData.get('email') as string;
         const type = formData.get('type') as string;
         const content = formData.get('content') as string;

@@ -18,9 +18,12 @@ export default function ContactPage() {
     const [cvFileName, setCvFileName] = useState('');
     const [captcha, setCaptcha] = useState<{ question: string; answer: string } | null>(null);
     const [captchaInput, setCaptchaInput] = useState('');
+    const [countryCode, setCountryCode] = useState('+91');
+    const [phoneNumber, setPhoneNumber] = useState('');
     
     const isCaptchaValid = captcha !== null && captchaInput.trim() === captcha.answer;
     const isCaptchaWrong = captchaInput.trim() !== '' && captcha !== null && captchaInput.trim() !== captcha.answer;
+    const isPhoneValid = phoneNumber.length === 10;
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -44,6 +47,11 @@ export default function ContactPage() {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
+        // Validate phone number (must be 10 digits)
+        if (phoneNumber.length !== 10) {
+            return;
+        }
+
         // Validate captcha (fallback in case they somehow submit)
         if (!captcha || captchaInput.trim() !== captcha.answer) {
             refreshCaptcha();
@@ -58,6 +66,8 @@ export default function ContactPage() {
         if (result.success) {
             setFormStatus('success');
             (e.target as HTMLFormElement).reset();
+            setPhoneNumber('');
+            setCountryCode('+91');
             refreshCaptcha();
             setCaptchaInput('');
         } else {
@@ -77,37 +87,104 @@ export default function ContactPage() {
                     <form onSubmit={handleSubmit} className="space-y-8">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div className="space-y-3">
-                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">First Name<span className="text-brand-accent ml-1">*</span></label>
-                                <input required type="text" name="firstName" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="John" />
+                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">
+                                    Name<span className="text-brand-accent ml-1">*</span>
+                                </label>
+                                <input 
+                                    required 
+                                    type="text" 
+                                    name="name" 
+                                    className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" 
+                                    placeholder="John Doe" 
+                                />
                             </div>
                             <div className="space-y-3">
-                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Last Name<span className="text-brand-accent ml-1">*</span></label>
-                                <input required type="text" name="lastName" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="Doe" />
+                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">
+                                    Email address<span className="text-brand-accent ml-1">*</span>
+                                </label>
+                                <input 
+                                    required 
+                                    type="email" 
+                                    name="email" 
+                                    className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" 
+                                    placeholder="john.doe@example.com" 
+                                />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div className="space-y-3">
-                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Phone<span className="text-brand-accent ml-1">*</span></label>
-                                <input required type="text" name="phone" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="+91 1234567890" />
-                            </div>
-                            <div className="space-y-3">
-                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">Email address<span className="text-brand-accent ml-1">*</span></label>
-                                <input required type="email" name="email" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm" placeholder="john.doe@example.com" />
-                            </div>
-                        </div>
+                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">
+                                    Phone Number<span className="text-brand-accent ml-1">*</span>
+                                </label>
+                                <div className="flex items-center gap-2">
+                                    {/* Country Code (Separate, selected as India +91) */}
+                                    <div className="relative shrink-0">
+                                        <select
+                                            name="countryCode"
+                                            value={countryCode}
+                                            onChange={(e) => setCountryCode(e.target.value)}
+                                            className="bg-th-input border border-brand-border px-3.5 py-3 pr-8 text-brand-text focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm appearance-none cursor-pointer font-sans"
+                                            aria-label="Country Code"
+                                        >
+                                            <option value="+91" className="bg-brand-panel text-brand-text">🇮🇳 +91</option>
+                                            <option value="+1" className="bg-brand-panel text-brand-text">🇺🇸 +1</option>
+                                            <option value="+44" className="bg-brand-panel text-brand-text">🇬🇧 +44</option>
+                                            <option value="+971" className="bg-brand-panel text-brand-text">🇦🇪 +971</option>
+                                            <option value="+65" className="bg-brand-panel text-brand-text">🇸🇬 +65</option>
+                                        </select>
+                                        <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-brand-accent">
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </div>
+                                    </div>
 
-                        <div className="space-y-3">
-                            <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">What area interests you?<span className="text-brand-accent ml-1">*</span></label>
-                            <div className="relative">
-                                <select name="type" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors appearance-none cursor-pointer rounded-full text-sm" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-                                    <option value="ENQUIRY" className="bg-brand-panel text-brand-text">Manufacturing Enquiry</option>
-                                    <option value="CONTACT" className="bg-brand-panel text-brand-text">General Collaboration</option>
-                                    <option value="CAREER" className="bg-brand-panel text-brand-text">Career Opportunities</option>
-                                    <option value="SUPPORT" className="bg-brand-panel text-brand-text">Technical Support</option>
-                                </select>
-                                <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-brand-accent">
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                                    {/* 10-Digit Mobile Number Input */}
+                                    <div className="relative flex-1">
+                                        <input
+                                            required
+                                            type="tel"
+                                            name="phone"
+                                            value={phoneNumber}
+                                            onChange={(e) => {
+                                                const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                                setPhoneNumber(digits);
+                                            }}
+                                            maxLength={10}
+                                            pattern="[0-9]{10}"
+                                            title="Please enter a valid 10-digit phone number"
+                                            placeholder="10-digit number"
+                                            className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text placeholder-brand-muted/40 focus:outline-none focus:border-brand-accent transition-colors rounded-full text-sm font-sans tracking-wide"
+                                        />
+                                        {phoneNumber.length > 0 && (
+                                            <span className={`absolute right-4 top-1/2 -translate-y-1/2 text-[11px] font-mono ${
+                                                phoneNumber.length === 10 ? 'text-green-500 font-semibold' : 'text-brand-muted/50'
+                                            }`}>
+                                                {phoneNumber.length}/10
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                                {phoneNumber.length > 0 && phoneNumber.length < 10 && (
+                                    <p className="text-[11px] font-sans text-brand-accent pl-1">
+                                        Please enter full 10 digits ({10 - phoneNumber.length} remaining)
+                                    </p>
+                                )}
+                            </div>
+
+                            <div className="space-y-3">
+                                <label className="font-sans text-xs tracking-widest uppercase text-brand-muted/60 block px-1">What area interests you?<span className="text-brand-accent ml-1">*</span></label>
+                                <div className="relative">
+                                    <select name="type" className="w-full bg-th-input border border-brand-border px-4 py-3 text-brand-text focus:outline-none focus:border-brand-accent transition-colors appearance-none cursor-pointer rounded-full text-sm" value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+                                        <option value="ENQUIRY" className="bg-brand-panel text-brand-text">Manufacturing Enquiry</option>
+                                        <option value="CONTACT" className="bg-brand-panel text-brand-text">General Collaboration</option>
+                                        <option value="CAREER" className="bg-brand-panel text-brand-text">Career Opportunities</option>
+                                        <option value="SUPPORT" className="bg-brand-panel text-brand-text">Technical Support</option>
+                                    </select>
+                                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-brand-accent">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +251,7 @@ export default function ContactPage() {
 
                             <button
                                 type="submit"
-                                disabled={formStatus === 'submitting' || !isCaptchaValid}
+                                disabled={formStatus === 'submitting' || !isCaptchaValid || !isPhoneValid}
                                 className="w-full btn-glass-secondary px-8 py-5 font-sans font-bold tracking-[0.2em] uppercase transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed group flex items-center justify-center gap-3"
                             >
                                 {formStatus === 'submitting' ? 'Transmitting...' : (
