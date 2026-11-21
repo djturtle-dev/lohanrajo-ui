@@ -28,7 +28,7 @@ export default function HeroBlobVideo() {
             playsInline
             preload="auto"
             suppressHydrationWarning
-            className="absolute inset-0 w-full h-full object-cover filter contrast-[1.15] brightness-[0.88] sepia-[0.35] saturate-[0.75] hue-rotate-[-8deg]"
+            className="absolute inset-0 w-full h-full object-cover opacity-40 dark:opacity-35 transition-opacity duration-700"
         />
     );
 }

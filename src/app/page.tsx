@@ -51,29 +51,14 @@ export default async function Home() {
             {/* Full-Bleed Cinematic Hero + Metrics Shelf */}
             <div>
                 <section className="relative w-full h-[100svh] min-h-[600px] max-h-[1100px] overflow-hidden">
-                    {/* Full-bleed video background with vintage grading */}
+                    {/* Full-bleed video background */}
                     <HeroBlobVideo />
-
-                    {/* Vintage Film Grain & Noise Overlay */}
-                    <div 
-                        className="absolute inset-0 pointer-events-none z-10 opacity-[0.25] mix-blend-overlay"
-                        style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                        }}
-                    />
-
-                    {/* Warm Amber / Sepia Film Tint */}
-                    <div className="absolute inset-0 bg-amber-950/20 mix-blend-color pointer-events-none z-10" />
 
                     {/* Cinematic gradient overlays */}
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-bg via-brand-bg/40 to-transparent z-10" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-brand-bg/75 via-brand-bg/25 to-transparent z-10" />
-
-                    {/* Classic Vintage Vignette */}
-                    <div 
-                        className="absolute inset-0 z-10 pointer-events-none" 
-                        style={{ background: 'radial-gradient(ellipse at center, transparent 35%, rgba(20, 10, 5, 0.4) 70%, var(--th-bg) 100%)' }} 
-                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-brand-bg/70 via-brand-bg/20 to-transparent z-10" />
+                    {/* Vignette */}
+                    <div className="absolute inset-0 z-10 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, transparent 40%, var(--th-bg) 100%)' }} />
 
                     {/* Bottom-left content */}
                     <div className="absolute inset-0 z-20 flex flex-col justify-end w-full 2xl:max-w-screen-2xl 3xl:max-w-full mx-auto px-4 md:px-8 pb-20 md:pb-28">
