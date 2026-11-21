@@ -79,11 +79,11 @@ export default async function Home() {
                             {/* Metrics */}
                             <div className="flex gap-10 md:gap-14 mt-8 pt-6 border-t border-brand-border/30">
                                 <div className="flex flex-col">
-                                    <span className="text-xl md:text-3xl font-bold font-sans text-brand-text">50+</span>
+                                    <span className="text-xl md:text-3xl font-semibold font-sans text-brand-text">50+</span>
                                     <span className="text-[9px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Industries</span>
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-xl md:text-3xl font-bold font-sans text-brand-text">100%</span>
+                                    <span className="text-xl md:text-3xl font-semibold font-sans text-brand-text">100%</span>
                                     <span className="text-[9px] md:text-xs text-brand-muted font-sans uppercase tracking-widest mt-0.5">Satisfaction</span>
                                 </div>
                             </div>

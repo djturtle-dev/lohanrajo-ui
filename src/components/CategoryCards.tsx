@@ -175,7 +175,7 @@ export default function CategoryCards({ categories }: { categories: Category[] }
                                     <Icon className="text-brand-accent w-6 h-6" />
                                     <span className="text-xs font-mono tracking-widest text-white/80 uppercase">Series 0{i+1}</span>
                                 </div>
-                                <h3 className="font-sans text-2xl md:text-3xl font-bold uppercase tracking-tight text-white drop-shadow-md">
+                                <h3 className="font-sans text-2xl md:text-3xl font-semibold uppercase tracking-tight text-white drop-shadow-md">
                                     {cat.label}
                                 </h3>
                                 
@@ -203,7 +203,7 @@ export default function CategoryCards({ categories }: { categories: Category[] }
                         <div className="w-16 h-16 rounded-full border border-brand-accent/30 flex items-center justify-center group-hover:bg-brand-accent group-hover:border-transparent transition-colors duration-500">
                             <ArrowUpRight className="w-8 h-8 text-brand-accent group-hover:text-white group-hover:rotate-45 transition-all duration-500" />
                         </div>
-                        <h3 className="font-sans text-xl font-bold uppercase tracking-widest text-brand-text text-center">
+                        <h3 className="font-sans text-xl font-semibold uppercase tracking-widest text-brand-text text-center">
                             View All <br /> Products
                         </h3>
                     </div>

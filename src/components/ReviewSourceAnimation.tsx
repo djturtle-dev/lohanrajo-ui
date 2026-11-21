@@ -96,7 +96,7 @@ export default function ReviewSourceAnimation({ stats }: { stats: SourceStat[] }
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="flex items-center gap-1 shrink-0">
-                        <span className="font-oswald text-base font-bold text-brand-text">
+                        <span className="font-sans text-base font-semibold text-brand-text">
                             {currentStat.rating.toFixed(1)}
                         </span>
                         <Star size={12} className="fill-brand-accent text-brand-accent" />

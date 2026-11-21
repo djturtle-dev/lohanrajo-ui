@@ -21,6 +21,9 @@
     --font-mono:     var(--font-poppins), sans-serif;
     --font-serif:    var(--font-playfair), serif;
     --font-playfair: var(--font-playfair), serif;
+
+    /* Toned-down bold: Poppins 700 is too heavy; 600 (SemiBold) is crisp and balanced */
+    --font-weight-bold: 600;
 }
 
 /* =============================================
