@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { submitFeedback } from '@/app/actions';
 import { 
     MapPin, 
@@ -168,7 +169,8 @@ function generateCaptcha() {
     return { question: `${a} + ${b}`, answer: (a + b).toString() };
 }
 
-export default function ContactPage() {
+function ContactFormContent() {
+    const searchParams = useSearchParams();
     const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [selectedType, setSelectedType] = useState('ENQUIRY');
     const [cvFileName, setCvFileName] = useState('');
@@ -196,28 +198,47 @@ export default function ContactPage() {
     const isCaptchaWrong = captchaInput.trim() !== '' && captcha !== null && captchaInput.trim() !== captcha.answer;
     const isPhoneValid = phoneNumber.length === 10;
 
+    // Reactively detect URL search params (?product=... or ?productId=... or ?type=...)
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const params = new URLSearchParams(window.location.search);
-            const type = params.get('type');
-            if (type && ['ENQUIRY', 'CONTACT', 'CAREER', 'SUPPORT'].includes(type)) {
-                setSelectedType(type);
-            }
-
-            // Pre-tag product if linked via query string e.g. /contact?product=Name
-            const prodParam = params.get('product');
-            if (prodParam) {
-                fetch(`/api/products/search?q=${encodeURIComponent(prodParam)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success && data.products && data.products.length > 0) {
-                            setTaggedProducts([data.products[0]]);
-                        }
-                    })
-                    .catch(() => {});
-            }
+        const type = searchParams.get('type');
+        if (type && ['ENQUIRY', 'CONTACT', 'CAREER', 'SUPPORT'].includes(type)) {
+            setSelectedType(type);
         }
-    }, []);
+
+        const prodId = searchParams.get('productId');
+        const prodName = searchParams.get('product');
+
+        if (prodId || prodName) {
+            const queryUrl = prodId 
+                ? `/api/products/search?id=${encodeURIComponent(prodId)}` 
+                : `/api/products/search?q=${encodeURIComponent(prodName!)}`;
+
+            fetch(queryUrl)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && data.products && data.products.length > 0) {
+                        const matched = data.products[0];
+                        setTaggedProducts(prev => {
+                            if (prev.some(p => p.id === matched.id)) return prev;
+                            return [...prev, matched];
+                        });
+                    } else if (prodName) {
+                        setTaggedProducts(prev => {
+                            if (prev.some(p => p.name.toLowerCase() === prodName.toLowerCase())) return prev;
+                            return [...prev, { id: prodId || `param-${Date.now()}`, name: prodName }];
+                        });
+                    }
+                })
+                .catch(() => {
+                    if (prodName) {
+                        setTaggedProducts(prev => {
+                            if (prev.some(p => p.name.toLowerCase() === prodName.toLowerCase())) return prev;
+                            return [...prev, { id: prodId || `param-${Date.now()}`, name: prodName }];
+                        });
+                    }
+                });
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         setCaptcha(generateCaptcha());
@@ -836,6 +857,14 @@ export default function ContactPage() {
                 </ScrollReveal>
             </div>
         </div>
+    );
+}
+
+export default function ContactPage() {
+    return (
+        <Suspense fallback={<div className="w-full min-h-screen" />}>
+            <ContactFormContent />
+        </Suspense>
     );
 }
 

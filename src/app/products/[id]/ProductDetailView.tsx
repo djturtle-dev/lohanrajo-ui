@@ -376,7 +376,7 @@ export default function ProductDetailView({ product }: ProductDetailViewProps) {
                     {/* Direct Request Button */}
                     <div className="pt-4">
                         <Link 
-                            href={`/contact?product=${encodeURIComponent(product.name)}`}
+                            href={`/contact?productId=${encodeURIComponent(product.id)}&product=${encodeURIComponent(product.name)}`}
                             className="w-full sm:w-auto px-10 py-4 rounded-full btn-glass-primary font-playfair italic font-semibold text-center text-sm sm:text-base inline-flex items-center justify-center gap-2 group shadow-lg"
                         >
                             <span>Request a Quote</span>

@@ -3,11 +3,14 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id')?.trim();
     const query = searchParams.get('q')?.trim() || '';
 
     try {
         const where: any = { isDeleted: false };
-        if (query) {
+        if (id) {
+            where.id = id;
+        } else if (query) {
             where.OR = [
                 { name: { contains: query, mode: 'insensitive' } },
                 { category: { name: { contains: query, mode: 'insensitive' } } },
