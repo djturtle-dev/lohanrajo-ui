@@ -30,11 +30,8 @@ export const metadata: Metadata = {
 const themeScript = `
 (function() {
     try {
-        var saved = localStorage.getItem('theme') || 'system';
-        var resolved = saved;
-        if (saved === 'system') {
-            resolved = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-        }
+        var saved = localStorage.getItem('theme');
+        var resolved = (saved === 'dark') ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', resolved);
     } catch(e) {}
 })();

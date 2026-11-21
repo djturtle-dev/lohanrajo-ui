@@ -27,54 +27,8 @@
    THEME CUSTOM PROPERTIES
    ============================================= */
 
-/* Dark theme (default) */
+/* Light theme (default) */
 :root,
-[data-theme="dark"] {
-    --th-bg:          #000000;
-    --th-panel:       #111111;
-    --th-border:      #333333;
-    --th-text:        #F9F9F9;
-    --th-muted:       #eaeaea;
-    --th-muted-60:    rgba(234, 234, 234, 0.6);
-    --th-input-bg:    #1d1d1d;
-    --th-overlay-bg:  rgba(0, 0, 0, 0.95);
-    --th-accent2:     #d42e26;
-
-    /* Nav glass */
-    --th-nav-bg-from: rgba(35,35,35,0.8);
-    --th-nav-bg-to:   rgba(0,0,0,0.7);
-    --th-nav-border:  rgba(255,255,255,0.1);
-    --th-nav-inset:   rgba(255,255,255,0.2);
-    --th-nav-shadow:  rgba(0,0,0,0.4);
-
-    /* Card glass */
-    --th-card-bg-from:    rgba(20,20,20,0.4);
-    --th-card-bg-to:      rgba(0,0,0,0.2);
-    --th-card-border:     rgba(255,255,255,0.1);
-    --th-card-border-dim: rgba(255,255,255,0.02);
-    --th-card-inset:      rgba(255,255,255,0.15);
-
-    /* Secondary button */
-    --th-btn-sec-bg-from:   rgba(0,0,0,0.3);
-    --th-btn-sec-bg-mid:    rgba(91,20,17,0.2);
-    --th-btn-sec-bg-to:     rgba(184,36,29,0.1);
-    --th-btn-sec-bg-hover-from: rgba(0,0,0,0.4);
-    --th-btn-sec-bg-hover-mid:  rgba(91,20,17,0.3);
-    --th-btn-sec-bg-hover-to:   rgba(184,36,29,0.2);
-    --th-btn-sec-border:    rgba(255,255,255,0.3);
-    --th-btn-sec-inset:     rgba(255,255,255,0.5);
-    --th-btn-sec-shine:     rgba(255,255,255,0.25);
-    --th-btn-sec-shadow:    rgba(0,0,0,0.3);
-
-    /* Glow / accent blobs */
-    --th-glow-opacity: 0.2;
-
-    /* Scrollbar */
-    --th-scrollbar-track: #111111;
-    --th-scrollbar-thumb: #333333;
-}
-
-/* Light theme */
 [data-theme="light"] {
     --th-bg:          #eaeaea;
     --th-panel:       #f5f5f5;
@@ -120,6 +74,52 @@
     --th-scrollbar-thumb: #c8c8c8;
 }
 
+/* Dark theme */
+[data-theme="dark"] {
+    --th-bg:          #000000;
+    --th-panel:       #111111;
+    --th-border:      #333333;
+    --th-text:        #F9F9F9;
+    --th-muted:       #eaeaea;
+    --th-muted-60:    rgba(234, 234, 234, 0.6);
+    --th-input-bg:    #1d1d1d;
+    --th-overlay-bg:  rgba(0, 0, 0, 0.95);
+    --th-accent2:     #d42e26;
+
+    /* Nav glass */
+    --th-nav-bg-from: rgba(35,35,35,0.8);
+    --th-nav-bg-to:   rgba(0,0,0,0.7);
+    --th-nav-border:  rgba(255,255,255,0.1);
+    --th-nav-inset:   rgba(255,255,255,0.2);
+    --th-nav-shadow:  rgba(0,0,0,0.4);
+
+    /* Card glass */
+    --th-card-bg-from:    rgba(20,20,20,0.4);
+    --th-card-bg-to:      rgba(0,0,0,0.2);
+    --th-card-border:     rgba(255,255,255,0.1);
+    --th-card-border-dim: rgba(255,255,255,0.02);
+    --th-card-inset:      rgba(255,255,255,0.15);
+
+    /* Secondary button */
+    --th-btn-sec-bg-from:   rgba(0,0,0,0.3);
+    --th-btn-sec-bg-mid:    rgba(91,20,17,0.2);
+    --th-btn-sec-bg-to:     rgba(184,36,29,0.1);
+    --th-btn-sec-bg-hover-from: rgba(0,0,0,0.4);
+    --th-btn-sec-bg-hover-mid:  rgba(91,20,17,0.3);
+    --th-btn-sec-bg-hover-to:   rgba(184,36,29,0.2);
+    --th-btn-sec-border:    rgba(255,255,255,0.3);
+    --th-btn-sec-inset:     rgba(255,255,255,0.5);
+    --th-btn-sec-shine:     rgba(255,255,255,0.25);
+    --th-btn-sec-shadow:    rgba(0,0,0,0.3);
+
+    /* Glow / accent blobs */
+    --th-glow-opacity: 0.2;
+
+    /* Scrollbar */
+    --th-scrollbar-track: #111111;
+    --th-scrollbar-thumb: #333333;
+}
+
 /* Industrial chamfer cut */
 @utility clip-chamfer {
     clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
@@ -153,10 +153,10 @@
 
 @layer base {
     html {
-        color-scheme: dark;
-    }
-    [data-theme="light"] {
         color-scheme: light;
+    }
+    [data-theme="dark"] {
+        color-scheme: dark;
     }
     body {
         background-color: var(--th-bg);

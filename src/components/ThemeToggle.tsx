@@ -1,39 +1,21 @@
 'use client';
 
-import { Sun, Moon, Monitor } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const themes = ['system', 'dark', 'light'] as const;
-
-const icons = {
-    system: Monitor,
-    dark: Moon,
-    light: Sun,
-};
-
-const labels = {
-    system: 'System theme',
-    dark: 'Dark mode',
-    light: 'Light mode',
-};
 
 export default function ThemeToggle() {
     const { theme, setTheme } = useTheme();
 
-    function cycle() {
-        const idx = themes.indexOf(theme);
-        const next = themes[(idx + 1) % themes.length];
-        setTheme(next);
+    function toggle() {
+        setTheme(theme === 'dark' ? 'light' : 'dark');
     }
-
-    const Icon = icons[theme];
 
     return (
         <button
-            onClick={cycle}
-            aria-label={labels[theme]}
-            title={labels[theme]}
+            onClick={toggle}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             className="relative h-10 w-10 rounded-full btn-glass-secondary flex-shrink-0 hover:scale-105 flex items-center justify-center cursor-pointer"
         >
             <AnimatePresence mode="wait" initial={false}>
@@ -45,7 +27,11 @@ export default function ThemeToggle() {
                     transition={{ duration: 0.2, ease: 'easeOut' }}
                     className="flex items-center justify-center"
                 >
-                    <Icon className="w-4 h-4" style={{ color: 'var(--th-text)' }} />
+                    {theme === 'dark' ? (
+                        <Sun className="w-4 h-4 text-amber-400" />
+                    ) : (
+                        <Moon className="w-4 h-4 text-slate-800" />
+                    )}
                 </motion.span>
             </AnimatePresence>
         </button>
