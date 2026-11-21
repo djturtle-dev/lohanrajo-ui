@@ -47,109 +47,43 @@ export default function ProductsDisplay({
 
     return (
         <div className="space-y-6">
-            {/* Top Bar: Search Bar on same line as Grid/List Toggle & Pagination */}
-            <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 pb-4 border-b border-brand-border/40">
+            {/* Top Bar: Search and View Toggle all in 1 row */}
+            <div className="flex items-center justify-between gap-4 pb-4 border-b border-brand-border/40">
                 {/* Search Bar (Contact Form Ref & Glass Themed) */}
                 {searchBar && (
-                    <div className="w-full xl:max-w-md">
+                    <div className="flex-1 max-w-md sm:max-w-lg">
                         {searchBar}
                     </div>
                 )}
 
-                {/* Right Group: Pagination Controls + View Toggle */}
-                <div className="flex items-center justify-between xl:justify-end gap-3 sm:gap-4 flex-wrap">
-                    {/* Top Pagination Status & Page Buttons */}
-                    <div className="flex items-center gap-2">
-                        <span className="text-xs font-sans text-brand-muted tracking-wide whitespace-nowrap">
-                            {countText}
-                        </span>
-                        {totalPages > 1 && (
-                            <div className="flex items-center gap-1 font-sans">
-                                {currentPage > 1 ? (
-                                    <Link
-                                        href={buildUrl(currentPage - 1)}
-                                        className="w-7 h-7 rounded-full btn-glass-secondary text-brand-muted hover:text-brand-text flex items-center justify-center transition-transform hover:scale-105"
-                                        title="Previous page"
-                                        aria-label="Previous page"
-                                    >
-                                        <ChevronLeft className="w-3.5 h-3.5" />
-                                    </Link>
-                                ) : (
-                                    <span className="w-7 h-7 rounded-full border border-brand-border/30 text-brand-muted/30 cursor-not-allowed bg-brand-panel/40 flex items-center justify-center">
-                                        <ChevronLeft className="w-3.5 h-3.5" />
-                                    </span>
-                                )}
-
-                                <div className="flex items-center gap-1">
-                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
-                                        const isCurrent = p === currentPage;
-                                        return isCurrent ? (
-                                            <span
-                                                key={p}
-                                                className="w-7 h-7 flex items-center justify-center rounded-full btn-glass-primary text-white font-semibold text-xs shadow-xs"
-                                                aria-current="page"
-                                            >
-                                                {p}
-                                            </span>
-                                        ) : (
-                                            <Link
-                                                key={p}
-                                                href={buildUrl(p)}
-                                                className="w-7 h-7 flex items-center justify-center rounded-full btn-glass-secondary text-brand-muted hover:text-brand-text text-xs font-medium transition-transform hover:scale-105"
-                                            >
-                                                {p}
-                                            </Link>
-                                        );
-                                    })}
-                                </div>
-
-                                {currentPage < totalPages ? (
-                                    <Link
-                                        href={buildUrl(currentPage + 1)}
-                                        className="w-7 h-7 rounded-full btn-glass-secondary text-brand-muted hover:text-brand-text flex items-center justify-center transition-transform hover:scale-105"
-                                        title="Next page"
-                                        aria-label="Next page"
-                                    >
-                                        <ChevronRight className="w-3.5 h-3.5" />
-                                    </Link>
-                                ) : (
-                                    <span className="w-7 h-7 rounded-full border border-brand-border/30 text-brand-muted/30 cursor-not-allowed bg-brand-panel/40 flex items-center justify-center">
-                                        <ChevronRight className="w-3.5 h-3.5" />
-                                    </span>
-                                )}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Site Button Themed Toggle: btn-glass-primary for active, btn-glass-secondary for inactive */}
-                    <div className="inline-flex items-center gap-1.5 p-1 rounded-full bg-brand-panel/50 border border-brand-border/40 shrink-0">
-                        <button
-                            onClick={() => setViewMode('grid')}
-                            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-all cursor-pointer ${
-                                viewMode === 'grid'
-                                    ? 'btn-glass-primary text-white shadow-xs'
-                                    : 'btn-glass-secondary text-brand-text'
-                            }`}
-                            aria-label="Grid view"
-                            title="Grid view"
-                        >
-                            <LayoutGrid className="w-3.5 h-3.5" />
-                            <span>Grid</span>
-                        </button>
-                        <button
-                            onClick={() => setViewMode('list')}
-                            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-all cursor-pointer ${
-                                viewMode === 'list'
-                                    ? 'btn-glass-primary text-white shadow-xs'
-                                    : 'btn-glass-secondary text-brand-text'
-                            }`}
-                            aria-label="List view"
-                            title="List view"
-                        >
-                            <List className="w-3.5 h-3.5" />
-                            <span>List</span>
-                        </button>
-                    </div>
+                {/* Grouped View Toggle Themed with Site Theme */}
+                <div className="inline-flex items-center gap-1.5 p-1 rounded-full bg-brand-panel/60 border border-brand-border/60 shadow-xs backdrop-blur-md shrink-0">
+                    <button
+                        onClick={() => setViewMode('grid')}
+                        className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-all duration-300 cursor-pointer ${
+                            viewMode === 'grid'
+                                ? 'btn-glass-primary text-white shadow-xs'
+                                : 'btn-glass-secondary text-brand-muted hover:text-brand-text'
+                        }`}
+                        aria-label="Grid view"
+                        title="Grid view"
+                    >
+                        <LayoutGrid className="w-3.5 h-3.5" />
+                        <span>Grid</span>
+                    </button>
+                    <button
+                        onClick={() => setViewMode('list')}
+                        className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium transition-all duration-300 cursor-pointer ${
+                            viewMode === 'list'
+                                ? 'btn-glass-primary text-white shadow-xs'
+                                : 'btn-glass-secondary text-brand-muted hover:text-brand-text'
+                        }`}
+                        aria-label="List view"
+                        title="List view"
+                    >
+                        <List className="w-3.5 h-3.5" />
+                        <span>List</span>
+                    </button>
                 </div>
             </div>
 
